@@ -2,12 +2,16 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 /* import routes */
 const usersRoutes = require("./routes/user");
 
 /* use morgan*/
 app.use(morgan("dev"));
+/* use body-parser*/
+//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 /* filter routes*/
 app.use('/user',usersRoutes); // url : /user
