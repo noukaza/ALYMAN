@@ -13,6 +13,26 @@ app.use(morgan("dev"));
 //app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+/* allow cors */
+app.use((req, res, next) => {
+   res.header("Access-Control-Allow-Origin","*");
+   res.header(
+       'Access-Control-Allow-Headers',
+       'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    /* or allow all
+    /*
+    res.header(
+        'Access-Control-Allow-Headers',
+        '*');
+    */
+
+    /* config allow methods  */
+    if(req.method === 'OPTIONS'){
+        res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET')
+    }
+    next();
+});
+
 /* filter routes*/
 app.use('/user',usersRoutes); // url : /user
 
