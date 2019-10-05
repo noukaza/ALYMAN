@@ -8,32 +8,32 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const config_storag = multer.diskStorage({
-  destination : function(req , file ,cb){
+  destination: function (req, file, cb) {
     cb(null, './uploads/profile_image/')
   },
-  filename : function(req, file, cb ){
-    cb (null, new Date().toISOString() + file.originalname)
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname)
   }
 });
 const filerFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" | file.mimetype === "image/png" ){
-    cb(null,true);
-  }else{
+  if (file.mimetype === "image/jpeg" | file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
     cb(null, false);
   }
 }
 
 const upload = multer({
   storage: config_storag,
-  limits:{
-    fileSize :1024 * 1024 * 5
+  limits: {
+    fileSize: 1024 * 1024 * 5
   },
   fileFilter: filerFilter
 })
 
 /**
  * @swagger
- * /users:
+ * /user:
  *   post:
  *     summary: Adds a new user
  *     requestBody:
@@ -52,108 +52,112 @@ const upload = multer({
  *       '200':
  *         description: OK
  */
-router.post("/", upload.single("profileImage"),(req, res, next) => {
+router.post("/", upload.single("profileImage"), (req, res, next) => {
   User.find({
-    email : req.body.email
+    email: req.body.email
   })
     .exec()
     .then(user => {
-      if (user.length >=1){
+      if (user.length >= 1) {
         res.status(409).json({
-          message : "Mail exists"
+          message: "Mail exists"
         })
-      }else{
-        bcrypt.hash(req.body.password, 10, (err, hash)=>{
-          if(err){
+      } else {
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+          if (err) {
             res.status(500).json({
-              error : err
+              error: "failed to creat user"
             })
-          }else{
+          } else {
             const user = new User({
-              _id             : mongoose.Types.ObjectId(),
-              firstName       : req.body.firstName,
-              lastName        : req.body.lastName,
-              profileImage    : req.file.path,
-              bio             : req.body.bio,
-              email           : req.body.email,
-              password        : hash
+              _id: mongoose.Types.ObjectId(),
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
+              profileImage: req.file.path,
+              bio: req.body.bio,
+              email: req.body.email,
+              password: hash
             })
             user
               .save()
               .then(data => {
                 res.status(201).json(data)
               })
-              .catch(e => {
+              .catch(err => {
                 res.status(500).json({
-                  error : err
+                  error: err
                 })
-              })  
+              })
           }
-        }) 
+        })
       }
     })
-    .catch(e=> console.log(e));
- 
-  
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      })
+    });
+
+
 });
 
 
-router.delete('/:id',(req, res, next) => {
-  User.remove({_id : req.params.id})
+router.delete('/:id', (req, res, next) => {
+  User.remove({ _id: req.params.id })
     .exec()
-    .then(result =>{
+    .then(result => {
       res.status(200).json({
-        message : "Done !"
+        message: "Done !"
       });
     })
-    .catch(err =>{
+    .catch(err => {
       res.status(500).json({
-        error : err
+        error: err
       });
     })
 })
 
 
-router.post("/login",(req, res, next) => {
-  User.find({ email : req.body.email }).exec()
+router.post("/login", (req, res, next) => {
+  User.find({ email: req.body.email }).exec()
     .then(user => {
-      if( user.length < 1){
+      if (user.length < 1) {
         res.status(401).json({
-          message : 'Auth failed'
+          message: 'Auth failed'
         })
-      }else{
-        bcrypt.compare(req.body.password, user[0].password, (err, result)=> {
-          if(err){
+      } else {
+        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+          if (err) {
             res.status(401).json({
-              message : 'Auth failed'
+              message: 'Auth failed'
             })
           }
-          if(result){
+          if (result) {
             const token = jwt.sign({
-              email : user[0].email,
-              _id : user[0]._id
+              email: user[0].email,
+              _id: user[0]._id
             },
-            process.env.JWT_KEY,
-            {
-              expiresIn :"1 days"
-            })
+              process.env.JWT_KEY,
+              {
+                expiresIn: "1 days"
+              })
             res.status(200).json({
-              message : 'Auth successful',
-              token : token
+              message: 'Auth successful',
+              token: token
             })
-          }else{
+          } else {
             res.status(401).json({
-              message : 'Auth failed'
+              message: 'Auth failed'
             })
           }
-          
+
         })
       }
 
     })
     .catch(err => {
       res.status(500).json({
-        error : err
+        error: err
       });
     })
 })
