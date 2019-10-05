@@ -32,12 +32,11 @@ router.delete("/:id",(req, res, next)=> {
 });
 
 /*Update method */
-router.post("/:id",(req,res, next)=>{
+router.put("/:id",(req,res, next)=>{
     const comment = {
         id_comment : req.params.id,
         comment : req.body.comment
     };
     res.status(201).json(comment)
 });
-
 module.exports = router;
