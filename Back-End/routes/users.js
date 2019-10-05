@@ -73,6 +73,24 @@ router.post("/", (req, res, next) => {
 });
 
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Adds a new user
+ *     requestBody:
+ *       content:
+ *         application/json:     # Media type
+ *           examples:    # Child of media type
+ *             Jessica:   # Example 1
+ *               value:
+ *                 id: 10
+ *                 name: Jessica Smith
+ *             Ron:       # Example 2
+ *               value:
+ *                 id: 11
+ *                 name: Ron Stewart
+ */
 router.get("/:id", (req, res, next) => {
   const id = req.params.id
   const user = {

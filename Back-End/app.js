@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const mongoose = require("mongoose");
 
 /* import routes */
 const usersRoutes = require("./routes/users");
@@ -13,7 +14,19 @@ const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 
-const config = {
+const authenticationMongo = "";
+if (process.env.MONGODB_USER !== ""){
+    authenticationMongo = process.env.MONGODB_USER + ":" + process.env.MONGODB_PASSWORD + "@";
+}
+mongoose.connect(
+    "mongodb://" + authenticationMongo + process.env.MONGODB_HOST + ":" + process.env.MONGODB_PORT + "/"+ process.env.MONGODB_DATA,
+    { 
+        useNewUrlParser: true,
+        useUnifiedTopology: true 
+    });
+
+
+const swaggerConfig = {
     swaggerDefinition : {
         info:{
             title: "LYMAN",
@@ -26,7 +39,7 @@ const config = {
     },
     apis: ["./routes/*.js"]
 }
-const swagerDocs = swaggerJsDoc(config)
+const swagerDocs = swaggerJsDoc(swaggerConfig)
 app.use('/doc',swaggerUi.serve,swaggerUi.setup(swagerDocs));
 
 /* use morgan*/
