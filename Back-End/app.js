@@ -8,8 +8,10 @@ const swaggerUi = require("swagger-ui-express");
 
 /* import routes */
 const usersRoutes = require("./routes/users");
-
-
+const commentsRoutes = require("./routes/comments");
+const followersRoutes = require("./routes/followers");
+const imagesRoutes = require("./routes/images");
+const likesRoutes = require("./routes/likes");
 
 const config = {
     swaggerDefinition : {
@@ -54,9 +56,11 @@ app.use((req, res, next) => {
 });
 
 /* filter routes*/
-
-app.use('/user',usersRoutes); // url : /user
-app.use('/follower',followersRoutes); // url : /follower
+app.use('/user', usersRoutes);              // url : /user
+app.use('/follower', followersRoutes);       // url : /follower
+app.use('/like', likesRoutes);               // url : /like
+app.use('/image', imagesRoutes);             // url : /image
+app.use('/comment', commentsRoutes)          // url : comment
 
 /* catch unfound routes */
 app.use((req, res, next) => {
