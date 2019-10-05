@@ -33,7 +33,7 @@ router.delete("/:id", (req, res, next) => {
 
 
 /* UPDATE method */
-router.update("/:id", (req, res, next) => {
+router.post("/:id", (req, res, next) => {
     const image = {
       id_image: req.params.id,
       description : req.body.description
