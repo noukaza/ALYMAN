@@ -3,10 +3,29 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 /* import routes */
-const usersRoutes = require("./routes/user");
-const likeRoutes = require("./routes/like");
+const usersRoutes = require("./routes/users");
+
+
+
+const config = {
+    swaggerDefinition : {
+        info:{
+            title: "LYMAN",
+            description : "instagrame ",
+            contact :{
+                name:"instagram"
+            },
+            servers:["http://localhost:3001"]
+        }       
+    },
+    apis: ["./routes/*.js"]
+}
+const swagerDocs = swaggerJsDoc(config)
+app.use('/doc',swaggerUi.serve,swaggerUi.setup(swagerDocs));
 
 /* use morgan*/
 app.use(morgan("dev"));
@@ -35,8 +54,9 @@ app.use((req, res, next) => {
 });
 
 /* filter routes*/
+
 app.use('/user',usersRoutes); // url : /user
-app.use('/like',likeRoutes); // url : /like
+app.use('/follower',followersRoutes); // url : /follower
 
 /* catch unfound routes */
 app.use((req, res, next) => {
