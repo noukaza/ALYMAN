@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 /* filter routes*/
 
 app.use('/user',usersRoutes); // url : /user
-app.use('/image',imagesRoutes); // url : /image
+app.use('/follower',followersRoutes); // url : /follower
 
 /* catch unfound routes */
 app.use((req, res, next) => {
