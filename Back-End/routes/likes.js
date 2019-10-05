@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const chekauth = require("../middleware/check_auth")
 
 /* GET method */
-router.get("/:id", (req, res, next) => {
+router.get("/:id", chekauth, (req, res, next) => {
     const id = req.params.id
    res.json({
        id : id
