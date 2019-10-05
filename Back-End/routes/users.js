@@ -1,36 +1,35 @@
 const express = require('express');
 const router = express.Router();
+const multer = require("multer");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
+const User = require("../models/user");
 
-const exemple_user = {
-  _id : "qlmksjdqlskmdj",
-  first_name : "first name",
-  last_name : "last name",
-  url_profil_pic : "/up/lkjqklsfghqosdimf.png",
-  bio : "est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lore",
-  email :  "myEmail@gmail.Com" 
-};
-
-/* GET method */
-router.get("/", (req, res, next) => {
-  //TODO : With mongo get all user 
- 
-  const users = [
-   exemple_user,
-   exemple_user,
-   exemple_user,
-   exemple_user,
-   exemple_user,
-   exemple_user,
-   exemple_user,
-  ];
-  
-  const exemple = {  
-    count : users.length,
-    users : users
+const config_storag = multer.diskStorage({
+  destination : function(req , file ,cb){
+    cb(null, './uploads/profile_image/')
+  },
+  filename : function(req, file, cb ){
+    cb (null, new Date().toISOString() + file.originalname)
   }
-   res.status(200).json(exemple)
 });
+const filerFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" | file.mimetype === "image/png" ){
+    cb(null,true);
+  }else{
+    cb(null, false);
+  }
+}
+
+const upload = multer({
+  storage: config_storag,
+  limits:{
+    fileSize :1024 * 1024 * 5
+  },
+  fileFilter: filerFilter
+})
 
 /**
  * @swagger
@@ -53,55 +52,110 @@ router.get("/", (req, res, next) => {
  *       '200':
  *         description: OK
  */
-router.post("/", (req, res, next) => {
-    const expect_format_user = {
-      first_name : req.body.first_name,
-      last_name : req.body.last_name,
-      bio : req.body.bio,
-      email :  req.body.email,
-      password : req.body.password
-    }
-    const user = {
-      ...expect_format_user,
-      _id : "qksjdlkqjsd",
-      //TODO: hash password
-      password : "hash password",
-      create_at : new Date(),
-      update_at : new Date()
-    };
-    res.status(201).json(user)
+router.post("/", upload.single("profileImage"),(req, res, next) => {
+  User.find({
+    email : req.body.email
+  })
+    .exec()
+    .then(user => {
+      if (user.length >=1){
+        res.status(409).json({
+          message : "Mail exists"
+        })
+      }else{
+        bcrypt.hash(req.body.password, 10, (err, hash)=>{
+          if(err){
+            res.status(500).json({
+              error : err
+            })
+          }else{
+            const user = new User({
+              _id             : mongoose.Types.ObjectId(),
+              firstName       : req.body.firstName,
+              lastName        : req.body.lastName,
+              profileImage    : req.file.path,
+              bio             : req.body.bio,
+              email           : req.body.email,
+              password        : hash
+            })
+            user
+              .save()
+              .then(data => {
+                res.status(201).json(data)
+              })
+              .catch(e => {
+                res.status(500).json({
+                  error : err
+                })
+              })  
+          }
+        }) 
+      }
+    })
+    .catch(e=> console.log(e));
+ 
+  
 });
 
 
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Adds a new user
- *     requestBody:
- *       content:
- *         application/json:     # Media type
- *           examples:    # Child of media type
- *             Jessica:   # Example 1
- *               value:
- *                 id: 10
- *                 name: Jessica Smith
- *             Ron:       # Example 2
- *               value:
- *                 id: 11
- *                 name: Ron Stewart
- */
-router.get("/:id", (req, res, next) => {
-  const id = req.params.id
-  const user = {
-    ...exemple_user,
-    _id : id,
-    create_at : new Date(),
-    update_at : new Date()
-  };
+router.delete('/:id',(req, res, next) => {
+  User.remove({_id : req.params.id})
+    .exec()
+    .then(result =>{
+      res.status(200).json({
+        message : "Done !"
+      });
+    })
+    .catch(err =>{
+      res.status(500).json({
+        error : err
+      });
+    })
+})
 
-  res.status(200).json(user)
-});
 
+router.post("/login",(req, res, next) => {
+  User.find({ email : req.body.email }).exec()
+    .then(user => {
+      if( user.length < 1){
+        res.status(401).json({
+          message : 'Auth failed'
+        })
+      }else{
+        bcrypt.compare(req.body.password, user[0].password, (err, result)=> {
+          if(err){
+            res.status(401).json({
+              message : 'Auth failed'
+            })
+          }
+          if(result){
+            const token = jwt.sign({
+              email : user[0].email,
+              _id : user[0]._id
+            },
+            process.env.JWT_KEY,
+            {
+              expiresIn :"1 days"
+            })
+            res.status(200).json({
+              message : 'Auth successful',
+              token : token
+            })
+          }else{
+            res.status(401).json({
+              message : 'Auth failed'
+            })
+          }
+          
+        })
+      }
+
+    })
+    .catch(err => {
+      res.status(500).json({
+        error : err
+      });
+    })
+})
 
 module.exports = router;

@@ -4,6 +4,7 @@
         "MONGODB_PASSWORD" : "",
         "MONGODB_HOST" : "localhost",
         "MONGODB_PORT" : "27017",
-        "MONGODB_DATA" : "LYMAN"
+        "MONGODB_DATA" : "dbname",
+        "JWT_KEY"   :"KEY"
     }
 }
