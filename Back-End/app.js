@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 /* import routes */
 const usersRoutes = require("./routes/user");
+const followersRoutes = require("./routes/follower");
 
 /* use morgan*/
 app.use(morgan("dev"));
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 
 /* filter routes*/
 app.use('/user',usersRoutes); // url : /user
+app.use('/follower',followersRoutes); // url : /follower
 
 /* catch unfound routes */
 app.use((req, res, next) => {
