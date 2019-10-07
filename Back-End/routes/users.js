@@ -162,4 +162,11 @@ router.post("/login", (req, res, next) => {
     })
 })
 
+
+router.get('/', (req, res, next) => {
+  User.find().select("_id firstName lastName profileImage bio email Images comments likes followers followings").exec().then(data => {
+    res.status(200).json(data)
+  }).catch(err => console.log(err))
+
+})
 module.exports = router;
