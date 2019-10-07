@@ -1,34 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+const followersController = require("../controllers/followers");
+
 /* GET method */
-router.get("/", (req, res, next) => {
-  res.status(200).json({
-    message: "hi"
-  })
-});
+router.get("/", followersController.get_all_followers);
 
 /* POST method */
-router.post("/", (req, res, next) => {
-  const follower = {
-    id_follow: req.body.id_follow,
-    id_user_from: req.body.id_user_from,
-    id_user_to: req.body.id_user_to,
-    create_at: req.body.create_at
-  };
+router.post("/", followersController.create_follower);
 
-  res.status(201).json(follower)
-});
-
-
-router.delete("/:id", (req, res, next) => {
-  const id = req.params.id
-  const follower = {
-    _id: id
-  };
-
-  res.status(202).json(follower)
-});
-
+router.delete("/:id", followersController.delete_follower);
 
 module.exports = router;
