@@ -11,13 +11,11 @@ exports.poste_like = (req, res, next) => {
         id_image: req.body.id_image,
         id_user: req.body.id_user,
         create_at: req.body.create_at
-
     };
     res.status(201).json(like)
 }
 
-exports.delete_like =  (req, res, next) => {
+exports.delete_like = (req, res, next) => {
     const id = req.params.id
-
     res.status(202).json(id)
 }
