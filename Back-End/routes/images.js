@@ -1,45 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
+const imagesController = require("../controllers/images")
+
 /* GET method */
-router.get("/", (req, res, next) => {
-  res.status(200).json({
-    message: "hi"
-  })
-});
+router.get("/", imagesController.get_all_images);
 
 /* POST method */
-router.post("/", (req, res, next) => {
-  const image = {
-    id_image: req.body.id_image,
-    id_user: req.body.id_user,
-    url: req.body.url,
-    description: req.body.description,
-    create_at: req.body.create_at,
-    update_at: req.body.update_at
-  };
-
-  res.status(201).json(image)
-});
+router.post("/", imagesController.create_image);
 
 /* DELETE method */
-router.delete("/:id", (req, res, next) => {
-  const image = {
-    id_image: req.params.id
-  };
-
-  res.status(202).json(image)
-});
-
+router.delete("/:id", imagesController.delete_image);
 
 /* UPDATE method */
-router.put("/:id", (req, res, next) => {
-  const image = {
-    id_image: req.params.id,
-    description: req.body.description
-  };
-
-  res.status(201).json(image)
-});
+router.put("/:id", imagesController.update_image);
 
 module.exports = router;
