@@ -21,9 +21,16 @@ exports.create_follower = (req, res, next) => {
 }
 
 exports.delete_follower = (req, res, next) => {
-    const id = req.params.id
-    const follower = {
-        _id: id
-    };
-    res.status(202).json(follower)
+    Follower.remove({ _id: req.params.id })
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: "Done !"
+        });
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    })
 }
