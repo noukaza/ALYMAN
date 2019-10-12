@@ -1,7 +1,13 @@
+const Follower = require("../models/follower");
 exports.get_all_followers = (req, res, next) => {
-    res.status(200).json({
-        message: "hi"
-    })
+    Follower
+    .find()
+    .select("_id follower following create_at")
+    //.populate("images")
+    .exec()
+    .then(data => {
+        res.status(200).json(data)
+    }).catch(err => console.log(err))
 }
 
 exports.create_follower = (req, res, next) => {
