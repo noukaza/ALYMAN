@@ -1,8 +1,8 @@
 {
     "env": {
-        "MONGODB_USER" : "",
-        "MONGODB_PASSWORD" : "",
-        "MONGODB_HOST" : "localhost",
+        "MONGODB_USER" : "mohand",
+        "MONGODB_PASSWORD" : "Sofia2004",
+        "MONGODB_HOST" : "cluster0-hlbkz.mongodb.net/test?retryWrites=true&w=majority",
         "MONGODB_PORT" : "27017",
         "MONGODB_DATA" : "dbname",
         "JWT_KEY"   :"KEY",

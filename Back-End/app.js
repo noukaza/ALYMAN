@@ -14,12 +14,13 @@ const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 
-const authenticationMongo = "";
+let authenticationMongo = "";
 if (process.env.MONGODB_USER !== "") {
     authenticationMongo = process.env.MONGODB_USER + ":" + process.env.MONGODB_PASSWORD + "@";
 }
 mongoose.connect(
-    "mongodb://" + authenticationMongo + process.env.MONGODB_HOST + ":" + process.env.MONGODB_PORT + "/" + process.env.MONGODB_DATA,
+    "mongodb+srv://mohand:RN7uRBjxLwRl7I4p@cluster0-hlbkz.mongodb.net/test?retryWrites=true&w=majority" ,
+    
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

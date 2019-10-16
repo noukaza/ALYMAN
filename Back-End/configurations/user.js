@@ -5,7 +5,7 @@ const config_storag = multer.diskStorage({
     cb(null, './uploads/profile_image/')
   },
   filename: function (req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname)
+    cb(null,  file.originalname)
   }
 });
 const filerFilter = (req, file, cb) => {
