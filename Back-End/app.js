@@ -37,7 +37,7 @@ const swaggerConfig = {
             servers: ["http://localhost:3001"]
         }
     },
-    apis: ["./routes/*.js"]
+    apis: ["./routes/*.js","./configurations/*.js"]
 }
 const swagerDocs = swaggerJsDoc(swaggerConfig)
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swagerDocs));
