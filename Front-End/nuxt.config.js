@@ -23,13 +23,16 @@ export default {
   ** Global CSS
   */
   css: [
-    'iview/dist/styles/iview.css'
+    //'iview/dist/styles/iview.css',
+    //'bootstrap/dist/css/bootstrap.css',
+    //'bootstrap-vue/dist/bootstrap-vue.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/iview'
+    //'@/plugins/iview'
+    //'@/plugins/bootstrap'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -42,6 +45,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    'bootstrap-vue/nuxt'
   ],
   /*
   ** Axios module configuration
@@ -58,5 +62,17 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  bootstrapVue: {
+    componentPlugins: [
+      'LayoutPlugin',
+      'FormPlugin',
+      'FormCheckboxPlugin',
+      'FormInputPlugin',
+      'FormRadioPlugin',
+      'ToastPlugin',
+      'ModalPlugin'
+    ],
+    directivePlugins: ['VBPopoverPlugin', 'VBTooltipPlugin', 'VBScrollspyPlugin']
   }
 }

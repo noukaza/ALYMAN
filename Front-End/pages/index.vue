@@ -1,63 +1,61 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        lyman-front
-      </h1>
-      <h2 class="subtitle">
-        Welcome to the iView + Nuxt.js template
-      </h2>
-      <div class="links">
-        <Button type="primary" target="_blank" to="https://nuxtjs.org/">
-          Documentation
-        </Button>
-        <Button target="_blank" to="https://github.com/nuxt/nuxt.js">
-          GitHub
-        </Button>
-        <Button target="_blank" to="https://www.iviewui.com/">
-          iView
-        </Button>
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+                <input type="email"  class="form-control" v-model="email" placeholder="Email address" required autofocus>
+              </div>
+            
+
+              <div class="form-label-group mt-3">
+                <input type="password"  v-model="password" class="form-control" placeholder="Password" required>
+              </div>
+              <hr class="my-4">
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" @click="login($event)" >Sign in</button>
+            </form>
+          </div>
+        </div>
+        <hr class="my-4">
+        {{token}}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+// import axios from "@nuxtjs/axios";
+
 export default {
-  components: {
-    Logo
-  }
+  
+  data() {
+    return {
+      email:"",
+      password : "",
+      token : ""
+    }
+  },
+  methods: {
+    login(e){
+      e.preventDefault();
+      this.$axios.post("http://localhost:3001/users/login",
+      {
+        email : this.email,
+        password :  this.password
+      }
+      ).then(e => {
+        this.token = e.data.token;
+        this.email = "",
+        this.password =""
+      })
+      
+    }
+  },
+
 }
+
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-.links {
-  padding-top: 15px;
-}
-</style>
