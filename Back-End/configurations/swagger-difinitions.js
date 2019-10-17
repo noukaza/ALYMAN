@@ -5,6 +5,7 @@
  *   User:
  *     type: object
  *     required:
+ *       - id
  *       - firstName
  *       - lastName
  *       - urlProfilPic
@@ -13,6 +14,8 @@
  *       - updateAt
  *       - password
  *     properties:
+ *       id:
+ *         type: integer
  *       firstName:
  *         type: string
  *       lastName:
@@ -31,12 +34,15 @@
  *   Image:
  *     type: object
  *     required:
+ *       - id_image
  *       - userId
  *       - url
  *       - description
  *       - createAt
  *       - updateAt
  *     properties:
+ *       id_image:
+ *          type: integer
  *       userId:
  *         type: integer
  *       url:
@@ -51,10 +57,13 @@
  *   Follower:
  *     type: object
  *     required:
+ *       - id_follow
  *       - IdUserFrom
  *       - IdUserTo
  *       - createAt
  *     properties:
+ *       id_follow:
+ *         type: integer
  *       IdUserFrom:
  *         type: integer
  *       IdUserTo:
@@ -64,10 +73,13 @@
  *   Like:
  *     type: object
  *     required:
+ *       - id_like
  *       - IdImage
  *       - IdUser
  *       - createAt
  *     properties:
+ *       id_like:
+ *          type: integer
  *       IdImage:
  *         type: integer
  *       IdUser:
@@ -77,11 +89,14 @@
  *   Comments:
  *     type: object
  *     required:
+ *       - id_comment
  *       - IdImage
  *       - IdUser
  *       - comment
  *       - createAt
  *     properties:
+ *       id_comment:
+ *         type: integer
  *       IdImage:
  *         type: integer
  *       IdUser:

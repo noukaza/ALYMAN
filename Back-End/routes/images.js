@@ -7,6 +7,28 @@ const imagesController = require("../controllers/images")
 router.get("/", imagesController.get_all_images);
 
 /* POST method */
+/**
+ * @swagger
+ *
+ * /Image:
+ *   post:
+ *     description: New Imge
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - id: Image
+ *         description: Image
+ *         in:  body
+ *         required: true
+ *         type: string
+ *         schema:
+ *           $ref: '#/definitions/Image'
+ *     responses:
+ *       200:
+ *         description: Image
+ *         schema:
+ *           $ref: '#/definitions/Image'
+ */
 router.post("/", imagesController.create_image);
 
 /* DELETE method */

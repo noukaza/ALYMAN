@@ -7,6 +7,28 @@ const commentsConttrollers = require("../controllers/commentes");
 router.get("/", commentsConttrollers.get_all_comments);
 
 /* POST method */
+/**
+ * @swagger
+ *
+ * /comments:
+ *   post:
+ *     description: Creates a comment
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - id: comment
+ *         description: comment
+ *         in:  body
+ *         required: true
+ *         type: string
+ *         schema:
+ *           $ref: '#/definitions/Comments'
+ *     responses:
+ *       200:
+ *         description: Comments
+ *         schema:
+ *           $ref: '#/definitions/Comments'
+ */
 router.post("/", commentsConttrollers.post_comment);
 
 /* DELETE method*/
