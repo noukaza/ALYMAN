@@ -15,24 +15,25 @@ const userController = require("../controllers/users");
 
 /**
  * @swagger
- * /user:
+ *
+ * /users:
  *   post:
- *     summary: Adds a new user
- *     requestBody:
- *       content:
- *         application/json:     # Media type
- *           examples:    # Child of media type
- *             Jessica:   # Example 1
- *               value:
- *                 id: 10
- *                 name: Jessica Smith
- *             Ron:       # Example 2
- *               value:
- *                 id: 11
- *                 name: Ron Stewart
+ *     description: Creates a user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: User object
+ *         in:  body
+ *         required: true
+ *         type: string
+ *         schema:
+ *           $ref: '#/definitions/User'
  *     responses:
- *       '200':
- *         description: OK
+ *       200:
+ *         description: users
+ *         schema:
+ *           $ref: '#/definitions/User'
  */
 router.post("/", upload.single("profileImage"), userController.create_user);
 
