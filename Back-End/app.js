@@ -14,17 +14,9 @@ const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 
-let authenticationMongo = "";
-if (process.env.MONGODB_USER !== "") {
-    authenticationMongo = process.env.MONGODB_USER + ":" + process.env.MONGODB_PASSWORD + "@";
-}
-mongoose.connect(
-    "mongodb+srv://mohand:RN7uRBjxLwRl7I4p@cluster0-hlbkz.mongodb.net/test?retryWrites=true&w=majority" ,
-    
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+const configMongo = require('./configurations/mognodb')
+
+mongoose.connect(configMongo.mongoUri, configMongo.option);
 
 
 const swaggerConfig = {
