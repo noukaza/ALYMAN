@@ -31,7 +31,7 @@ exports.post_comment = (req, res, next) => {
                     .then(img => {
                         if (img.length >= 1) {
                             const commente = new Commente({
-                                    _id: req.body._id,
+                                    _id: mongoose.Types.ObjectId(),
                                     image: req.body.image,
                                     user: req.body.user,
                                     comment: req.body.comment,

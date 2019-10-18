@@ -1,6 +1,7 @@
 
 const Follower = require("../models/follower");
 const User = require("../models/user");
+const mongoose = require("mongoose");
 
 exports.get_all_followers = (req, res, next) => {
     Follower
@@ -14,20 +15,21 @@ exports.get_all_followers = (req, res, next) => {
 }
 
 exports.create_follower = (req, res, next) => {
+   // console.log(req.body.follower)
     User.find({
-        email: req.body.follower.email
+        _id: req.body.follower
     })
         .exec()
         .then(user => {
             if (user.length >= 1) {
                 User.find({
-                    email: req.body.follower.email
+                    _id: req.body.follower
                 })
                     .exec()
                     .then(user => {
                         if (user.length >= 1) {
                             const follower = new Follower({
-                                    id: req.body.id,
+                                    _id: mongoose.Types.ObjectId(),
                                     follower: req.body.follower,
                                     following: req.body.following,
                                     create_at: req.body.create_at

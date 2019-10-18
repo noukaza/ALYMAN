@@ -20,7 +20,7 @@ exports.get_like_by_id = (req, res, next) => {
 exports.poste_like = (req, res, next) => {
 
     User.find({
-        email: req.body.email
+        _id: req.body.user
     })
         .exec()
         .then(user => {
@@ -31,14 +31,14 @@ exports.poste_like = (req, res, next) => {
                     .exec()
                     .then(img => {
                         if (img.length >= 1) {
-                            const image = new Image({
-                                    _id: req.body.id_like,
-                                    id_image: req.body.id_image,
-                                    id_user: req.body.id_user,
+                            const like = new Like({
+                                    _id: mongoose.Types.ObjectId(),
+                                    user: req.body.user,
+                                    image: req.body.image,
                                     create_at: req.body.create_at,
                                     update_at:req.body.update_at
                                 })
-                            image
+                            like
                                 .save()
                                 .then(data => {
                                     res.status(201).json(data)
