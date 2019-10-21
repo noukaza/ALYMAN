@@ -18,6 +18,7 @@ const userController = require("../controllers/users");
  *
  * /users:
  *   post:
+ *     summary: "Create user"
  *     description: Creates a user
  *     produces:
  *       - application/json
@@ -34,8 +35,27 @@ const userController = require("../controllers/users");
  *         description: users
  *         schema:
  *           $ref: '#/definitions/User'
+ * /user/{id}:
+ *   delete:
+ *      summary: "Delete user"
+ *      description: "This can only be done by the logged in user."
+ *      operationId: "deleteUser"
+ *      produces:
+ *            - "application/xml"
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            400:
+ *               description: "Invalid id supplied"
+ *            404:
+ *               description: "User not found"
  */
 router.post("/", upload.single("profileImage"), userController.create_user);
+
 
 router.delete('/:id', userController.delets_user)
 
