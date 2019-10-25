@@ -28,8 +28,25 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *         description: Like
  *         schema:
  *           $ref: '#/definitions/Like'
+ * /Like/{id}:
+ *   delete:
+ *      summary: "Delete like"
+ *      description: "delete like"
+ *      operationId: "deleteLike"
+ *      produces:
+ *            - "application/xml"
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            400:
+ *               description: "Invalid id supplied"
+ *            200:
+ *               description:"successful"
  */
-/* POST method */
 router.post("/", likesController.poste_like);
 
 router.delete("/:id", likesController.delete_like);
