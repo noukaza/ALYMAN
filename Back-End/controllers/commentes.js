@@ -7,6 +7,7 @@ const User = require("../models/user");
 const Image = require("../models/image");
 
 exports.get_all_comments = (req, res, next) => {
+    //TODO : remove this route 
     Commentes
     .find()
     .select("_id image user comment create_at update_at")
@@ -19,13 +20,13 @@ exports.get_all_comments = (req, res, next) => {
 
 exports.post_comment = (req, res, next) => {
     User.find({
-        email: req.body.email
+        email: req.body.email  //TODO: get user id from token 
     })
         .exec()
         .then(user => {
             if (user.length >= 1) {
                 Image.find({
-                    image: req.body.image
+                    image: req.body.image 
                 })
                     .exec()
                     .then(img => {
@@ -33,7 +34,7 @@ exports.post_comment = (req, res, next) => {
                             const commente = new Commente({
                                     _id: mongoose.Types.ObjectId(),
                                     image: req.body.image,
-                                    user: req.body.user,
+                                    user: req.body.user, // TODO : get user id from tkone
                                     comment: req.body.comment,
                                     create_at: req.body.create_at,
                                     update_at:req.body.update_at
@@ -41,7 +42,7 @@ exports.post_comment = (req, res, next) => {
                             commente
                                 .save()
                                 .then(data => {
-                                    res.status(201).json(data)
+                                    res.status(201).json(data) // TODO : serlaize new data 
                                 })
                                 .catch(err => {
                                     res.status(500).json({
@@ -50,7 +51,7 @@ exports.post_comment = (req, res, next) => {
                                 })                     
                                } else {
                             res.status(409).json({
-                                message: "l'image n'existe pas"
+                                message: "l'image n'existe pas" 
                             })
                         }
                     })
@@ -74,6 +75,7 @@ exports.post_comment = (req, res, next) => {
 }
 
 exports.delete_comment = (req, res, next) => {
+    //TODO : verify that the user is the owner of the pic using the token
     Commente.remove({ _id: req.params.id })
     .exec()
     .then(result => {
