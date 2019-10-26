@@ -28,6 +28,24 @@ router.get("/", followersController.get_all_followers);
  *         description: Follow
  *         schema:
  *           $ref: '#/definitions/Follower'
+ * /follower/{id}:
+ *   delete:
+ *      summary: "Delete follower"
+ *      description: "delete follower"
+ *      operationId: "deletefollower"
+ *      produces:
+ *            - "application/xml"
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            400:
+ *               description: "Invalid id supplied"
+ *            404:
+ *               description: "follower not found"
  */
 router.post("/", followersController.create_follower);
 
