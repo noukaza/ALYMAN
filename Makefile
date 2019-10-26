@@ -14,7 +14,7 @@ install-front:  ## install dependencies for the frontend app
 run-front:  ## run front end app in dev env
 	cd Front-End; NUXT_PORT=$(PORTFRONT) npm run dev
 
-run-app: install-back install-front run-back  ## install and run back and front app
+run-app: install-back install-front run-back run-front  ## install and run back and front app
 
 CreateUploadFolder: ## init upload Folders
 	mkdir -p uploads/profile_images
