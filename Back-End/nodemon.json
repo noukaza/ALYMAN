@@ -1,11 +1,12 @@
 {
     "env": {
-        "MONGODB_USER" : "",
-        "MONGODB_PASSWORD" : "",
-        "MONGODB_HOST" : "localhost",
-        "MONGODB_PORT" : "27017",
-        "MONGODB_DATA" : "dbname",
-        "JWT_KEY"   :"KEY",
+        "MONGODB_USER": "mohand",
+        "MONGODB_PASSWORD": "RN7uRBjxLwRl7I4p",
+        "MONGODB_PROTOCOL" : "mongodb+srv",
+        "MONGODB_HOST": "cluster0-hlbkz.mongodb.net",
+        "MONGODB_PORT": "",
+        "MONGODB_DATA": "test?retryWrites=true&w=majority",
+        "JWT_KEY": "KEY",
         "PORT": "3000"
     }
 }
