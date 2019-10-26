@@ -14,7 +14,8 @@ router.get("/", commentsConttrollers.get_all_comments);
  *   post:
  *     tags:
  *       - "comments"
- *     description: Creates a comment
+ *     summary: " Create comments"
+ *     description: "Creates comment"
  *     produces:
  *       - application/json
  *     parameters:
@@ -38,7 +39,7 @@ router.post("/", commentsConttrollers.post_comment);
  * /comments/{id}:
  *   delete:
  *      tags:
- *       - "comments"
+ *         - "comments"
  *      summary: "Delete comments"
  *      description: "delete comments"
  *      operationId: "deleteComment"
@@ -65,28 +66,28 @@ router.delete("/:id", commentsConttrollers.delete_comment);
  * /comments/{id}:
  *   put:
  *      tags:
- *       - "comments"
- *   summary: "Update a comment"
- *   description: ""
- *   operationId: "updateComment"
- *   consumes:
- *            - "application/json"
- *   produces:
- *            - "application/json"
- *   parameters:
- *            - in: "body"
- *              name: "body"
- *              description: "Put a comment"
- *              required: true
- *              schema:
- *                    $ref: "#/definitions/Comments"
- * responses:
- *       200:
- *          description: "successful update "
- *       401:
- *          description: "Put failed"
- *       405:
- *          description: "error server"
+ *         - "comments"
+ *      summary: "Update comment"
+ *      description: "Update comment"
+ *      operationId: "updateComment"
+ *      consumes:
+ *              - "application/json"
+ *      produces:
+ *              - "application/json"
+ *      parameters:
+ *              - in: "body"
+ *                name: "body"
+ *                description: "Put a comment"
+ *                required: true
+ *                schema:
+ *                     $ref: "#/definitions/Comments"
+ *      responses:
+ *            200:
+ *               description: "successful deletion"
+ *            401:
+ *               description: " deletion failed"
+ *            500:
+ *               description: "error server"
 */
 /*Update method */
 router.put("/:id", commentsConttrollers.update_comment);

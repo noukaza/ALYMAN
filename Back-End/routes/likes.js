@@ -12,7 +12,11 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *
  * /Like:
  *   post:
- *     description:  Like
+ *     tags:
+ *         - "Like"
+ *     summary: "Create like"
+ *     description: "Create like"
+ *     operationId: "createLike"
  *     produces:
  *       - application/json
  *     parameters:
@@ -28,13 +32,20 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *         description: Like
  *         schema:
  *           $ref: '#/definitions/Like'
+ *
+ */
+ router.post("/", likesController.poste_like);
+/**
+ * @swagger
+ *
  * /Like/{id}:
  *   delete:
+ *      tags:
+ *         - "Like"
  *      summary: "Delete like"
  *      description: "delete like"
  *      operationId: "deleteLike"
  *      produces:
- *            - "application/xml"
  *            - "application/json"
  *      parameters:
  *      - name: "id"
@@ -42,12 +53,13 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *        required: true
  *        type: "string"
  *      responses:
- *            400:
- *               description: "Invalid id supplied"
  *            200:
- *               description:"successful"
+ *               description: "successful deletion"
+ *            401:
+ *               description: " deletion failed"
+ *            500:
+ *               description: "error server"
  */
-router.post("/", likesController.poste_like);
 
 router.delete("/:id", likesController.delete_like);
 
