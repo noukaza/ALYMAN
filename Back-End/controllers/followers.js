@@ -69,7 +69,7 @@ exports.create_follower = (req, res, next) => {
 }
 
 exports.delete_follower = (req, res, next) => {
-     //TODO : verify that the user is the follower or following in this cas
+     //TODO : verify that the user is the follower or following in this case
     Follower.remove({ _id: req.params.id })
     .exec()
     .then(result => {
