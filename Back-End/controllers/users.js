@@ -124,3 +124,18 @@ exports.get_all_user = (req, res, next) => {
         }).catch(err => console.log(err))
 
 }
+
+exports.get_user_by_id = (req, res, next) => {
+    User
+        .find({ _id: req.params.id })
+        .select("_id firstName lastName profileImage bio email")
+        .exec()
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.json(err)
+          //   console.log(err)
+        })
+
+}
