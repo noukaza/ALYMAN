@@ -81,7 +81,7 @@ router.post("/", upload.single("profileImage"), userController.create_user);
 
 router.delete('/:id', userController.delets_user)
 
-router.get("/login", userController.login_user)
+router.post("/login", userController.login_user)
 
 router.get('/', userController.get_all_user)
 
