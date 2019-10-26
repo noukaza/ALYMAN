@@ -17,6 +17,8 @@ const userController = require("../controllers/users");
  * @swagger
  * /user:
  *   post:
+ *     tags:
+ *       - "user"
  *     summary: "Create user"
  *     description: Creates a user
  *     produces:
@@ -34,8 +36,15 @@ const userController = require("../controllers/users");
  *         description: users
  *         schema:
  *           $ref: '#/definitions/User'
+ */
+router.post("/", upload.single("profileImage"), userController.create_user);
+
+/**
+ * @swagger
  * /user/{id}:
  *   delete:
+ *      tags:
+ *       - "user"
  *      summary: "Delete user"
  *      description: "This can only be done by the logged in user."
  *      operationId: "deleteUser"
@@ -52,8 +61,16 @@ const userController = require("../controllers/users");
  *               description: "Invalid id supplied"
  *            404:
  *               description: "User not found"
+ */
+router.delete('/:id', userController.delets_user)
+
+
+/**
+ * @swagger
  * /user/{login}:
  *   get:
+ *      tags:
+ *       - "user"
  *      summary: "get user"
  *      operationId: "getUser"
  *      produces:
@@ -76,11 +93,6 @@ const userController = require("../controllers/users");
  *            404:
  *               description: "User not found"
  */
-router.post("/", upload.single("profileImage"), userController.create_user);
-
-
-router.delete('/:id', userController.delets_user)
-
 router.post("/login", userController.login_user)
 
 router.get('/', userController.get_all_user)

@@ -1,6 +1,9 @@
 /**
  * @swagger
- *
+ * tags:
+ *    - name: "user"
+ *      description: "Everything about your user"
+ *     
  * definitions:
  *   User:
  *     type: object
