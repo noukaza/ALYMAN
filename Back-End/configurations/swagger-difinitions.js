@@ -5,7 +5,7 @@
  *      description: "Everything about your user"
  *     
  * definitions:
- *   User:
+ *   user:
  *     type: object
  *     required:
  *       - id
@@ -30,6 +30,18 @@
  *       createAt:
  *         type: string
  *       updateAt:
+ *         type: string
+ *       password:
+ *         type: string
+ *         format: password
+ *   userLogin:
+ *     type: object
+ *     required:
+ *       - email
+ *       - password
+ *     properties:
+
+ *       email:
  *         type: string
  *       password:
  *         type: string

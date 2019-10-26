@@ -15,7 +15,7 @@ const userController = require("../controllers/users");
 
 /**
  * @swagger
- * /user:
+ * /users:
  *   post:
  *     tags:
  *       - "user"
@@ -41,7 +41,7 @@ router.post("/", upload.single("profileImage"), userController.create_user);
 
 /**
  * @swagger
- * /user/{id}:
+ * /users/{id}:
  *   delete:
  *      tags:
  *       - "user"
@@ -67,31 +67,31 @@ router.delete('/:id', userController.delets_user)
 
 /**
  * @swagger
- * /user/{login}:
- *   get:
+ * /users/login:
+ *   post:
  *      tags:
  *       - "user"
  *      summary: "get user"
  *      operationId: "getUser"
  *      produces:
- *            - "application/xml"
+ *            - "application/json"
+ *      consumes:
  *            - "application/json"
  *      parameters:
- *      - name: "username"
- *        in: "query"
+ *      - in: "body"
+ *        name: "body"
  *        required: true
- *        type: "string"
- *      - name: "password"
- *        in: "query"
- *        required: true
- *        type: string
+ *        schema:
+ *          $ref: "#/definitions/userLogin"
  *      responses:
  *            200:
- *               description: "successful operation"
+ *               description: "Auth successful"
  *               schema:
  *                 type: "string"
- *            404:
- *               description: "User not found"
+ *            401:
+ *               description: "Auth failed" 
+ *            500:
+ *               description: "error"
  */
 router.post("/login", userController.login_user)
 
