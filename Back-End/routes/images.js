@@ -28,6 +28,26 @@ router.get("/", imagesController.get_all_images);
  *         description: Image
  *         schema:
  *           $ref: '#/definitions/Image'
+ *
+ * /Image/{id}:
+ *   delete:
+ *      summary: "Delete Image"
+ *      description: "Image"
+ *      operationId: "deleteImage"
+ *      produces:
+ *            - "application/xml"
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            400:
+ *               description: "Invalid id supplied"
+ *            404:
+ *               description: "Image not found"
+ *
  */
 router.post("/", imagesController.create_image);
 
