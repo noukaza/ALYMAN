@@ -28,6 +28,24 @@ router.get("/", commentsConttrollers.get_all_comments);
  *         description: Comments
  *         schema:
  *           $ref: '#/definitions/Comments'
+ * /comments/{id}:
+ *   delete:
+ *      summary: "Delete comments"
+ *      description: "delete comments"
+ *      operationId: "deleteComment"
+ *      produces:
+ *            - "application/xml"
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            400:
+ *               description: "Invalid id supplied"
+ *            404:
+ *               description: "Comment not found"
  */
 router.post("/", commentsConttrollers.post_comment);
 
