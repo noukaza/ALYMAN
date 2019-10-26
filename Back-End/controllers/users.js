@@ -2,24 +2,22 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const response = require("../configurations/responsesTempalte");
 const User = require("../models/user");
 
 exports.create_user = (req, res, next) => {
     User.find({
-        email: req.body.email
-    })
+            email: req.body.email
+        })
         .exec()
         .then(user => {
             if (user.length >= 1) {
-                res.status(409).json({
-                    message: "Mail exists"
-                })
+               
+                response(res, 409, false, "Mail exists")
             } else {
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
-                        res.status(500).json({
-                            error: "failed to creat user"
-                        })
+                        response(res, 500, false, "error", err)
                     } else {
                         const user = new User({
                             _id: mongoose.Types.ObjectId(),
@@ -33,73 +31,61 @@ exports.create_user = (req, res, next) => {
                         user
                             .save()
                             .then(data => {
-                                res.status(201).json(data)
+                                response(res, 201, true, "successful operation", data)
                             })
                             .catch(err => {
-                                res.status(500).json({
-                                    error: err
-                                })
+                                response(res, 500, false, "error", err)
                             })
                     }
                 })
             }
         })
         .catch(err => {
-            res.status(500).json({
-                error: err
-            })
+            response(res, 500, false, "error", err)
         });
-
 
 }
 
 exports.delets_user = (req, res, next) => {
-    User.remove({ _id: req.params.id })
+    User.remove({
+            _id: req.params.id
+        })
         .exec()
         .then(result => {
-            res.status(200).json({
-                message: "Done !"
-            });
+            response(res, 200, true, "Done ! has been deleted  ")
         })
         .catch(err => {
-            res.status(500).json({
-                error: errr
-            });
+            response(res, 500, false, "user notfond ", err)
         })
 }
 
 
 exports.login_user = (req, res, next) => {
-    User.find({ email: req.body.email }).exec()
+    User.find({
+            email: req.body.email
+        }).exec()
         .then(user => {
             if (user.length < 1) {
-                res.status(401).json({
-                    message: 'Auth failed'
-                })
+                response(res, 401, false, "Auth failed", err)
             } else {
                 bcrypt.compare(req.body.password, user[0].password, (err, result) => {
                     if (err) {
-                        res.status(401).json({
-                            message: 'Auth failed'
-                        })
+                        response(res, 401, false, "Auth failed", err)
                     }
                     if (result) {
                         const token = jwt.sign({
-                            email: user[0].email,
-                            _id: user[0]._id
-                        },
-                            process.env.JWT_KEY,
-                            {
+                                email: user[0].email,
+                                _id: user[0]._id
+                            },
+                            process.env.JWT_KEY, {
                                 expiresIn: "1 days"
                             })
-                        res.status(200).json({
-                            message: 'Auth successful',
-                            token: token
+
+                        response(res, 200, true, "Auth successful", {
+                            token
                         })
                     } else {
-                        res.status(401).json({
-                            message: 'Auth failed'
-                        })
+                        response(res, 401, false, "Auth failed", err)
                     }
 
                 })
@@ -107,9 +93,7 @@ exports.login_user = (req, res, next) => {
 
         })
         .catch(err => {
-            res.status(500).json({
-                error: err
-            });
+            response(res, 500, false, "Auth failed", err)
         })
 }
 
@@ -117,10 +101,27 @@ exports.get_all_user = (req, res, next) => {
     User
         .find()
         .select("_id firstName lastName profileImage bio email")
-        //.populate("images")
         .exec()
         .then(data => {
-            res.status(200).json(data)
-        }).catch(err => console.log(err))
+            response(res, 200, true, "successful operation", data)
+        }).catch(err => {
+            response(res, 404, false, "errr", err)
+        })
+
+}
+
+exports.get_user_by_id = (req, res, next) => {
+    User
+        .find({
+            _id: req.params.id
+        })
+        .select("_id firstName lastName profileImage bio email")
+        .exec()
+        .then(data => {
+            response(res, 200, true, "successful operation", data)
+        })
+        .catch(err => {
+            response(res, 404, false, "can't find user")
+        })
 
 }
