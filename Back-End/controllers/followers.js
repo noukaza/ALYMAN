@@ -4,6 +4,7 @@ const User = require("../models/user");
 const mongoose = require("mongoose");
 
 exports.get_all_followers = (req, res, next) => {
+    // TODO : remove this route
     Follower
     .find()
     .select("_id follower following create_at")
@@ -15,9 +16,8 @@ exports.get_all_followers = (req, res, next) => {
 }
 
 exports.create_follower = (req, res, next) => {
-   // console.log(req.body.follower)
     User.find({
-        _id: req.body.follower
+        _id: req.body.follower // TODO GET user id from token 
     })
         .exec()
         .then(user => {
@@ -69,6 +69,7 @@ exports.create_follower = (req, res, next) => {
 }
 
 exports.delete_follower = (req, res, next) => {
+     //TODO : verify that the user is the follower or following in this cas
     Follower.remove({ _id: req.params.id })
     .exec()
     .then(result => {
