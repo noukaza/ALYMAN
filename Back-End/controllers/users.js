@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
@@ -63,7 +63,7 @@ exports.delets_user = (req, res, next) => {
         })
         .catch(err => {
             res.status(500).json({
-                error: err
+                error: errr
             });
         })
 }
