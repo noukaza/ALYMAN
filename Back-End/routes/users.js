@@ -54,7 +54,7 @@ const userController = require("../controllers/users");
  *       200:
  *         description: users
  *         schema:
- *           $ref: '#/definitions/User'
+ *           $ref: '#/definitions/user'
  */
 router.post("/", upload.single("profileImage"), userController.create_user);
 
