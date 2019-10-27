@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const commentsConttrollers = require("../controllers/commentes");
-
-/* GET method */
-router.get("/", commentsConttrollers.get_all_comments);
-
 /* POST method */
 /**
  * @swagger
@@ -82,7 +78,7 @@ router.delete("/:id", commentsConttrollers.delete_comment);
  *            200:
  *               description: "successful deletion"
  *            401:
- *               description: " deletion failed"
+ *               description: " operation failed"
  *            500:
  *               description: "error server"
 */

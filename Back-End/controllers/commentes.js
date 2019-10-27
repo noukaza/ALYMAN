@@ -6,17 +6,6 @@ const Commente = require("../models/like");
 const User = require("../models/user");
 const Image = require("../models/image");
 
-exports.get_all_comments = (req, res, next) => {
-    //TODO : remove this route 
-    Commentes
-    .find()
-    .select("_id image user comment create_at update_at")
-    //.populate("images")
-    .exec()
-    .then(data => {
-        res.status(200).json(data)
-    }).catch(err => console.log(err))
-}
 
 exports.post_comment = (req, res, next) => {
     User.find({
