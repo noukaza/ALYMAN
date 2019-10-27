@@ -1,10 +1,7 @@
-module.exports = (res, status, success, message, data = null) => {
-    let tmp = data === null ? [] : data;
-    data = {
-        success: success,
-        message: message,
-        data: tmp
-    }
-
-    return res.status(status).json(data)
+module.exports = (res, status = 500, success = false, message = "error", data = null) => {
+    return res.status(status).json({
+        success,
+        message,
+        data: data === null ? [] : data
+    });
 }
