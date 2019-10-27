@@ -47,7 +47,8 @@ exports.create_user = (req, res, next) => {
 }
 
 exports.delets_user = (req, res, next) => {
-    User.remove({
+    if(req.userData._id === req.params.id){
+        User.remove({
             _id: req.params.id
         })
         .exec()
@@ -57,6 +58,10 @@ exports.delets_user = (req, res, next) => {
         .catch(err => {
             response(res, 500, false, "user notfond ", err)
         })
+    }else{
+        response(res, 401, false, "you are not the user ")
+    }
+  
 }
 
 
