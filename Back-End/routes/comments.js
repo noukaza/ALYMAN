@@ -18,14 +18,13 @@ router.get("/", commentsConttrollers.get_all_comments);
  *     description: "Creates comment"
  *     produces:
  *       - application/json
+ *     consumes:
+ *       - multipart/form-data
  *     parameters:
- *       - id: comment
- *         description: comment
- *         in:  body
- *         required: true
+ *       - in: formData
+ *         name: comment
  *         type: string
- *         schema:
- *           $ref: '#/definitions/Comments'
+ *         description: first name.
  *     responses:
  *       200:
  *         description: Comments
@@ -39,9 +38,9 @@ router.post("/", commentsConttrollers.post_comment);
  * /comments/{id}:
  *   delete:
  *      tags:
- *         - "comments"
- *      summary: "Delete comments"
- *      description: "delete comments"
+ *       - "comments"
+ *      summary: "Delete user"
+ *      description: "This can only be done by the logged in user."
  *      operationId: "deleteComment"
  *      produces:
  *            - "application/json"
@@ -51,12 +50,10 @@ router.post("/", commentsConttrollers.post_comment);
  *        required: true
  *        type: "string"
  *      responses:
- *            200:
- *               description: "successful deletion"
- *            401:
- *               description: " deletion failed"
- *            500:
- *               description: "error server"
+ *            400:
+ *               description: "Invalid id supplied"
+ *            404:
+ *               description: "Comment not found"
  */
 /* DELETE method*/
 router.delete("/:id", commentsConttrollers.delete_comment);
