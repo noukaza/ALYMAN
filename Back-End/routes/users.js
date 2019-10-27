@@ -63,7 +63,7 @@ router.post("/", upload.single("profileImage"), userController.create_user);
  * /users/{id}:
  *   delete:
  *      security:
- *         - Bearer: ''
+ *         - Bearer: []
  *      tags:
  *       - "user"
  *      summary: "Delete user"
