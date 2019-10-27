@@ -1,9 +1,17 @@
 /**
  * @swagger
+ * openapi: 3.0.0
+ * securityDefinitions:
+ *      Bearer:
+ *          name: Authorization
+ *          description : "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\""
+ *          type: apiKey
+ *          scheme: bearer
+ *          in: header
+ *          bearerFormat: JWT 
  * tags:
  *    - name: "user"
  *      description: "Everything about your user"
- *     
  * definitions:
  *   user:
  *     type: object

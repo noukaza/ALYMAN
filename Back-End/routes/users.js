@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const chekauth = require("../middleware/check_auth")
 /**
  * Upload middleware
  */
@@ -62,6 +62,8 @@ router.post("/", upload.single("profileImage"), userController.create_user);
  * @swagger
  * /users/{id}:
  *   delete:
+ *      security:
+ *         - Bearer: ''
  *      tags:
  *       - "user"
  *      summary: "Delete user"
@@ -80,7 +82,7 @@ router.post("/", upload.single("profileImage"), userController.create_user);
  *            404:
  *               description: "User not found"
  */
-router.delete('/:id', userController.delets_user)
+router.delete('/:id',chekauth, userController.delets_user)
 
 /**
  * @swagger
