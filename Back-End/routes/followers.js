@@ -14,9 +14,9 @@ router.get("/", followersController.get_all_followers);
  *
  * /follower:
  *   post:
- *      security:
+ *     security:
  *         - Bearer: []
- *      tags : 
+ *     tags: 
  *         - "follower"
  *     summary: "Create follower"
  *     description: Creates a follower
