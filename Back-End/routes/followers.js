@@ -14,29 +14,46 @@ router.get("/", followersController.get_all_followers);
  *
  * /follower:
  *   post:
- *     description: New follow
+ *      security:
+ *         - Bearer: []
+ *      tags : 
+ *         - "follower"
+ *     summary: "Create follower"
+ *     description: Creates a follower
+ *     consumes: 
+ *        -multipart/form-data
  *     produces:
  *       - application/json
  *     parameters:
- *       - id: follow
- *         description: follow
- *         in:  body
- *         required: true
- *         type: string
- *         schema:
- *           $ref: '#/definitions/Follower'
+ *       - in: formData
+ *         name: follower
+ *         type: mongoose.Schema.Types.ObjectId
+ *         description: id follower.
+ *       - in: formData
+ *         name: following
+ *         type: mongoose.Schema.Types.ObjectId
+ *         description: id following.
+ * 
+ * 
  *     responses:
  *       200:
  *         description: Follow
  *         schema:
  *           $ref: '#/definitions/Follower'
+ */
+ router.post("/", check_auth,  followersController.create_follower);
+ /** 
+ * @swagger
  * /follower/{id}:
  *   delete:
+ *      security:
+ *          - Bearer: []
+ *      tags:
+ *        - "follower"
  *      summary: "Delete follower"
- *      description: "delete follower"
+ *      description: "This can only be done by the follower or the following concerned"
  *      operationId: "deletefollower"
  *      produces:
- *            - "application/xml"
  *            - "application/json"
  *      parameters:
  *      - name: "id"
@@ -49,7 +66,6 @@ router.get("/", followersController.get_all_followers);
  *            404:
  *               description: "follower not found"
  */
-router.post("/", check_auth,  followersController.create_follower);
 
 router.delete("/:id", check_auth, followersController.delete_follower);
 
