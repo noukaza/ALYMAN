@@ -1,23 +1,85 @@
+
+const Follower = require("../models/follower");
+const User = require("../models/user");
+const mongoose = require("mongoose");
+
 exports.get_all_followers = (req, res, next) => {
-    res.status(200).json({
-        message: "hi"
-    })
+    // TODO : remove this route
+    Follower
+    .find()
+    .select("_id follower following create_at")
+    //.populate("images")
+    .exec()
+    .then(data => {
+        res.status(200).json(data)
+    }).catch(err => console.log(err))
 }
 
 exports.create_follower = (req, res, next) => {
-    const follower = {
-        id_follow: req.body.id_follow,
-        id_user_from: req.body.id_user_from,
-        id_user_to: req.body.id_user_to,
-        create_at: req.body.create_at
-    };
-    res.status(201).json(follower)
+    User.find({
+        _id: req.body.follower // TODO GET user id from token 
+    })
+        .exec()
+        .then(user => {
+            if (user.length >= 1) {
+                User.find({
+                    _id: req.body.follower
+                })
+                    .exec()
+                    .then(user => {
+                        if (user.length >= 1) {
+                            const follower = new Follower({
+                                    _id: mongoose.Types.ObjectId(),
+                                    follower: req.body.follower,
+                                    following: req.body.following,
+                                    create_at: req.body.create_at
+                                })
+                            follower
+                                .save()
+                                .then(data => {
+                                    res.status(201).json(data)
+                                })
+                                .catch(err => {
+                                    res.status(500).json({
+                                        error: err
+                                    })
+                                })                        } else {
+                            res.status(409).json({
+                                message: "following n'existe pas"
+                            })
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            error: err
+                        })
+                    });
+            } else {
+                res.status(409).json({
+                    message: "follower n'existe pas"
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            })
+        });
+   
 }
 
 exports.delete_follower = (req, res, next) => {
-    const id = req.params.id
-    const follower = {
-        _id: id
-    };
-    res.status(202).json(follower)
+     //TODO : verify that the user is the follower or following in this case
+    Follower.remove({ _id: req.params.id })
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: "Done !"
+        });
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    })
 }

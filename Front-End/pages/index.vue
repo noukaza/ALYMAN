@@ -41,7 +41,7 @@ export default {
   methods: {
     login(e){
       e.preventDefault();
-      this.$axios.post("http://localhost:3001/users/login",
+      this.$axios.post("http://localhost:3000/users/login",
       {
         email : this.email,
         password :  this.password

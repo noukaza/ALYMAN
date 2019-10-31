@@ -14,16 +14,9 @@ const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 
-const authenticationMongo = "";
-if (process.env.MONGODB_USER !== "") {
-    authenticationMongo = process.env.MONGODB_USER + ":" + process.env.MONGODB_PASSWORD + "@";
-}
-mongoose.connect(
-    "mongodb://" + authenticationMongo + process.env.MONGODB_HOST + ":" + process.env.MONGODB_PORT + "/" + process.env.MONGODB_DATA,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+const configMongo = require('./configurations/mognodb')
+
+mongoose.connect(configMongo.mongoUri, configMongo.option);
 
 
 const swaggerConfig = {
@@ -37,7 +30,7 @@ const swaggerConfig = {
             servers: ["http://localhost:3001"]
         }
     },
-    apis: ["./routes/*.js"]
+    apis: ["./routes/*.js","./configurations/*.js"]
 }
 const swagerDocs = swaggerJsDoc(swaggerConfig)
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swagerDocs));
