@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: npm start
+    volumes:
+      - ./Back-End/:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "80:3000"
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+  mongo:
+    image: mongo
+    networks:
+      - app-network
+networks:
+  app-network:
