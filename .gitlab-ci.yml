@@ -1,19 +1,23 @@
-
 image: node:latest
 
 services:
   - mongo:latest
 
+stages:
+  - build
+  - test
+
 cache:
   paths:
     - node_modules/
 
-test_async:
+build:
+  stage: build
   script:
-    - npm install
-    #- node ./specs/start.js ./specs/async.spec.js
+    - npm install 
+tets:
+  stage: test
+  script:
+    - /bin/echo "do test"
 
-test_db:
-  script:
-    - npm install
-    #- node ./specs/start.js ./specs/db-postgres.spec.js
+
