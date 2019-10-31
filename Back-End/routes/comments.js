@@ -2,39 +2,43 @@ const express = require('express');
 const router = express.Router();
 
 const commentsConttrollers = require("../controllers/commentes");
-
-/* GET method */
-router.get("/", commentsConttrollers.get_all_comments);
-
 /* POST method */
 /**
  * @swagger
  *
  * /comments:
  *   post:
- *     description: Creates a comment
+ *     tags:
+ *       - "comments"
+ *     summary: " Create comments"
+ *     description: "Creates comment"
  *     produces:
  *       - application/json
+ *     consumes:
+ *       - multipart/form-data
  *     parameters:
- *       - id: comment
- *         description: comment
- *         in:  body
- *         required: true
+ *       - in: formData
+ *         name: comment
  *         type: string
- *         schema:
- *           $ref: '#/definitions/Comments'
+ *         description: first name.
  *     responses:
  *       200:
  *         description: Comments
  *         schema:
  *           $ref: '#/definitions/Comments'
+ */
+router.post("/", commentsConttrollers.post_comment);
+
+/**
+ * @swagger
  * /comments/{id}:
  *   delete:
- *      summary: "Delete comments"
- *      description: "delete comments"
+ *      tags:
+ *       - "comments"
+ *      summary: "Delete user"
+ *      description: "This can only be done by the logged in user."
  *      operationId: "deleteComment"
  *      produces:
- *            - "application/xml"
  *            - "application/json"
  *      parameters:
  *      - name: "id"
@@ -47,11 +51,37 @@ router.get("/", commentsConttrollers.get_all_comments);
  *            404:
  *               description: "Comment not found"
  */
-router.post("/", commentsConttrollers.post_comment);
-
 /* DELETE method*/
 router.delete("/:id", commentsConttrollers.delete_comment);
 
+/**
+ * @swagger
+ * /comments/{id}:
+ *   put:
+ *      tags:
+ *         - "comments"
+ *      summary: "Update comment"
+ *      description: "Update comment"
+ *      operationId: "updateComment"
+ *      consumes:
+ *              - "application/json"
+ *      produces:
+ *              - "application/json"
+ *      parameters:
+ *              - in: "body"
+ *                name: "body"
+ *                description: "Put a comment"
+ *                required: true
+ *                schema:
+ *                     $ref: "#/definitions/Comments"
+ *      responses:
+ *            200:
+ *               description: "successful deletion"
+ *            401:
+ *               description: " operation failed"
+ *            500:
+ *               description: "error server"
+*/
 /*Update method */
 router.put("/:id", commentsConttrollers.update_comment);
 

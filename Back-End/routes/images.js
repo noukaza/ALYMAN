@@ -12,7 +12,8 @@ router.get("/", imagesController.get_all_images);
  *
  * /Image:
  *   post:
- *     description: New Imge
+ *     tags:
+ *         - "Image"
  *     produces:
  *       - application/json
  *     parameters:
@@ -28,9 +29,14 @@ router.get("/", imagesController.get_all_images);
  *         description: Image
  *         schema:
  *           $ref: '#/definitions/Image'
- *
+ */
+router.post("/", imagesController.create_image);
+/**
+ * @swagger
  * /Image/{id}:
  *   delete:
+ *      tags:
+ *         - "Image"
  *      summary: "Delete Image"
  *      description: "Image"
  *      operationId: "deleteImage"
@@ -49,11 +55,36 @@ router.get("/", imagesController.get_all_images);
  *               description: "Image not found"
  *
  */
-router.post("/", imagesController.create_image);
-
 /* DELETE method */
 router.delete("/:id", imagesController.delete_image);
-
+/**
+ * @swagger
+ * /Image/{id}:
+ *   put:
+ *      tags:
+ *         - "Image"
+ *      summary: "Update Image"
+ *      description: "Update Image"
+ *      operationId: "updateImage"
+ *      consumes:
+ *              - "application/json"
+ *      produces:
+ *              - "application/json"
+ *      parameters:
+ *              - in: "body"
+ *                name: "body"
+ *                description: "Put a Image"
+ *                required: true
+ *                schema:
+ *                     $ref: "#/definitions/Image"
+ *      responses:
+ *            200:
+ *               description: "successful deletion"
+ *            401:
+ *               description: " operation failed"
+ *            500:
+ *               description: "error server"
+ */
 /* UPDATE method */
 router.put("/:id", imagesController.update_image);
 
