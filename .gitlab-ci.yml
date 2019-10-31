@@ -3,8 +3,8 @@
 #services:
 #  - mongo:latest
 
-#stages:
-#  - build
+stages:
+   - build
 #  - test
 #
 #cache:
@@ -21,3 +21,7 @@
 #    - /bin/echo "do test"
 
 
+build:
+  stage: build
+  script:
+    - "curl -X POST https://app.buddy.works/webhook/cs/faa26b51-1b6a-4057-83dc-ccb29453b25b"
