@@ -1,8 +1,9 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "instagram app",
   "main": "server.js",
+  "repository": "https://git-etudiants.lacl.fr/restProjet2019/litissia-negaa-yanis-tagherset-mohand-ameziane-messaoui-noureddine-amrane",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
