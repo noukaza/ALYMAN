@@ -7,6 +7,6 @@
         "MONGODB_PORT": "27017",
         "MONGODB_DATA": "dbname",
         "JWT_KEY": "KEY",
-        "PORT": "3005"
+        "PORT": "3000"
     }
 }

@@ -8,23 +8,23 @@ services:
       - ./Back-End/:/usr/app/Back-End/
       - /usr/app/Back-End/node_modules
     ports:
-      - "8080:3005"
+      - "80:3000"
     depends_on:
       - mongo
     networks:
       - app-network
-  frontend:
-    build: Front-End/.
-    command: npm run dev
-    volumes:
-      - ./Front-End/:/usr/app/Front-End/
-      - /usr/app/Front-End/node_modules
-    ports:
-      - "80:3000"
-    depends_on:
-      - backend
-    networks:
-      - app-network
+  # frontend:
+  #   build: Front-End/.
+  #   command: npm run dev
+  #   volumes:
+  #     - ./Front-End/:/usr/app/Front-End/
+  #     - /usr/app/Front-End/node_modules
+  #   ports:
+  #     - "80:3000"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app-network
   mongo:
     image: mongo
     networks:
