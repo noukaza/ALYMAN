@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const check_auth = require("../middleware/check_auth");
+
 
 const commentsConttrollers = require("../controllers/commentes");
 /* POST method */
@@ -83,6 +85,6 @@ router.delete("/:id", check_auth,commentsConttrollers.delete_comment);
  *               description: "error server"
 */
 /*Update method */
-router.put("/:id", commentsConttrollers.update_comment);
+router.put("/:id", check_auth, commentsConttrollers.update_comment);
 
 module.exports = router;

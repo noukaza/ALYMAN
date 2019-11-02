@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const Commente = require("../models/comment");
 const User = require("../models/user");
 const Image = require("../models/image");
+const response = require("../configurations/responsesTempalte");
 
 
 exports.post_comment = (req, res, next) => {
@@ -77,9 +78,28 @@ exports.delete_comment = (req, res, next) => {
 }
 
 exports.update_comment = (req, res, next) => {
-    const comment = {
-        id_comment: req.params.id,
-        comment: req.body.comment
-    };
-    res.status(201).json(comment)
+        Commente.find({
+            _id: req.body._id
+        })
+            .exec()
+            .then(comment => {
+                if (comment.length >= 1 && comment.user == req.userData._id ) {
+                    if(req.body.user)  comment.user = req.body.user
+                    if(req.body.image) comment.image = req.body.image
+                    if(req.body.comment) comment.comment = req.body.comment
+                    comment
+                        .save()
+                        .then(data => {
+                            response(res, 201, true, "successful operation", data)
+                        })
+                        .catch(err => {
+                            response(res, 500, false, "error", err)
+                        })                        }
+                         else {
+                            response(res, 409, false, "le commentaire n'existe pas ou l'utilisateur n'a pas le droit", err)
+                }
+            })
+            .catch(err => {
+                response(res, 500, false, "error", err)
+            });
 }
