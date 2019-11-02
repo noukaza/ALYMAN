@@ -12,8 +12,10 @@ exports.get_all_followers = (req, res, next) => {
     //.populate("images")
     .exec()
     .then(data => {
-        res.status(200).json(data)
-    }).catch(err => console.log(err))
+        response(res, 200, true, "successful operation", data)
+    }).catch(err =>{
+        response(res, 404, false, "error", err)
+    })
 }
 
 exports.create_follower = (req, res, next) => {
@@ -39,33 +41,24 @@ exports.create_follower = (req, res, next) => {
                             follower
                                 .save()
                                 .then(data => {
-                                    res.status(201).json(data)
+                                    response(res, 201, true, "successful operation", data)
                                 })
                                 .catch(err => {
-                                    res.status(500).json({
-                                        error: err
-                                    })
-                                })                        } else {
-                            res.status(409).json({
-                                message: "following n'existe pas"
-                            })
+                                    response(res, 500, false, "error", err)
+                                })                        }
+                                 else {
+                                    response(res, 409, false, "following n'existe pas", err)
                         }
                     })
                     .catch(err => {
-                        res.status(500).json({
-                            error: err
-                        })
+                        response(res, 500, false, "error", err)
                     });
             } else {
-                res.status(409).json({
-                    message: "follower n'existe pas"
-                })
+                response(res, 409, false, "follower n'existe pas", err)
             }
         })
         .catch(err => {
-            res.status(500).json({
-                error: err
-            })
+            response(res, 500, false, "error", err)
         });
    
 }
@@ -82,33 +75,15 @@ exports.delete_follower = (req, res, next) => {
             Follower.remove({ _id: req.params.id })
             .exec()
             .then(result => {
-            res.status(200).json({
-                message: "Done !"
-            });
+                response(res, 200, true, "Follower supprimer ")
     })
     .catch(err => {
-        res.status(500).json({
-            error: err
-        });
+        response(res, 500, false, "error", err)
     })
         } else {
-            res.status(409).json({
-                message: "following n'existe pas"
-            });
+            response(res, 409, false, "c'est pas le bon following", err)
         }
-    }).catch(err => console.log(err));
-
- 
-    /*Follower.remove({ _id: req.params.id })
-    .exec()
-    .then(result => {
-        res.status(200).json({
-            message: "Done !"
-        });
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err
-        });
-    })*/
+    }).catch(err =>{ 
+        response(res, 500, false, "error", err)
+    });
 }
