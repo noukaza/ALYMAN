@@ -18,9 +18,9 @@ exports.get_like_by_id = (req, res, next) => {
 }
 
 exports.poste_like = (req, res, next) => {
-
+    id = req.userData._id;
     User.find({
-        _id: req.body.user
+        _id: id
     })
         .exec()
         .then(user => {
@@ -33,7 +33,7 @@ exports.poste_like = (req, res, next) => {
                         if (img.length >= 1) {
                             const like = new Like({
                                     _id: mongoose.Types.ObjectId(),
-                                    user: req.body.user,
+                                    user: id,
                                     image: req.body.image,
                                     create_at: req.body.create_at,
                                     update_at:req.body.update_at
@@ -41,12 +41,10 @@ exports.poste_like = (req, res, next) => {
                             like
                                 .save()
                                 .then(data => {
-                                    res.status(201).json(data)
+                                    response(res, 201, true, "successful operation", data)
                                 })
                                 .catch(err => {
-                                    res.status(500).json({
-                                        error: err
-                                    })
+                                    response(res, 500, false, "error", err)
                                 })                        } else {
                             res.status(409).json({
                                 message: "l'image n'existe pas"
