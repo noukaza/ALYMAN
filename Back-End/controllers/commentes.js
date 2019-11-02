@@ -9,7 +9,7 @@ const Image = require("../models/image");
 
 exports.post_comment = (req, res, next) => {
     User.find({
-        email: req.body.email  //TODO: get user id from token 
+        _id: req.userData._id  
     })
         .exec()
         .then(user => {
@@ -23,7 +23,7 @@ exports.post_comment = (req, res, next) => {
                             const commente = new Commente({
                                     _id: mongoose.Types.ObjectId(),
                                     image: req.body.image,
-                                    user: req.body.user, // TODO : get user id from tkone
+                                    user: req.userData._id, 
                                     comment: req.body.comment,
                                     create_at: req.body.create_at,
                                     update_at:req.body.update_at
@@ -31,12 +31,10 @@ exports.post_comment = (req, res, next) => {
                             commente
                                 .save()
                                 .then(data => {
-                                    res.status(201).json(data) // TODO : serlaize new data 
+                                    response(res, 201, true, "successful operation", data) 
                                 })
                                 .catch(err => {
-                                    res.status(500).json({
-                                        error: err
-                                    })
+                                    response(res, 500, false, "error", err)
                                 })                     
                                } else {
                             res.status(409).json({
@@ -64,7 +62,6 @@ exports.post_comment = (req, res, next) => {
 }
 
 exports.delete_comment = (req, res, next) => {
-    //TODO : verify that the user is the owner of the pic using the token
     Commente
     .findById({ _id: req.params.id })
     .exec()
