@@ -17,7 +17,7 @@ exports.get_all_images = (req, res, next) => {
 exports.create_image = (req, res, next) => {
 
          User.find({
-                    _id: req.body.user
+                    _id: req.userData._id
                 })
                     .exec()
                     .then(user => {
