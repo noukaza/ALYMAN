@@ -9,7 +9,6 @@ exports.get_all_followers = (req, res, next) => {
     Follower
     .find()
     .select("_id follower following create_at")
-    //.populate("images")
     .exec()
     .then(data => {
         res.status(200).json(data)
@@ -19,7 +18,7 @@ exports.get_all_followers = (req, res, next) => {
 exports.create_follower = (req, res, next) => {
     id = req.userData._id;
     User.find({
-        _id: id // TODO GET user id from token 
+        _id: id 
     })
         .exec()
         .then(user => {
@@ -71,7 +70,7 @@ exports.create_follower = (req, res, next) => {
 }
 
 exports.delete_follower = (req, res, next) => {
-    //TODO : verify that the user is the follower or following in this case
+
     id = req.userData._id;
     console.log(req.params.id);
     Follower
@@ -98,17 +97,4 @@ exports.delete_follower = (req, res, next) => {
         }
     }).catch(err => console.log(err));
 
- 
-    /*Follower.remove({ _id: req.params.id })
-    .exec()
-    .then(result => {
-        res.status(200).json({
-            message: "Done !"
-        });
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err
-        });
-    })*/
 }
