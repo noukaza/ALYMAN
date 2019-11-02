@@ -23,7 +23,7 @@ exports.create_user = (req, res, next) => {
                             _id: mongoose.Types.ObjectId(),
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            profileImage:""/* req.file.path*/,
+                            profileImage: req.file.path,
                             bio: req.body.bio,
                             email: req.body.email,
                             password: hash
