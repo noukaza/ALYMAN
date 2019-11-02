@@ -13,8 +13,10 @@ exports.get_like_by_id = (req, res, next) => {
         //.populate("images")
         .exec()
         .then(data => {
-            res.status(200).json(data)
-        }).catch(err => console.log(err))
+            response(res, 200, true, "successful operation", data)
+        }).catch(err =>{
+            response(res, 404, false, "error", err)
+        })
 }
 
 exports.poste_like = (req, res, next) => {
@@ -51,18 +53,14 @@ exports.poste_like = (req, res, next) => {
                         }
                     })
                     .catch(err => {
-                        res.status(500).json({
-                            error: err
-                        })
+                        response(res, 500, false, "error", err)
                     });
             } else {
                 response(res, 409, false, "l'utilisateur n'existe pas", err)
             }
         })
         .catch(err => {
-            res.status(500).json({
-                error: err
-            })
+            response(res, 500, false, "error", err)
         });
     
 }
@@ -77,19 +75,15 @@ exports.delete_like = (req, res, next) => {
             Like.remove({ _id: req.params.id })
             .exec()
             .then(result => {
-            res.status(200).json({
-                message: "Done !"
-            });
+                response(res, 200, true, "Like supprimer ")
     })
     .catch(err => {
-        res.status(500).json({
-            error: err
-        });
+        response(res, 500, false, "error", err)
     })
         } else {
-            res.status(409).json({
-                message: "Like n'appartien pas a l'utilisateur"
-            });
+            response(res, 409, false, "Like n'appartien pas a l'utilisateur", err)
         }
-    }).catch(err => console.log(err));
+    }).catch(err =>{
+        response(res, 500, false, "error", err)
+    });
 }
