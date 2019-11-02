@@ -51,18 +51,29 @@ exports.create_image = (req, res, next) => {
 }
 
 exports.delete_image = (req, res, next) => {
-    Image.remove({ _id: req.params.id })
-        .exec()
-        .then(result => {
+    Image
+    .findById({ _id: req.params.id })
+    .exec()
+    .then(data => {
+        if (data.user == req.userData._id )  {
+            Image.remove({ _id: req.params.id })
+            .exec()
+            .then(result => {
             res.status(200).json({
                 message: "Done !"
             });
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    })
+        } else {
+            res.status(409).json({
+                message: "Wrong user"
             });
-        })
+        }
+    }).catch(err => console.log(err));
 }
 
 exports.update_image = (req, res, next) => {
