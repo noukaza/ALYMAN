@@ -65,18 +65,29 @@ exports.post_comment = (req, res, next) => {
 
 exports.delete_comment = (req, res, next) => {
     //TODO : verify that the user is the owner of the pic using the token
-    Commente.remove({ _id: req.params.id })
+    Commente
+    .findById({ _id: req.params.id })
     .exec()
-    .then(result => {
-        res.status(200).json({
-            message: "Done !"
-        });
+    .then(data => {
+        if (data.user == req.userData._id )  {
+            Commente.remove({ _id: req.params.id })
+            .exec()
+            .then(result => {
+            res.status(200).json({
+                message: "Done !"
+            });
     })
     .catch(err => {
         res.status(500).json({
             error: err
         });
     })
+        } else {
+            res.status(409).json({
+                message: "Wrong user"
+            });
+        }
+    }).catch(err => console.log(err));
 }
 
 exports.update_comment = (req, res, next) => {
