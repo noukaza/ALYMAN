@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const Like = require("../models/like");
 const User = require("../models/user");
 const Image = require("../models/image");
+const response = require("../configurations/responsesTempalte");
 
 exports.get_like_by_id = (req, res, next) => {
     Like

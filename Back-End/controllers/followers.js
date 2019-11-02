@@ -3,6 +3,7 @@ const Follower = require("../models/follower");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const response = require("../configurations/responsesTempalte");
 
 exports.get_all_followers = (req, res, next) => {
     // TODO : remove this route
