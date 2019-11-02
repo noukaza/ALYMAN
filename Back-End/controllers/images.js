@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const User = require("../models/user");
 const Image = require("../models/image");
+const response = require("../configurations/responsesTempalte");
 
 exports.get_all_images = (req, res, next) => {
     Image
@@ -39,11 +40,10 @@ exports.create_image = (req, res, next) => {
                                 })
                                 .catch(err => {
                                     response(res, 500, false, "error", err)
-
-                                })                        } 
+                                })                       
+                            } 
                                 else {
                                     response(res, 500, false, "error", err)
-
                         }
                     
         });
@@ -71,9 +71,30 @@ exports.delete_image = (req, res, next) => {
 }
 
 exports.update_image = (req, res, next) => {
-    const image = {
-        id_image: req.params.id,
-        description: req.body.description
-    };
-    res.status(201).json(image)
+    Image.find({
+        image: req.body.image
+    })
+        .exec()
+        .then(img => {
+            if (img.length >= 1 && img.user == req.userData._id ) {
+                if(req.body.user) img.user = req.body.user
+                if(req.body.image) img.image = req.body.image
+                if(req.body.likes) img.likes = req.body.likes
+                if(req.body.comments) img.comments = req.body.comments
+                if(req.body.description) img.description = req.body.description
+                img
+                    .save()
+                    .then(data => {
+                        response(res, 201, true, "successful operation", data)
+                    })
+                    .catch(err => {
+                        response(res, 500, false, "error", err)
+                    })                        }
+                     else {
+                        response(res, 409, false, "l'image n'existe pas ou l'utilisateur na pas le droit", err)
+            }
+        })
+        .catch(err => {
+            response(res, 500, false, "error", err)
+        });
 }
