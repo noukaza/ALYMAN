@@ -34,7 +34,7 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *           $ref: '#/definitions/Like'
  *
  */
- router.post("/", likesController.poste_like);
+ router.post("/", check_auth,likesController.poste_like);
 /**
  * @swagger
  *
@@ -61,6 +61,6 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *               description: "error server"
  */
 
-router.delete("/:id", likesController.delete_like);
+router.delete("/:id",check_auth, likesController.delete_like);
 
 module.exports = router;
