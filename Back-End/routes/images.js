@@ -30,7 +30,7 @@ router.get("/", imagesController.get_all_images);
  *         schema:
  *           $ref: '#/definitions/Image'
  */
-router.post("/", imagesController.create_image);
+router.post("/", check_auth,imagesController.create_image);
 /**
  * @swagger
  * /Image/{id}:
@@ -56,7 +56,7 @@ router.post("/", imagesController.create_image);
  *
  */
 /* DELETE method */
-router.delete("/:id", imagesController.delete_image);
+router.delete("/:id", check_auth,imagesController.delete_image);
 /**
  * @swagger
  * /Image/{id}:

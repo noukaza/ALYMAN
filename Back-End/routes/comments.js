@@ -27,7 +27,7 @@ const commentsConttrollers = require("../controllers/commentes");
  *         schema:
  *           $ref: '#/definitions/Comments'
  */
-router.post("/", commentsConttrollers.post_comment);
+router.post("/", check_auth,commentsConttrollers.post_comment);
 
 /**
  * @swagger
@@ -52,7 +52,7 @@ router.post("/", commentsConttrollers.post_comment);
  *               description: "Comment not found"
  */
 /* DELETE method*/
-router.delete("/:id", commentsConttrollers.delete_comment);
+router.delete("/:id", check_auth,commentsConttrollers.delete_comment);
 
 /**
  * @swagger
