@@ -35,16 +35,15 @@ exports.create_image = (req, res, next) => {
                             image
                                 .save()
                                 .then(data => {
-                                    res.status(201).json(data)
+                                    response(res, 200, true, "ok", data)
                                 })
                                 .catch(err => {
-                                    res.status(500).json({
-                                        error: err
-                                    })
-                                })                        } else {
-                            res.status(409).json({
-                                message: "l'utilisateur n'existe pas"
-                            })
+                                    response(res, 500, false, "error", err)
+
+                                })                        } 
+                                else {
+                                    response(res, 500, false, "error", err)
+
                         }
                     
         });
@@ -59,19 +58,14 @@ exports.delete_image = (req, res, next) => {
             Image.remove({ _id: req.params.id })
             .exec()
             .then(result => {
-            res.status(200).json({
-                message: "Done !"
-            });
+                response(res, 200, true, "done", result)
     })
     .catch(err => {
-        res.status(500).json({
-            error: err
-        });
+        response(res, 500, false, "error", err)
     })
         } else {
-            res.status(409).json({
-                message: "Wrong user"
-            });
+            response(res, 409, false, "Wrong user", err)
+
         }
     }).catch(err => console.log(err));
 }
