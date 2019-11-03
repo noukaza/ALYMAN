@@ -6,62 +6,49 @@ const response = require("../configurations/responsesTempalte");
 const User = require("../models/user");
 
 exports.create_user = (req, res, next) => {
-    User.find({
-            email: req.body.email
-        })
-        .exec()
-        .then(user => {
-            if (user.length >= 1) {
-               
-                response(res, 409, false, "Mail exists")
-            } else {
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
-                    if (err) {
-                        response(res, 500, false, "error", err)
-                    } else {
-                        const user = new User({
-                            _id: mongoose.Types.ObjectId(),
-                            firstName: req.body.firstName,
-                            lastName: req.body.lastName,
-                            profileImage: req.file.path,
-                            bio: req.body.bio,
-                            email: req.body.email,
-                            password: hash
-                        })
-                        user
-                            .save()
-                            .then(data => {
-                                response(res, 201, true, "successful operation", data)
-                            })
-                            .catch(err => {
-                                response(res, 500, false, "error", err)
-                            })
-                    }
-                })
-            }
-        })
-        .catch(err => {
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if (err) {
             response(res, 500, false, "error", err)
-        });
+        } else {
+            const user = new User({
+                _id: mongoose.Types.ObjectId(),
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                profileImage: req.file.path,
+                bio: req.body.bio,
+                email: req.body.email,
+                password: hash
+            })
+            user
+                .save()
+                .then(data => {
+                    response(res, 201, true, "successful operation", data)
+                })
+                .catch(err => {
+                    response(res, 500, false, "error", err)
+                })
+        }
+    });
+
 
 }
 
 exports.delets_user = (req, res, next) => {
-    if(req.userData._id === req.params.id){
+    if (req.userData._id === req.params.id) {
         User.remove({
-            _id: req.params.id
-        })
-        .exec()
-        .then(result => {
-            response(res, 200, true, "Done ! has been deleted  ")
-        })
-        .catch(err => {
-            response(res, 500, false, "user notfond ", err)
-        })
-    }else{
+                _id: req.params.id
+            })
+            .exec()
+            .then(result => {
+                response(res, 200, true, "Done ! has been deleted  ")
+            })
+            .catch(err => {
+                response(res, 500, false, "user notfond ", err)
+            })
+    } else {
         response(res, 401, false, "you are not the user ")
     }
-  
+
 }
 
 
