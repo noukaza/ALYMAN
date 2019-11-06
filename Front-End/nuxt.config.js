@@ -23,7 +23,7 @@ export default {
   ** Global CSS
   */
   css: [
-    //'iview/dist/styles/iview.css',
+    'iview/dist/styles/iview.css',
     //'bootstrap/dist/css/bootstrap.css',
     //'bootstrap-vue/dist/bootstrap-vue.css'
   ],
@@ -31,7 +31,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    //'@/plugins/iview'
+    '@/plugins/iview'
     //'@/plugins/bootstrap'
   ],
   /*
