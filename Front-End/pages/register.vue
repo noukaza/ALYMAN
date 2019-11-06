@@ -3,7 +3,7 @@
 
   <div class="Col">
       <div class="row justify-content-md-center">
-       <div class="Col Center">
+       <div class="Col text-center">
              <b-img src="~/assets/logo.png" style="width :50%; height :auto"></b-img>
        </div>
       </div>
