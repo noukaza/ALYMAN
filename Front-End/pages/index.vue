@@ -1,5 +1,6 @@
 
 <template>
+  
   <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -28,13 +29,14 @@
         {{token}}
       </div>
     </div>
-  </div>
+ </div>
+
 </template>
 
 <script>
 
 // import axios from "@nuxtjs/axios";
-import BootstrapVue from "bootstrap-vue";
+
 export default {
 
 

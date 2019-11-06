@@ -1,8 +1,25 @@
 <template>
   <div>
+    <Header></Header>
     <nuxt />
+    <Footer></Footer>
   </div>
 </template>
+<script>
+
+// import axios from "@nuxtjs/axios";
+import Footer from '~/components/Footer.vue';
+import Header from '~/components/Header.vue';
+
+export default {
+  components:{
+    Footer,
+    Header
+  },
+}
+
+</script>
+
 
 <style>
 html {

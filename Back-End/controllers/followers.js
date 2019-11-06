@@ -2,6 +2,8 @@
 const Follower = require("../models/follower");
 const User = require("../models/user");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const response = require("../configurations/responsesTempalte");
 
 exports.get_all_followers = (req, res, next) => {
     // TODO : remove this route
@@ -11,75 +13,78 @@ exports.get_all_followers = (req, res, next) => {
     //.populate("images")
     .exec()
     .then(data => {
-        res.status(200).json(data)
-    }).catch(err => console.log(err))
+        response(res, 200, true, "successful operation", data)
+    }).catch(err =>{
+        response(res, 404, false, "error", err)
+    })
 }
 
 exports.create_follower = (req, res, next) => {
+    id = req.userData._id;
     User.find({
-        _id: req.body.follower // TODO GET user id from token 
+        _id: id // TODO GET user id from token 
     })
         .exec()
         .then(user => {
             if (user.length >= 1) {
                 User.find({
-                    _id: req.body.follower
+                    _id: req.body.following
                 })
                     .exec()
                     .then(user => {
                         if (user.length >= 1) {
                             const follower = new Follower({
                                     _id: mongoose.Types.ObjectId(),
-                                    follower: req.body.follower,
+                                    follower: id,
                                     following: req.body.following,
                                     create_at: req.body.create_at
                                 })
                             follower
                                 .save()
                                 .then(data => {
-                                    res.status(201).json(data)
+                                    response(res, 201, true, "successful operation", data)
                                 })
                                 .catch(err => {
-                                    res.status(500).json({
-                                        error: err
-                                    })
-                                })                        } else {
-                            res.status(409).json({
-                                message: "following n'existe pas"
-                            })
+                                    response(res, 500, false, "error", err)
+                                })                        }
+                                 else {
+                                    response(res, 409, false, "following n'existe pas", err)
                         }
                     })
                     .catch(err => {
-                        res.status(500).json({
-                            error: err
-                        })
+                        response(res, 500, false, "error", err)
                     });
             } else {
-                res.status(409).json({
-                    message: "follower n'existe pas"
-                })
+                response(res, 409, false, "follower n'existe pas", err)
             }
         })
         .catch(err => {
-            res.status(500).json({
-                error: err
-            })
+            response(res, 500, false, "error", err)
         });
    
 }
 
 exports.delete_follower = (req, res, next) => {
-     //TODO : verify that the user is the follower or following in this case
-    Follower.remove({ _id: req.params.id })
+    //TODO : verify that the user is the follower or following in this case
+    id = req.userData._id;
+    console.log(req.params.id);
+    Follower
+    .findById({ _id: req.params.id })
     .exec()
-    .then(result => {
-        res.status(200).json({
-            message: "Done !"
-        });
+    .then(data => {
+        if (data.follower == id  || data.following == id)  {
+            Follower.remove({ _id: req.params.id })
+            .exec()
+            .then(result => {
+                response(res, 200, true, "Follower supprimer ")
     })
     .catch(err => {
-        res.status(500).json({
-            error: err
-        });
+        response(res, 500, false, "error", err)
     })
+        } else {
+            response(res, 409, false, "c'est pas le bon following", err)
+        }
+    }).catch(err =>{ 
+        response(res, 500, false, "error", err)
+    });
 }
