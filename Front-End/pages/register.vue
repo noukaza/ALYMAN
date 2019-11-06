@@ -2,7 +2,7 @@
    <b-container>
      <div class="row">
        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-             <img style="width: 250px" src="~/assets/logo2.png">
+             <img style="width: 250px" src="~/assets/logo.png">
        </div>
      </div>
  <form class="flex flex-col" @submit="submitRegister">
