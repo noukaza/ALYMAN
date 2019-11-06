@@ -1,5 +1,7 @@
 
 <template>
+ <div>
+  <Header></Header>
   <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -28,14 +30,23 @@
         {{token}}
       </div>
     </div>
+  <Footer></Footer>
   </div>
+ </div>
+
 </template>
 
 <script>
 
 // import axios from "@nuxtjs/axios";
 import BootstrapVue from "bootstrap-vue";
+import Footer from '~/components/Footer.vue';
+import Header from '~/components/Header.vue';
 export default {
+  components:{
+    Footer,
+    Header
+  },
 
 
   data() {
