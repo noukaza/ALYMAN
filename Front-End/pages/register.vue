@@ -4,7 +4,7 @@
   <div class="Col">
       <div class="row justify-content-md-center">
        <div class="Col Center">
-             <b-img src="~/assets/logo2.png" style="width :50%; height :auto"></b-img>
+             <b-img src="~/assets/Logo/logo.png" style="width :50%; height :auto"></b-img>
        </div>
       </div>
       <b-form-group id="input-group-2" label="Your firstName:" label-for="input-2" class="Row">

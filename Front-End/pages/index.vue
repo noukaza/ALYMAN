@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-    <img style="width: 500px" src="~/assets/logo.png">
+    <img style="width: 500px" src="~/assets/Logo/logo.png">
       </div>
     </div>
     <div class="row">
