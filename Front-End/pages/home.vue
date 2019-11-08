@@ -16,12 +16,16 @@
       <b-carousel-slide>
         <template v-slot:img>
           <img
-            class="img-fluid"
+            class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="~assets/Pictures/image1.jpg"
+            src="~assets/Pictures/fond.jpg"
             alt="image slot"
-          >
+            center ="true"
+          ></img>
+            <div class="carousel-caption" style="top:40%">
+                                <h1 class="display-2" style="font-family: Palatino">Rejoinez vos amis sur LYMAN</h1>
+            </div>               
         </template>
        </b-carousel-slide>
     
@@ -31,35 +35,14 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="~assets/Logo/logo.png"
+            src="~assets/Pictures/fond.jpg"
             alt="image slot"
           >
+               <div class="carousel-caption" style="top:40%">
+                                <h1 class="display-2">Atquchem</h1>
+            </div>    
         </template>
        </b-carousel-slide>
-    
-      <b-carousel-slide>
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="~assets/Logo/logo.png"
-            alt="image slot"
-          >
-        </template>
-       </b-carousel-slide>
-   
-      <b-carousel-slide>
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="~assets/Logo/logo.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide>
     </b-carousel>
   </div>
 </template>
