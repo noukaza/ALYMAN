@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const check_auth = require("../middleware/check_auth");
+
 
 const commentsConttrollers = require("../controllers/commentes");
 /* POST method */
@@ -27,7 +29,7 @@ const commentsConttrollers = require("../controllers/commentes");
  *         schema:
  *           $ref: '#/definitions/Comments'
  */
-router.post("/", commentsConttrollers.post_comment);
+router.post("/", check_auth,commentsConttrollers.post_comment);
 
 /**
  * @swagger
@@ -52,7 +54,7 @@ router.post("/", commentsConttrollers.post_comment);
  *               description: "Comment not found"
  */
 /* DELETE method*/
-router.delete("/:id", commentsConttrollers.delete_comment);
+router.delete("/:id", check_auth,commentsConttrollers.delete_comment);
 
 /**
  * @swagger
@@ -83,6 +85,6 @@ router.delete("/:id", commentsConttrollers.delete_comment);
  *               description: "error server"
 */
 /*Update method */
-router.put("/:id", commentsConttrollers.update_comment);
+router.put("/:id", check_auth, commentsConttrollers.update_comment);
 
 module.exports = router;

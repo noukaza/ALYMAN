@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const imagesController = require("../controllers/images")
+const check_auth = require("../middleware/check_auth");
+
 
 /* GET method */
 router.get("/", imagesController.get_all_images);
@@ -30,7 +32,7 @@ router.get("/", imagesController.get_all_images);
  *         schema:
  *           $ref: '#/definitions/Image'
  */
-router.post("/", imagesController.create_image);
+router.post("/", check_auth, imagesController.create_image);
 /**
  * @swagger
  * /Image/{id}:
@@ -56,7 +58,7 @@ router.post("/", imagesController.create_image);
  *
  */
 /* DELETE method */
-router.delete("/:id", imagesController.delete_image);
+router.delete("/:id", check_auth,imagesController.delete_image);
 /**
  * @swagger
  * /Image/{id}:
@@ -86,6 +88,6 @@ router.delete("/:id", imagesController.delete_image);
  *               description: "error server"
  */
 /* UPDATE method */
-router.put("/:id", imagesController.update_image);
+router.put("/:id", check_auth, imagesController.update_image);
 
 module.exports = router;
