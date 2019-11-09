@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const chekauth = require("../middleware/check_auth")
+const chekauth = require("../middleware/check_auth");
+const chekUser = require("../middleware/check_user");
 /**
  * Upload middleware
  */
@@ -56,7 +57,12 @@ const userController = require("../controllers/users");
  *         schema:
  *           $ref: '#/definitions/user'
  */
-router.post("/", upload.single("profileImage"), userController.create_user);
+router.post(
+            "/",
+            upload.single("profileImage"),
+            chekUser.notUsedEmail,
+            userController.create_user
+        );
 
 /**
  * @swagger
