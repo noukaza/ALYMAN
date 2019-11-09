@@ -3,8 +3,8 @@
 
   <div class="Col">
       <div class="row justify-content-md-center">
-       <div class="Col text-center">
-             <b-img src="~/assets/logo.png" style="width :50%; height :auto"></b-img>
+       <div class="Col Center">
+             <b-img src="~/assets/Logo/logo.png" style="width :50%; height :auto"></b-img>
        </div>
       </div>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
