@@ -1,0 +1,103 @@
+<template>
+<div class="container">
+  <b-modal id="modal-1" title="EditProfil">
+  <div class="Col">
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
+        <b-form-group id="input-group-2" label="Your firstName*:" label-for="input-2" class="Row">
+          <b-form-input
+            id="input-2"
+            v-model="form.firstName"
+            required
+            placeholder="Enter firstName"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group id="input-group-2" label="Your lastName*:" label-for="input-2" class="Row">
+          <b-form-input
+            id="input-2"
+            v-model="form.lastName"
+            required
+            placeholder="Enter lastName"
+          ></b-form-input>
+        </b-form-group>
+      
+        <b-form-group id="input-group-1" label="Email address*:" label-for="input-1">
+        <b-form-input
+            id="input-1"
+            v-model="form.email"
+            type="email"
+            required
+            placeholder="Enter email"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group id="input-group-2" label="Your password*:" label-for="input-2" class="Row">
+          <b-form-input
+            id="input-2"
+            v-model="form.password"
+            type="password"
+            required
+            placeholder="Enter password"
+          ></b-form-input>
+        </b-form-group>
+
+      <b-form-group id="input-group-2" label="Your profileImage:" label-for="input-2" class="Row">
+           <b-form-file v-model="form.file" class="mt-3" plain></b-form-file>
+      </b-form-group>   
+
+      <b-button type="submit" variant="primary" >Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>   
+       </b-form>
+
+  </div>
+  </b-modal>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        form: {
+          firstName:'',
+          lastName:'',
+          email: '',
+          password:'',
+          file: null,
+        },
+        show: true
+      }
+    },
+    methods: {
+      onSubmit(evt) {
+        evt.preventDefault()
+         const data = new FormData();
+         data.append("firstName",this.form.firstName);
+         data.append("lastName",this.form.lastName);
+         data.append("email",this.form.email);
+         data.append("password",this.form.password);
+         data.append("profileImage",this.form.file);
+         this.$axios.post(`http://localhost:3000/users`, data)
+            .then(response => {
+              console.log(response)
+            })
+            .catch(e => {
+                
+          })
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        this.form.firstName = '',
+        this.form.lastName = '',
+        this.form.bio = '',
+        this.form.email = '',
+        this.password = ''
+      },
+      onCreate(evt) {
+        evt.preventDefault()
+        
+    }
+  }
+  }
+</script>
