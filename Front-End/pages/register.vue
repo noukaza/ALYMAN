@@ -115,7 +115,8 @@
         this.form.lastName = '',
         this.form.bio = '',
         this.form.email = '',
-        this.password = ''
+        this.password = '',
+        this.confirmPassword = ''
       },
       onCreate(evt) {
         evt.preventDefault()
