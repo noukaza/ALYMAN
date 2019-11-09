@@ -7,75 +7,68 @@
              <b-img src="~/assets/Logo/logo.png" style="width :50%; height :auto"></b-img>
        </div>
       </div>
-      <b-form-group id="input-group-2" label="Your firstName:" label-for="input-2" class="Row">
-        <b-form-input
-          id="input-2"
-          v-model="form.firstName"
-          required
-          placeholder="Enter firstName"
-        ></b-form-input>
-      </b-form-group>
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
-      <b-form-group id="input-group-2" label="Your lastName:" label-for="input-2" class="Row">
-        <b-form-input
-          id="input-2"
-          v-model="form.lastName"
-          required
-          placeholder="Enter lastName"
-        ></b-form-input>
-      </b-form-group>
+        <b-form-group id="input-group-2" label="Your firstName*:" label-for="input-2" class="Row">
+          <b-form-input
+            id="input-2"
+            v-model="form.firstName"
+            required
+            placeholder="Enter firstName"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group id="input-group-2" label="Your bio:" label-for="input-2" class="Row">
+        <b-form-group id="input-group-2" label="Your lastName*:" label-for="input-2" class="Row">
+          <b-form-input
+            id="input-2"
+            v-model="form.lastName"
+            required
+            placeholder="Enter lastName"
+          ></b-form-input>
+        </b-form-group>
+      
+        <b-form-group id="input-group-1" label="Email address*:" label-for="input-1">
         <b-form-input
-          id="input-2"
-          v-model="form.bio"
-          required
-          placeholder="Enter bio"
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-2" label="Your email:" label-for="input-2" class="Row">
-       <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
-          required
-          placeholder="Enter email"
-        ></b-form-input>
-      </b-form-group>
+            id="input-1"
+            v-model="form.email"
+            type="email"
+            required
+            placeholder="Enter email"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group id="input-group-2" label="Your password:" label-for="input-2" class="Row">
-        <b-form-input
-          id="input-2"
-          v-model="form.password"
-          type="password"
-          required
-          placeholder="Enter password"
-        ></b-form-input>
-      </b-form-group>
+        <b-form-group id="input-group-2" label="Your password*:" label-for="input-2" class="Row">
+          <b-form-input
+            id="input-2"
+            v-model="form.password"
+            type="password"
+            required
+            placeholder="Enter password"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-button type="submit" variant="primary"  v-on:click="onCreate">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
+      <b-form-group id="input-group-2" label="Your profileImage:" label-for="input-2" class="Row">
+           <b-form-file v-model="form.file" class="mt-3" plain></b-form-file>
+      </b-form-group>   
+
+      <b-button type="submit" variant="primary" >Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>   
+       </b-form>
+
   </div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
-
-Vue.use(BootstrapVue)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
   export default {
     data() {
       return {
         form: {
           firstName:'',
           lastName:'',
-          bio:'',
           email: '',
           password:'',
+          file: null,
         },
         show: true
       }
@@ -83,7 +76,19 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+         const data = new FormData();
+         data.append("firstName",this.form.firstName);
+         data.append("lastName",this.form.lastName);
+         data.append("email",this.form.email);
+         data.append("password",this.form.password);
+         data.append("profileImage",this.form.file);
+         this.$axios.post(`http://localhost:3000/users`, data)
+            .then(response => {
+              console.log(response)
+            })
+            .catch(e => {
+                
+          })
       },
       onReset(evt) {
         evt.preventDefault()
@@ -95,13 +100,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
       },
       onCreate(evt) {
         evt.preventDefault()
-         axios.post(`https://localhost:3000/users`, {
-            body: this.form,
-          })
-            .then(response => {})
-            .catch(e => {
-                this.errors.push(e)
-          })
+        
     }
   }
   }
