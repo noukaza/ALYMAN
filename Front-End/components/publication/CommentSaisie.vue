@@ -27,14 +27,14 @@
 </style>
 
 <script>
-    export default {
-      name: "CommentSaisie.vue",
-      props: ['images', 'username'],
-      data: () => {
-        return {
-          comment: ""
-        }
-      }
+export default {
+  name: "CommentSaisie.vue",
+  props: ['images', 'username'],
+  data: () => {
+    return {
+      comment: ""
     }
+  }
+}
 </script>
 

@@ -9,11 +9,17 @@
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
+              <div v-if="isFollowed">
+                <b-badge href="#" variant="primary" v-on:click="follow">Primary</b-badge>
+              </div>
+              <div v-else>
+                <b-badge href="#" variant="danger"  v-on:click="unFollow">danger</b-badge>
+              </div>
           </b-col>
           <b-col sm="4">
             <font-awesome-icon icon="user-edit" v-b-modal.modal-1 style = "width :50% ; height : 50%"/>
             <div class="container">
-              <b-modal id="modal-1" title="EditProfil">
+              <b-modal id="modal-1" title="EditProfil" >
                 <EditProfil  type = "follower"></EditProfil>
               </b-modal>
             </div>
@@ -33,7 +39,7 @@
              <Label v-b-modal.modal-2 style="font-weight:bold; display:inline; margin-right:120px">Follower</Label>
             <div class="container">
               <b-modal id="modal-2" title="Follower">
-                <Follower  type = "follower"></Follower>
+                <Follower  type = "followers" :userId="iduser? iduser: user._id"></Follower>
               </b-modal>
             </div>
           </b-col>
@@ -41,7 +47,7 @@
             <Label v-b-modal.modal-3 style="font-weight:bold; display:inline; margin-right:120px">Following</Label>
             <div class="container">
               <b-modal id="modal-3" title="Following">
-                <Follower></Follower>
+                <Follower type = "followings" :userId="iduser? iduser: user._id" ></Follower>
               </b-modal>
             </div>
           </b-col>
@@ -66,25 +72,18 @@ export default {
     return {
       username: "",
       urlPicProfil : "",
-      bio :""
-    }
+      bio :""    }
   },
   methods: {
-    onSubmit(evt) {
-      var configHeader = {
-        headers: {
-          'accept': 'application/json',
-          'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaG1vaEBnbWFpbC5jb20iLCJfaWQiOiI1ZGMzMGMxODVlYTVjYjAzMDhjMTY5OGYiLCJpYXQiOjE1NzMyOTcyMTAsImV4cCI6MTU3MzM4MzYxMH0.tfwFHmoxxC6qqlZ2aJTokW2UJq5beMQsRJzxOPubf4s"
-        }
-      }
-      this.$axios.put(`http://localhost:3000/users`, data, configHeader)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(e => {
-
-        })
+    follow(e){
+      console.log("hi")
+      this.$axios.post("/followers",{
+        following : this.iduser
+      })
     },
+    unFollow(e){
+      this.$axios.delete("/followers/"+this.iduser)
+    }
   },
   created: async function (){
     if(this.user){
@@ -100,6 +99,12 @@ export default {
       this.bio = userProfile.data.data.bio;
     }
 
+  },
+  computed:{
+     isFollowed: function () {
+       // TODO check if is followed by the user or not
+      return true;
+    }
   }
 }
 </script>

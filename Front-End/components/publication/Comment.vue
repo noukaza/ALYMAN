@@ -26,32 +26,32 @@
 </style>
 <script>
 
-    export default {
+export default {
 
-      props: ['images', 'username', 'descriptions'],
+  props: ['images', 'username', 'descriptions'],
 
-      data() {
+  data() {
 
-        return {
-          show: true,
-          modifier: true,
-          mainProps: {
-            blank: false,
-            blankColor: '#777',
-            width: 50,
-            height: 50,
-            class: 'align-middle'
-          },
-          nanoProps: {
-            blank: false,
-            blankColor: '#777',
-            width: 50,
-            height: 50,
-            class: 'align-middle'
-          }
-        }
-
+    return {
+      show: true,
+      modifier: true,
+      mainProps: {
+        blank: false,
+        blankColor: '#777',
+        width: 50,
+        height: 50,
+        class: 'align-middle'
+      },
+      nanoProps: {
+        blank: false,
+        blankColor: '#777',
+        width: 50,
+        height: 50,
+        class: 'align-middle'
       }
     }
+
+  }
+}
 
 </script>
