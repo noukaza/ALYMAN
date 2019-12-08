@@ -89,7 +89,7 @@ exports.login_user = async (req, res, next) => {
 
 exports.get_all_user = async (req, res, next) => {
     const ID = req.userData._id
-    let users = await User.findOne({_id : ID}).select("_id firstName bio lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
+    let users = await User.findOne({_id : ID}).select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
     (users.length === 0) ?
     response(res, 404, false, "Zero user find"): response(res, 200, true, "successful operation", users)
 }
@@ -115,20 +115,21 @@ exports.get_user_by_id = async (req, res, next) => {
 exports.get_follower_for_user = async (req, res, next) => {
     let follower = await Follower.find({
             follower: req.params.id
-        })
+        }).select("_id create_at following ").populate(" following", "_id firstName lastName profileImage")
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-    (follower.length === 0) ?
-    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", follower);
+    // (follower.length === 0) ?
+    // response(res, 404, false, "can't find user"): 
+    response(res, 200, true, "successful operation", follower);
 }
 
 
 exports.get_followings_for_user = async (req, res, next) => {
     let follower = await Follower.find({
-            following: req.params.id
-        })
-        .exec()
-        .catch(err => response(res, 404, false, "can't find user"));
-    (follower.length === 0) ?
-    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", follower);
+        following: req.params.id
+    }).select("_id create_at follower ").populate(" follower", "_id firstName lastName profileImage")
+    .exec()
+    .catch(err => response(res, 404, false, "can't find user"));
+
+    response(res, 200, true, "successful operation", follower);
 }
