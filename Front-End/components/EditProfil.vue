@@ -32,7 +32,8 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="Your password*:" label-for="input-2" class="Row">
+         <div  class="row">
+        <b-form-group id="input-group-2" label="Your password*:" label-for="input-2" class="col">
           <b-form-input
             id="input-2"
             v-model="form.password"
@@ -41,6 +42,17 @@
             placeholder="Enter password"
           ></b-form-input>
         </b-form-group>
+       
+        <b-form-group id="input-group-2" label="confirm your password*:" label-for="input-2" class="col">
+          <b-form-input
+            id="input-2"
+            v-model="form.confirmPassword"
+            type="password"
+            required
+            placeholder="Enter password"
+          ></b-form-input>
+        </b-form-group>
+         </div>
 
       <b-form-group id="input-group-2" label="Your profileImage:" label-for="input-2" class="Row">
            <b-form-file v-model="form.file" class="mt-3" plain></b-form-file>
@@ -71,6 +83,10 @@
     },
     methods: {
       onSubmit(evt) {
+        if(this.form.password != this.form.confirmPassword){
+          alert("password is not equal to confirmPassword")
+
+        }else{
         evt.preventDefault()
          const data = new FormData();
          data.append("firstName",this.form.firstName);
@@ -91,6 +107,7 @@
             .catch(e => {
                 
           })
+        }
       },
       onReset(evt) {
         evt.preventDefault()
@@ -98,7 +115,8 @@
         this.form.lastName = '',
         this.form.bio = '',
         this.form.email = '',
-        this.password = ''
+        this.password = '',
+        this.confirmPassword = ''
       },
       onCreate(evt) {
         evt.preventDefault()
