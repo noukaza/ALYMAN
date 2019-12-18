@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const axios = require('axios');
 
 
 const response = require("../configurations/responsesTempalte");
@@ -55,41 +54,36 @@ exports.delets_user = (req, res, next) => {
 }
 
 
-exports.login_user = (req, res, next) => {
-    User.find({
-            email: req.body.email
-        }).exec()
-        .then(user => {
-            if (user.length < 1) {
+exports.login_user = async (req, res, next) => {
+    let user = await User.find({
+        email: req.body.email
+    }).exec().catch(err => response(res, 500, false, "Auth failed", err));
+    if (user.length < 1) {
+        response(res, 401, false, "Auth failed", err)
+    } else {
+        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+            if (err) {
                 response(res, 401, false, "Auth failed", err)
-            } else {
-                bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-                    if (err) {
-                        response(res, 401, false, "Auth failed", err)
-                    }
-                    if (result) {
-                        const token = jwt.sign({
-                                email: user[0].email,
-                                _id: user[0]._id
-                            },
-                            process.env.JWT_KEY, {
-                                expiresIn: "1 days"
-                            })
+            }
+            if (result) {
+                const token = jwt.sign({
+                        email: user[0].email,
+                        _id: user[0]._id
+                    },
+                    process.env.JWT_KEY, {
+                        expiresIn: "1 days"
+                    })
 
-                        response(res, 200, true, "Auth successful", {
-                            token
-                        })
-                    } else {
-                        response(res, 401, false, "Auth failed", err)
-                    }
-
+                response(res, 200, true, "Auth successful", {
+                    token
                 })
+            } else {
+                response(res, 401, false, "Auth failed", err)
             }
 
         })
-        .catch(err => {
-            response(res, 500, false, "Auth failed", err)
-        })
+    }
+
 }
 
 exports.get_all_user = async (req, res, next) => {
@@ -99,44 +93,35 @@ exports.get_all_user = async (req, res, next) => {
 
 exports.get_user_by_id = async (req, res, next) => {
     let user = await User
-                        .find({_id: req.params.id})
-                        .select("_id firstName lastName profileImage bio email followers followings")
-                        .exec()
-                        .catch(err => {
-                            response(res, 404, false, "can't find user")
-                        });
+        .find({
+            _id: req.params.id
+        })
+        .select("_id firstName lastName profileImage bio email followers followings")
+        .exec()
+        .catch(err => response(res, 404, false, "can't find user"));
     response(res, 200, true, "successful operation", user)
-   
 }
 
-exports.get_follower_for_user = (req, res, next) => {
-    Follower.find({
+exports.get_follower_for_user = async (req, res, next) => {
+
+    let follower = await Follower.find({
             followers: req.params._id
         })
-        .exec()
-        .then(data => {
-            response(res, 200, true, "successful operation", data)
-        }).catch(err => {
+        .exec().catch(err => {
             response(res, 404, false, "can't find user")
-        })
+        });
+    response(res, 200, true, "successful operation", follower);
 }
 
 
-getFollowerForUser = async (user) => {
-    return Follower.findOne()
-        .exec()
-        .then()
-}
 
-exports.get_followings_for_user = (req, res, next) => {
-    Follower.find({
+exports.get_followings_for_user = async (req, res, next) => {
+    let following = await Follower.find({
             followings: req.params._id
         })
-        .exec()
-        .then(data => {
-            response(res, 200, true, "successful operation", data)
-        }).catch(err => {
+        .exec().catch(err => {
             response(res, 404, false, "can't find user")
-        })
+        });
+    response(res, 200, true, "successful operation", following);
 
 }
