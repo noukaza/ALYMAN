@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }],
-    followers: [{ type: String ,require : false, default : 'users/'+ mongoose.Schema.Types.ObjectId + '/followers' }],
+    followers: [{ type: Array ,require : false, default : 'users/'+ mongoose.Schema.Types.ObjectId + '/followers' }],
     followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Follower' }],
     create_at: { type: String, default: new Date().toISOString() },
     update_at: { type: String, default: new Date().toISOString() }

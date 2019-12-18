@@ -117,6 +117,7 @@ exports.get_user_by_id = (req, res, next) => {
                 .get(`http://dev.local:3000/users/${data[0]._id}/followers`)
                 .then(followers => {
                     //TODO test if success = true 
+                    console.log(followers.data)
                     data[0].followers = followers.data.data
                     response(res, 200, true, "successful operation", data)
 
@@ -133,6 +134,14 @@ exports.get_user_by_id = (req, res, next) => {
 
 exports.get_follower_for_user = (req, res, next) => {
     //TODO get follower for this user
-    data = [1,2,3]
-    response(res, 200, true, "successful operation",data)
+    Follower.find({
+        followers : req.params._id
+    })
+    .exec()
+    .then(data =>{
+        response(res, 200, true, "successful operation",data)
+    }).catch(err =>{
+        response(res, 404, false, "can't find user")
+    })
+   
 }
