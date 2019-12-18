@@ -92,56 +92,51 @@ exports.login_user = (req, res, next) => {
         })
 }
 
-exports.get_all_user = (req, res, next) => {
-    User
-        .find()
-        .select("_id firstName lastName profileImage bio email")
+exports.get_all_user = async (req, res, next) => {
+    let users = await User.find().select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
+    response(res, 200, true, "successful operation", users)
+}
+
+exports.get_user_by_id = async (req, res, next) => {
+    let user = await User
+                        .find({_id: req.params.id})
+                        .select("_id firstName lastName profileImage bio email followers followings")
+                        .exec()
+                        .catch(err => {
+                            response(res, 404, false, "can't find user")
+                        });
+    response(res, 200, true, "successful operation", user)
+   
+}
+
+exports.get_follower_for_user = (req, res, next) => {
+    Follower.find({
+            followers: req.params._id
+        })
         .exec()
         .then(data => {
             response(res, 200, true, "successful operation", data)
         }).catch(err => {
-            response(res, 404, false, "errr", err)
-        })
-}
-
-exports.get_user_by_id = (req, res, next) => {
-    User
-        .find({
-            _id: req.params.id
-        })
-        .select("_id firstName lastName profileImage bio email followers")
-        .exec()
-        .then(data => {
-            // TODO : axios change url (domaine) 
-            axios
-                .get(`http://dev.local:3000/users/${data[0]._id}/followers`)
-                .then(followers => {
-                    //TODO test if success = true 
-                    console.log(followers.data)
-                    data[0].followers = followers.data.data
-                    response(res, 200, true, "successful operation", data)
-
-                })
-                .catch(e => {
-                    data[0].followers = `users/${data[0]._id}/followers`;
-                    response(res, 200, true, "successful operation", data)
-                })
-        })
-        .catch(err => {
             response(res, 404, false, "can't find user")
         })
 }
 
-exports.get_follower_for_user = (req, res, next) => {
-    //TODO get follower for this user
+
+getFollowerForUser = async (user) => {
+    return Follower.findOne()
+        .exec()
+        .then()
+}
+
+exports.get_followings_for_user = (req, res, next) => {
     Follower.find({
-        followers : req.params._id
-    })
-    .exec()
-    .then(data =>{
-        response(res, 200, true, "successful operation",data)
-    }).catch(err =>{
-        response(res, 404, false, "can't find user")
-    })
-   
+            followings: req.params._id
+        })
+        .exec()
+        .then(data => {
+            response(res, 200, true, "successful operation", data)
+        }).catch(err => {
+            response(res, 404, false, "can't find user")
+        })
+
 }
