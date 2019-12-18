@@ -112,9 +112,19 @@ exports.get_user_by_id = (req, res, next) => {
         .select("_id firstName lastName profileImage bio email followers")
         .exec()
         .then(data => {
-            // TODO : make req to get follower we may do it with axios 
-            data[0].followers = `users/${data[0]._id}/followers`;
-            response(res, 200, true, "successful operation", data)
+            // TODO : axios change url (domaine) 
+            axios
+                .get(`http://dev.local:3000/users/${data[0]._id}/followers`)
+                .then(followers => {
+                    //TODO test if success = true 
+                    data[0].followers = followers.data.data
+                    response(res, 200, true, "successful operation", data)
+
+                })
+                .catch(e => {
+                    data[0].followers = `users/${data[0]._id}/followers`;
+                    response(res, 200, true, "successful operation", data)
+                })
         })
         .catch(err => {
             response(res, 404, false, "can't find user")
@@ -123,6 +133,6 @@ exports.get_user_by_id = (req, res, next) => {
 
 exports.get_follower_for_user = (req, res, next) => {
     //TODO get follower for this user
-    console.log(req.params.id)
-    response(res, 200, true, "successful operation")
+    data = [1,2,3]
+    response(res, 200, true, "successful operation",data)
 }
