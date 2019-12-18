@@ -14,6 +14,8 @@ const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 
+
+const response = require("./configurations/responsesTempalte");
 const configMongo = require('./configurations/mognodb')
 
 mongoose.connect(configMongo.mongoUri, configMongo.option);
@@ -72,18 +74,15 @@ app.use('/comments', commentsRoutes)          // url : comments
 
 /* catch unfound routes */
 app.use((req, res, next) => {
-    const error = new Error("Not found");
+    const error = new Error("Page not found");
     next(error);
 });
 
 /* respons errors */
 app.use((error, req, res, next) => {
-    res.status(500);
-    res.json({
-        error: {
-            message: error.message
-        }
-    })
+
+    response(res, 500, false, error.message )
+
 });
 
 module.exports = app;
