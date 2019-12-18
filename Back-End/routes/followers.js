@@ -12,7 +12,7 @@ router.get("/", followersController.get_all_followers);
 /**
  * @swagger
  *
- * /follower:
+ * /followers:
  *   post:
  *     security:
  *         - Bearer: []
@@ -44,7 +44,7 @@ router.get("/", followersController.get_all_followers);
  router.post("/", check_auth,  followersController.create_follower);
  /** 
  * @swagger
- * /follower/{id}:
+ * /followers/{id}:
  *   delete:
  *      security:
  *          - Bearer: []

@@ -157,4 +157,8 @@ router.get('/', userController.get_all_user)
  */
 router.get('/:id', userController.get_user_by_id)
 
+
+// TODO : ADD swager doc 
+router.get('/:id/followers/',userController.get_follower_for_user);
+
 module.exports = router;
