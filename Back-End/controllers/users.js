@@ -7,6 +7,7 @@ const response = require("../configurations/responsesTempalte");
 const User = require("../models/user");
 const Follower = require('../models/follower');
 
+// TODO make this func async 
 exports.create_user = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
@@ -33,6 +34,7 @@ exports.create_user = (req, res, next) => {
     });
 }
 
+// TODO make it async
 exports.delets_user = (req, res, next) => {
     if (req.userData._id === req.params.id) {
         User.remove({
@@ -83,7 +85,9 @@ exports.login_user = async (req, res, next) => {
 
 exports.get_all_user = async (req, res, next) => {
     let users = await User.find().select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
-    response(res, 200, true, "successful operation", users)
+    (users.length === 0)
+    ? response(res, 404, false, "Zero user find")
+    : response(res, 200, true, "successful operation", users)
 }
 
 exports.get_user_by_id = async (req, res, next) => {
@@ -92,10 +96,13 @@ exports.get_user_by_id = async (req, res, next) => {
             _id: req.params.id
         })
         .select("_id firstName lastName profileImage bio email followers followings")
-        .populate("followers")
+        .populate("followers ")
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-    response(res, 200, true, "successful operation", user)
+
+    (user.length === 0) 
+    ? response(res, 404, false, "can't find user") 
+    : response(res, 200, true, "successful operation", user)
 }
 
 exports.get_follower_for_user = async (req, res, next) => {
@@ -104,7 +111,9 @@ exports.get_follower_for_user = async (req, res, next) => {
         })
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-    response(res, 200, true, "successful operation", follower);
+    (follower.length === 0 ) 
+    ? response(res, 404, false, "can't find user")
+    : response(res, 200, true, "successful operation", follower);
 }
 
 
@@ -113,6 +122,8 @@ exports.get_followings_for_user = async (req, res, next) => {
             followings: req.params._id
         })
         .exec()
-        .catch(err =>response(res, 404, false, "can't find user"));
-    response(res, 200, true, "successful operation", following);
+        .catch(err => response(res, 404, false, "can't find user"));
+    (following.length === 0)
+    ? response(res, 404, false, "can't find user")
+    : response(res, 200, true, "successful operation", following);
 }
