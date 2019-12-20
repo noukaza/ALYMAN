@@ -26,10 +26,6 @@ router.get("/", followersController.get_all_followers);
  *       - application/json
  *     parameters:
  *       - in: formData
- *         name: follower
- *         type: mongoose.Schema.Types.ObjectId
- *         description: id follower.
- *       - in: formData
  *         name: following
  *         type: mongoose.Schema.Types.ObjectId
  *         description: id following.

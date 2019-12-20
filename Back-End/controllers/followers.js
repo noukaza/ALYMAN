@@ -38,8 +38,13 @@ exports.create_follower = async (req, res, next) => {
                 create_at: req.body.create_at
             })
             follow = await follower.save()
+
             user.followers.push(follower) 
             await user.save();
+            
+            following.followings.push(user);
+            await following.save()
+
             response(res, 201, true, "successful operation", follow)
         }
     }
