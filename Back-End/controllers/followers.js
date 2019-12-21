@@ -24,6 +24,7 @@ exports.create_follower = async (req, res, next) => {
     const id = req.userData._id;
     let user = await  User
     .findOne({_id: id})
+    .select(" _id firstName lastName profileImage")
     .exec()
     .catch(err => {
         response(res, 500, false, "error", err)
@@ -31,7 +32,7 @@ exports.create_follower = async (req, res, next) => {
     if (user) {
         let following = await User.findOne({
             _id: req.body.following
-        }).select("password").exec().catch(err=> response(res, 409, false, "following n'existe pas", err))
+        }).select(" _id firstName lastName profileImage").exec().catch(err=> response(res, 409, false, "following n'existe pas", err))
         if(following){
             const follower = new Follower({
                 _id: mongoose.Types.ObjectId(),

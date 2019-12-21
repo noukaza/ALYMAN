@@ -96,7 +96,10 @@ exports.get_user_by_id = async (req, res, next) => {
             _id: req.params.id
         })
         .select("_id firstName lastName profileImage bio email followers followings")
-        .populate("followers ")
+        .populate({
+            path: 'followers',
+            model: 'Follower'
+        })
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
 
