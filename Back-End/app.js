@@ -64,12 +64,12 @@ app.use((req, res, next) => {
 });
 
 /* filter routes*/
-app.use('/', (req, res) => res.redirect(swaggerDocRoute)); // redirect to swagger doc 
 app.use('/users', usersRoutes); // url : /users
 app.use('/followers', followersRoutes); // url : /followers
 app.use('/likes', likesRoutes); // url : /likes
 app.use('/images', imagesRoutes); // url : /images
 app.use('/comments', commentsRoutes) // url : comments
+app.use('/', (req, res) => res.redirect(swaggerDocRoute)); // redirect to swagger doc 
 
 /* catch unfound routes */
 app.use((req, res, next) => {
