@@ -21,7 +21,6 @@ exports.get_all_followers = async (req, res, next) => {
 }
 
 exports.create_follower = async (req, res, next) => {
-    //TODO test that we dont have duplicat data 
     const id = req.userData._id;
     let user = await  User
     .findOne({_id: id})
@@ -40,13 +39,7 @@ exports.create_follower = async (req, res, next) => {
                 following: following,
                 create_at: req.body.create_at
             })
-            follow = await follower.save()
-
-            // user.followers.push(follower) 
-            // await user.save();
-            
-            // following.followings.push(user);
-            // await following.save()
+            follow = await follower.save();
 
             response(res, 201, true, "successful operation", follow)
         }
