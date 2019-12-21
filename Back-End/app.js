@@ -26,10 +26,13 @@ const swaggerConfig = {
             title: "LYMAN",
             description: "instagrame ",
             contact: {
-                name: "instagram"
+                email: "apiteam@lyman.com"
             },
-            servers: ["http://localhost:3001"]
-        }
+            version: "1.0.0",
+        },
+        host: "localhost:"+process.env.PORT ,
+        basePath: "/",
+        schemes:["https","http"]
     },
     apis: ["./routes/*.js", "./configurations/*.js"]
 }
