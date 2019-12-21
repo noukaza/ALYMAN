@@ -14,7 +14,10 @@ exports.get_all_followers = async (req, res, next) => {
     .catch(err =>{
         response(res, 404, false, "error", err)
     })
-    response(res, 200, true, "successful operation", followers)
+    // TODO change message 
+    followers.length === 0
+    ? response(res, 404, false, " 404 ") 
+    : response(res, 200, true, "successful operation", followers)
 }
 
 exports.create_follower = async (req, res, next) => {
@@ -29,7 +32,7 @@ exports.create_follower = async (req, res, next) => {
     if (user) {
         let following = await User.findOne({
             _id: req.body.following
-        }).exec().catch(err=> response(res, 409, false, "following n'existe pas", err))
+        }).select("password").exec().catch(err=> response(res, 409, false, "following n'existe pas", err))
         if(following){
             const follower = new Follower({
                 _id: mongoose.Types.ObjectId(),
@@ -39,11 +42,11 @@ exports.create_follower = async (req, res, next) => {
             })
             follow = await follower.save()
 
-            user.followers.push(follower) 
-            await user.save();
+            // user.followers.push(follower) 
+            // await user.save();
             
-            following.followings.push(user);
-            await following.save()
+            // following.followings.push(user);
+            // await following.save()
 
             response(res, 201, true, "successful operation", follow)
         }
