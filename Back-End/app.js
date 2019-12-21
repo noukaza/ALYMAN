@@ -13,6 +13,7 @@ const commentsRoutes = require("./routes/comments");
 const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
+const queriesRoutes = require('./routes/queries');
 
 const swaggerDocRoute = process.env.SWAGGER_DOC_ROUTE;
 const response = require("./configurations/responsesTempalte");
@@ -69,6 +70,7 @@ app.use('/followers', followersRoutes); // url : /followers
 app.use('/likes', likesRoutes); // url : /likes
 app.use('/images', imagesRoutes); // url : /images
 app.use('/comments', commentsRoutes) // url : comments
+app.use('/q',queriesRoutes); // url : queries
 app.use('/', (req, res) => res.redirect(swaggerDocRoute)); // redirect to swagger doc 
 
 /* catch unfound routes */
