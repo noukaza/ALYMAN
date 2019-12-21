@@ -32,7 +32,7 @@ const swaggerConfig = {
         },
         host: "localhost:"+process.env.PORT ,
         basePath: "/",
-        schemes:["https","http"]
+        schemes:["http","https"]
     },
     apis: ["./routes/*.js", "./configurations/*.js"]
 }
