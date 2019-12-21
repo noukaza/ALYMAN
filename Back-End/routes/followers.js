@@ -3,6 +3,7 @@ const router = express.Router();
 
 const followersController = require("../controllers/followers");
 const check_auth = require("../middleware/check_auth");
+const followerMiddleware = require("../middleware/followers");
 
 
 /* GET method */
@@ -37,7 +38,7 @@ router.get("/", followersController.get_all_followers);
  *         schema:
  *           $ref: '#/definitions/Follower'
  */
- router.post("/", check_auth,  followersController.create_follower);
+ router.post("/", check_auth, followerMiddleware.followAlreadyExists, followersController.create_follower);
  /** 
  * @swagger
  * /followers/{id}:

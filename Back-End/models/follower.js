@@ -27,12 +27,18 @@ followerSchema.post('validate', function () {
 
 });
 followerSchema.pre('save', function () {
+    // return new Promise((resolve, reject) => {
+    //     reject(new Error('something went wrong'));
+    //   });
+    // throw new Error('something went wrong');
 
     //PreSave
 });
 followerSchema.post('save', async function () {
+    // throw new Error('something went wrong');
+
     //postSave
-    console.log(this)
+   // console.log(this)
 
 });
 
