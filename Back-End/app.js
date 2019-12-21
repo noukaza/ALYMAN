@@ -14,12 +14,11 @@ const followersRoutes = require("./routes/followers");
 const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 
-
+const swaggerDocRoute = process.env.SWAGGER_DOC_ROUTE;
 const response = require("./configurations/responsesTempalte");
 const configMongo = require('./configurations/mognodb')
 
 mongoose.connect(configMongo.mongoUri, configMongo.option);
-
 
 const swaggerConfig = {
     swaggerDefinition: {
@@ -32,17 +31,19 @@ const swaggerConfig = {
             servers: ["http://localhost:3001"]
         }
     },
-    apis: ["./routes/*.js","./configurations/*.js"]
+    apis: ["./routes/*.js", "./configurations/*.js"]
 }
 const swagerDocs = swaggerJsDoc(swaggerConfig)
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swagerDocs));
+app.use(swaggerDocRoute, swaggerUi.serve, swaggerUi.setup(swagerDocs));
 
 /* use morgan*/
 app.use(morgan("dev"));
 app.use('/uploads', express.static("uploads"))
 
 /* use body-parser*/
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
 
 /* allow cors */
@@ -51,12 +52,6 @@ app.use((req, res, next) => {
     res.header(
         'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    /* or allow all
-    /*
-    res.header(
-        'Access-Control-Allow-Headers',
-        '*');
-    */
 
     /* config allow methods  */
     if (req.method === 'OPTIONS') {
@@ -66,11 +61,12 @@ app.use((req, res, next) => {
 });
 
 /* filter routes*/
-app.use('/users', usersRoutes);               // url : /users
-app.use('/followers', followersRoutes);       // url : /followers
-app.use('/likes', likesRoutes);               // url : /likes
-app.use('/images', imagesRoutes);             // url : /images
-app.use('/comments', commentsRoutes)          // url : comments
+app.use('/', (req, res) => res.redirect(swaggerDocRoute)); // redirect to swagger doc 
+app.use('/users', usersRoutes); // url : /users
+app.use('/followers', followersRoutes); // url : /followers
+app.use('/likes', likesRoutes); // url : /likes
+app.use('/images', imagesRoutes); // url : /images
+app.use('/comments', commentsRoutes) // url : comments
 
 /* catch unfound routes */
 app.use((req, res, next) => {
@@ -80,9 +76,7 @@ app.use((req, res, next) => {
 
 /* respons errors */
 app.use((error, req, res, next) => {
-
-    response(res, 500, false, error.message )
-
+    response(res, 500, false, error.message)
 });
 
 module.exports = app;
