@@ -55,11 +55,12 @@ exports.delets_user = (req, res, next) => {
 
 
 exports.login_user = async (req, res, next) => {
+    console.log(req.body)
     let user = await User.find({
         email: req.body.email
     }).exec().catch(err => response(res, 500, false, "Auth failed", err));
     if (user.length < 1) {
-        response(res, 401, false, "Auth failed", err)
+        response(res, 401, false, "Auth failed")
     } else {
         bcrypt.compare(req.body.password, user[0].password, (err, result) => {
             err ? response(res, 401, false, "Auth failed", err) : null;
@@ -75,7 +76,7 @@ exports.login_user = async (req, res, next) => {
                     token
                 })
             } else {
-                response(res, 401, false, "Auth failed", err)
+                response(res, 401, false, "Auth failed")
             }
 
         })
@@ -85,12 +86,12 @@ exports.login_user = async (req, res, next) => {
 
 exports.get_all_user = async (req, res, next) => {
     let users = await User.find().select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
-    (users.length === 0)
-    ? response(res, 404, false, "Zero user find")
-    : response(res, 200, true, "successful operation", users)
+    (users.length === 0) ?
+    response(res, 404, false, "Zero user find"): response(res, 200, true, "successful operation", users)
 }
 
 exports.get_user_by_id = async (req, res, next) => {
+
     let user = await User
         .find({
             _id: req.params.id
@@ -103,30 +104,27 @@ exports.get_user_by_id = async (req, res, next) => {
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
 
-    (user.length === 0) 
-    ? response(res, 404, false, "can't find user") 
-    : response(res, 200, true, "successful operation", user)
+    (user.length === 0) ?
+    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", user)
 }
 
 exports.get_follower_for_user = async (req, res, next) => {
     let follower = await Follower.find({
-            followers: req.params._id
+            follower: req.params.id
         })
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-    (follower.length === 0 ) 
-    ? response(res, 404, false, "can't find user")
-    : response(res, 200, true, "successful operation", follower);
+    (follower.length === 0) ?
+    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", follower);
 }
 
 
 exports.get_followings_for_user = async (req, res, next) => {
-    let following = await Follower.find({
-            followings: req.params._id
+    let follower = await Follower.find({
+            following: req.params.id
         })
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-    (following.length === 0)
-    ? response(res, 404, false, "can't find user")
-    : response(res, 200, true, "successful operation", following);
+    (follower.length === 0) ?
+    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", follower);
 }
