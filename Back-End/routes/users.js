@@ -150,7 +150,7 @@ router.post("/login", userController.login_user)
  *            404:
  *               description: "User not found"
  */
-router.get('/', userController.get_all_user)
+router.get('/', chekauth, userController.get_all_user)
 /**
  * @swagger
  * /users/{id}:
