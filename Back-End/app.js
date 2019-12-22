@@ -6,8 +6,6 @@ const bodyParser = require('body-parser');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const mongoose = require("mongoose");
-const gitVersion = require('git-tag-version');
-const versionGit = gitVersion().split("-")[0];
 
 /* import routes */
 const usersRoutes = require("./routes/users");
@@ -20,25 +18,10 @@ const queriesRoutes = require('./routes/queries');
 const swaggerDocRoute = process.env.SWAGGER_DOC_ROUTE;
 const response = require("./configurations/responsesTempalte");
 const configMongo = require('./configurations/mognodb')
+const swaggerConfig = require("./configurations/swaggerConfig");
 
 mongoose.connect(configMongo.mongoUri, configMongo.option);
 
-const swaggerConfig = {
-    swaggerDefinition: {
-        info: {
-            title: "LYMAN",
-            description: "instagrame ",
-            contact: {
-                email: "apiteam@lyman.com"
-            },
-            version: versionGit,
-        },
-        host: "localhost:"+process.env.PORT ,
-        basePath: "/",
-        schemes:["http","https"]
-    },
-    apis: ["./routes/*.js", "./configurations/*.js"]
-}
 const swagerDocs = swaggerJsDoc(swaggerConfig)
 app.use(swaggerDocRoute, swaggerUi.serve, swaggerUi.setup(swagerDocs));
 
