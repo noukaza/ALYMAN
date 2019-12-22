@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const mongoose = require("mongoose");
+const gitVersion = require('git-tag-version');
+const versionGit = gitVersion().split("-")[0];
 
 /* import routes */
 const usersRoutes = require("./routes/users");
@@ -29,7 +31,7 @@ const swaggerConfig = {
             contact: {
                 email: "apiteam@lyman.com"
             },
-            version: "1.0.0",
+            version: versionGit,
         },
         host: "localhost:"+process.env.PORT ,
         basePath: "/",
