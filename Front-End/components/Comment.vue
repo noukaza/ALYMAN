@@ -1,6 +1,6 @@
 <template>
 <div>
-<b-container v-show="istrue" class="clearfix">
+<b-container v-if="show" class="clearfix" style="padding: 10px 0px 10px 0px">
   <b-row>
     <b-col cols="1">
         <b-img  v-bind="mainProps" v-bind:src="images" rounded="circle" alt="Circle image"></b-img>
@@ -11,7 +11,7 @@
     <b-col cols="1"></b-col>
    <b-col cols="2" md="auto">{{ this.descriptions }}</b-col>
     <b-col cols="1"><font-awesome-icon icon="pencil-alt"/></b-col>
-    <b-col cols="1"><font-awesome-icon icon="trash-alt" v-on:click="istrue = !istrue"/></b-col>
+    <b-col cols="1"><font-awesome-icon icon="trash-alt" v-on:click="show = false"/></b-col>
   </b-row>
 </b-container>
 </div>
@@ -31,9 +31,10 @@
        blankColor: '#777',
        width: 30,
        height: 30,
-       class: 'align-middle' },
-      //TODO :  we don't use date to set css pram
-       istrue:true
+       padding:"10px 0px 10px 0px",
+       class: 'align-middle'
+       },
+       show:true
 
 
 

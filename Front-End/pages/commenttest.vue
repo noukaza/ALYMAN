@@ -11,7 +11,7 @@
     },
     data: function () {
       return {
-        image: "Pictures/fond.jpg",
+        image: "Pictures/liti.jpg",
         username: "Litissia",
         description: "Ceci est un commentaire"
       }
