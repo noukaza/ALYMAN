@@ -55,7 +55,6 @@ exports.delets_user = (req, res, next) => {
 
 
 exports.login_user = async (req, res, next) => {
-    console.log(req.body)
     let user = await User.find({
         email: req.body.email
     }).exec().catch(err => response(res, 500, false, "Auth failed", err));
