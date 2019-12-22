@@ -15,18 +15,22 @@ const imagesRoutes = require("./routes/images");
 const likesRoutes = require("./routes/likes");
 const queriesRoutes = require('./routes/queries');
 
+/* import config */
 const swaggerDocRoute = process.env.SWAGGER_DOC_ROUTE;
 const response = require("./configurations/responsesTempalte");
 const configMongo = require('./configurations/mognodb')
 const swaggerConfig = require("./configurations/swaggerConfig");
 
+/* Connect to BDD */
 mongoose.connect(configMongo.mongoUri, configMongo.option);
 
-const swagerDocs = swaggerJsDoc(swaggerConfig)
-app.use(swaggerDocRoute, swaggerUi.serve, swaggerUi.setup(swagerDocs));
+/* init swagger */
+app.use(swaggerDocRoute, swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerConfig)));
 
 /* use morgan*/
 app.use(morgan("dev"));
+
+/* allow access to /uploads route */
 app.use('/uploads', express.static("uploads"))
 
 /* use body-parser*/
