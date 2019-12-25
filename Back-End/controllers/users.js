@@ -75,9 +75,10 @@ exports.login_user = async (req, res, next) => {
                     process.env.JWT_KEY, {
                         expiresIn: "1 days"
                     })
-                response(res, 200, true, "Auth successful", {
-                    token
-                })
+                    res.status(200).json({token})
+                // response(res, 200, true, "Auth successful", {
+                    // token
+                // })
             } else {
                 response(res, 401, false, "Auth failed")
             }
@@ -88,7 +89,8 @@ exports.login_user = async (req, res, next) => {
 }
 
 exports.get_all_user = async (req, res, next) => {
-    let users = await User.find().select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
+    const ID = req.userData._id
+    let users = await User.findOne({_id : ID}).select("_id firstName bio lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
     (users.length === 0) ?
     response(res, 404, false, "Zero user find"): response(res, 200, true, "successful operation", users)
 }
