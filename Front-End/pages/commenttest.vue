@@ -1,12 +1,14 @@
 <template>
 
-  <Comment :images="image" :username="username" :descriptions="description"></Comment>
+  <CommentSaisie :images="image" :username="username" :descriptions="description"></CommentSaisie>
 </template>
 
 <script>
   import Comment from "../components/publication/Comment";
+  import CommentSaisie from "../components/publication/CommentSaisie";
   export default {
     components: {
+      CommentSaisie,
       Comment
     },
     data: function () {
