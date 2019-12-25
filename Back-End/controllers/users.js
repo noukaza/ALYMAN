@@ -13,11 +13,15 @@ exports.create_user = (req, res, next) => {
         if (err) {
             response(res, 500, false, "error", err)
         } else {
+            let filePath = process.env.DEFAULT_PORFIL_IMAGE;
+            try {
+                filePath = req.file.path
+            } catch (e) {}
             const user = new User({
                 _id: mongoose.Types.ObjectId(),
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                profileImage: req.file.path,
+                profileImage: filePath,
                 bio: req.body.bio,
                 email: req.body.email,
                 password: hash

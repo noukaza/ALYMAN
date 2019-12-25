@@ -8,6 +8,7 @@
         "MONGODB_DATA": "preprod",
         "SWAGGER_DOC_ROUTE": "/doc",
         "JWT_KEY": "KEY",
-        "PORT": "3000"
+        "PORT": "3000",
+        "DEFAULT_PORFIL_IMAGE" : "/uploads/default/profil.png"
     }
 }
