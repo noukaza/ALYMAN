@@ -1,6 +1,5 @@
 <template>
-<div class="container">
-  <b-modal id="modal-1" title="EditProfil">
+
   <div class="Col">
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
@@ -63,8 +62,7 @@
        </b-form>
 
   </div>
-  </b-modal>
-  </div>
+  
 </template>
 
 <script>
