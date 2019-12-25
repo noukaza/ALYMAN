@@ -60,6 +60,12 @@ export default {
         // tokenRequired: true,
         // tokenType: 'bearer'
       }
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/login',
+      home: '/'
     }
     // Options
   },

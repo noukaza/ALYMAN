@@ -19,7 +19,7 @@
             </div>
           </b-col>
         </b-row>
-        <p>Azul fellawen nekk dachikour nwen marra merci bisous au revoir, m3adnouss tikerkass tidak nni akk ouhh dizzan yawdii mais wichqa</p>
+        <p>{{ $auth.user.bio }}</p>
       </b-col>
     </b-row>
     <b-row class="mb-3">

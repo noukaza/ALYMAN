@@ -17,6 +17,7 @@
 import ProfileInfo from '~/components/ProfileInfo.vue'
 
 export default {
+  middleware : "auth",
   components:{
      ProfileInfo
   },
