@@ -1,5 +1,7 @@
 <template>
   <div>
+    mohand.ameziane.messaoui@gmail.com
+    {{ this.$store.state.token}}
     <ProfileInfo></ProfileInfo>
   </div>
     <!--<b-img

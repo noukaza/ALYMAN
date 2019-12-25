@@ -1,7 +1,10 @@
 <template>
 
   <div class="Col">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <div class="alert alert-danger" role="alert"  v-if="show">
+        {{messageError}}  
+      </div>
+      <b-form @submit="onSubmit" @reset="onReset">
 
         <b-form-group id="input-group-2" label="Your firstName*:" label-for="input-2" class="Row">
           <b-form-input
@@ -76,7 +79,8 @@
           password:'',
           file: null,
         },
-        show: true
+        show: false,
+        messageError : "",
       }
     },
     methods: {
@@ -98,12 +102,13 @@
                     'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaG1vaEBnbWFpbC5jb20iLCJfaWQiOiI1ZGMzMGMxODVlYTVjYjAzMDhjMTY5OGYiLCJpYXQiOjE1NzMyOTcyMTAsImV4cCI6MTU3MzM4MzYxMH0.tfwFHmoxxC6qqlZ2aJTokW2UJq5beMQsRJzxOPubf4s"
                 }
             }
-         this.$axios.put(`http://localhost:3000/users`, data,configHeader)
+         this.$axios.put(`http://5484d604.ngrok.io/users`, data,configHeader)
             .then(response => {
               console.log(response)
             })
             .catch(e => {
-                
+                this.messageError = e.response.data.message;
+                 this.show = true;
           })
         }
       },

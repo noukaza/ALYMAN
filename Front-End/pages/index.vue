@@ -2,11 +2,15 @@
 <template>
   
   <div class="container">
-    <div class="row">
+    <div class="Row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
     <img style="width: 500px" src="~/assets/Logo/logo.png">
       </div>
+      <div class="alert alert-danger" role="alert"  v-if="show" >
+        {{messageError}}  
     </div>
+    </div>
+    
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
@@ -44,22 +48,30 @@ export default {
     return {
       email:"",
       password : "",
-      token : ""
+      token : "",
+       show: false,
+      messageError : ""
     }
   },
   methods: {
     login(e){
       e.preventDefault();
-      this.$axios.post("http://localhost:3000/users/login",
+      this.$axios.post("http://5484d604.ngrok.io/users/login",
       {
         email : this.email,
         password :  this.password
       }
       ).then(e => {
-        this.token = e.data.token;
-        this.email = "",
-        this.password =""
+        this.token = e.data.data.token;
+        this.email = "";
+        this.password ="";
+        window.location.href = "/profile";
       })
+      .catch(er => {
+              console.log(er.response)
+                 this.messageError = er.response.data.message;
+                 this.show = true;
+          })
 
     }
   },

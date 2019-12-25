@@ -9,7 +9,7 @@
       </div>
       <div class="alert alert-danger" role="alert"  v-if="show">
         {{messageError}}  
-    </div>
+      </div>
       <b-form @submit="onSubmit" @reset="onReset">
 
         <b-form-group id="input-group-2" label="Your firstName*:" label-for="input-2" class="Row">
