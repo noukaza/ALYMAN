@@ -56,22 +56,28 @@ export default {
   methods: {
     login(e){
       e.preventDefault();
-      this.$axios.post("http://5484d604.ngrok.io/users/login",
-      {
-        email : this.email,
+      this.$auth.loginWith("local",{
+         email : this.email,
         password :  this.password
-      }
-      ).then(e => {
-        this.token = e.data.data.token;
-        this.email = "";
-        this.password ="";
-        window.location.href = "/profile";
       })
-      .catch(er => {
-              console.log(er.response)
-                 this.messageError = er.response.data.message;
-                 this.show = true;
-          })
+
+
+      // this.$axios.post("http://5484d604.ngrok.io/users/login",
+      // {
+      //   email : this.email,
+      //   password :  this.password
+      // }
+      // ).then(e => {
+      //   this.token = e.data.data.token;
+      //   this.email = "";
+      //   this.password ="";
+      //   window.location.href = "/profile";
+      // })
+      // .catch(er => {
+      //         console.log(er.response)
+      //            this.messageError = er.response.data.message;
+      //            this.show = true;
+      //     })
 
     }
   },
