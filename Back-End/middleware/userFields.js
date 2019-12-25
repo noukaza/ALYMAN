@@ -9,7 +9,7 @@ exports.ValidPassword = (req, res, next) => {
     if (password.length < 16 && password.length > 6){ //TODO find regx for password 
         next()
     }else{
-        response(res,500,false,"error invalid password") ;//TODO : chagne message
+        response(res,409,false,"error invalid password") ;//TODO : chagne message
     }
 
 }
