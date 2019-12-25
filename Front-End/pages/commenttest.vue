@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  import Comment from "../components/Comment";
+  import Comment from "../components/publication/Comment";
   export default {
     components: {
       Comment
