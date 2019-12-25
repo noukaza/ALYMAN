@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const chekauth = require("../middleware/check_auth");
 const chekUser = require("../middleware/check_user");
+const userFeild = require("../middleware/userFields");
+
+
 /**
  * Upload middleware
  */
@@ -61,6 +64,7 @@ router.post(
     "/",
     upload.single("profileImage"),
     chekUser.notUsedEmail,
+    userFeild.ValidPassword,
     userController.create_user
 );
 
