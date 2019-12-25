@@ -104,7 +104,7 @@
          data.append("email",this.form.email);
          data.append("password",this.form.password);
          data.append("profileImage",this.form.file);
-         this.$axios.post(`http://5484d604.ngrok.io/users`, data)
+         this.$axios.post(`http://b601fad9.ngrok.io/users`, data)
 
             .then(res => {
                 window.location.href = "/"

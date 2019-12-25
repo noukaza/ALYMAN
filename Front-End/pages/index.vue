@@ -10,7 +10,6 @@
         {{messageError}}  
     </div>
     </div>
-    
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
@@ -57,8 +56,12 @@ export default {
     login(e){
       e.preventDefault();
       this.$auth.loginWith("local",{
-         email : this.email,
-        password :  this.password
+        data:{
+          email : this.email,
+          password :  this.password
+        }
+      }).then(e =>{
+        window.location.href = "/profile";
       })
 
 

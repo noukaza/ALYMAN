@@ -2,12 +2,13 @@
   <b-container class="bv-example-row mt-5">
     <b-row class="justify-content-md-center">
       <b-col col lg="2">
-        <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
+                    <b-img rounded="circle" alt="Circle image" v-bind:src= "'http://b601fad9.ngrok.io/'+$auth.user.profileImage" style = "width : 100% ; heitgh : 100%"></b-img>
+
       </b-col>
       <b-col>
         <b-row>
           <b-col sm="8">
-            <h2>Yanis King</h2>
+            <h2>{{$auth.user.firstName}} {{$auth.user.lastName}}</h2>
           </b-col>
           <b-col sm="4">
             <b-button v-b-modal.modal-1>Edit profile</b-button>

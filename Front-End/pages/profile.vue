@@ -1,6 +1,6 @@
 <template>
   <div>
-    mohand.ameziane.messaoui@gmail.com
+    {{ $auth.user }}
     <ProfileInfo></ProfileInfo>
   </div>
     <!--<b-img
