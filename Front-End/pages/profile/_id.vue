@@ -8,15 +8,13 @@
 
 <script>
 import ProfileInfo from '~/components/ProfileInfo.vue'
- import axios from "@nuxtjs/axios";
+import axios from "@nuxtjs/axios";
 export default {
- // middleware : "auth",
-  mounted:()=>{
-     // console.log($route )
-     //this.$axios.get("/users/5e03642d7a37c61cba3dde7b" ).then(e => console.log("hi")).catch(e => console.log("error"));
+  // middleware : "auth",
+  mounted: () => {
   },
-  components:{
-     ProfileInfo
+  components: {
+    ProfileInfo
   }
 }
 </script>

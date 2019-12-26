@@ -11,7 +11,9 @@
 // import axios from "@nuxtjs/axios";
 import login from "~/components/login";
 export default {
-  components:{login},
+  components: {
+    login
+  },
 
 }
 

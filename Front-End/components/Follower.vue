@@ -21,45 +21,41 @@
 </template>
 
 <script>
+export default {
+  props: ['type'],
+  data() {
+    return {
 
-  export default {
-    props:['type'],
-    data() {
-      return {
-
-        dataFollowers : [{
-          id:"5e03a64b98f0cc23e95620b9",
-          lastName : "messaoui",
-          firstName : "mohand",
-          images : "https://picsum.photos/125/125/?image=58"
+      dataFollowers: [{
+          id: "5e03a64b98f0cc23e95620b9",
+          lastName: "messaoui",
+          firstName: "mohand",
+          images: "https://picsum.photos/125/125/?image=58"
         },
         {
-          id:"5e03a64b98f0cc23e95620b9",
-          lastName : "messaoui",
-          firstName : "mohand",
-          images : "https://picsum.photos/125/125/?image=58"
+          id: "5e03a64b98f0cc23e95620b9",
+          lastName: "messaoui",
+          firstName: "mohand",
+          images: "https://picsum.photos/125/125/?image=58"
         },
         {
-          id:"5e03a64b98f0cc23e95620b9",
-          lastName : "messaoui",
-          firstName : "mohand",
-          images : "https://picsum.photos/125/125/?image=58"
+          id: "5e03a64b98f0cc23e95620b9",
+          lastName: "messaoui",
+          firstName: "mohand",
+          images: "https://picsum.photos/125/125/?image=58"
         }
-        ],
-      }
-    },
-    methods: {
-      onSubmit(evt) {
-        },
+      ],
+    }
+  },
+  methods: {
+    onSubmit(evt) {},
     onDelete(index) {
-       alert(this.type)
-       this.$delete(this.dataFollowers,index)
-       },
-    redirect(index){
-       this.$router.push("/profile/"+this.dataFollowers[index].id)
+      alert(this.type)
+      this.$delete(this.dataFollowers, index)
+    },
+    redirect(index) {
+      this.$router.push("/profile/" + this.dataFollowers[index].id)
     }
-
-    }
-      
   }
+}
 </script>
