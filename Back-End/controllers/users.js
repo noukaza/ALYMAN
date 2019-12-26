@@ -75,7 +75,6 @@ exports.login_user = async (req, res, next) => {
                     process.env.JWT_KEY, {
                         expiresIn: "1 days"
                     })
-                    // res.status(200).json({token})
                 response(res, 200, true, "Auth successful", {
                     token
                 })
