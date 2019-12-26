@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-     <b-modal id="modal-1" title="follower">
+     
       <li v-for="(dataFollower,index) in dataFollowers">
         <b-row>
           <b-col>
@@ -16,7 +16,7 @@
           </b-col>
         </b-row>
         </li>
-       </b-modal>
+       
   </div>
 </template>
 
@@ -53,8 +53,9 @@
       onSubmit(evt) {
         },
     onDelete(index) {
+       alert(this.type)
        this.$delete(this.dataFollowers,index)
-        alert(this.dataFollowers[index].lastName)
+       
         
         
     }
