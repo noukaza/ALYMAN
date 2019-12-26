@@ -49,7 +49,7 @@ export default {
     onSubmit(evt) {},
     onDelete(index) {
       alert(this.type)
-      this.$axios.delete("/" + $this.type + "/" + this.dataFollowers[index]._id).then(_ => {
+      this.$axios.delete("/" + this.type + "/" + this.dataFollowers[index]._id).then(_ => {
         this.$delete(this.dataFollowers, index)
       })
 
