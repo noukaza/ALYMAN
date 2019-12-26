@@ -74,7 +74,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL:"http://b601fad9.ngrok.io/"
+    baseURL:"http://dev.local:3000"
   },
   /*
   ** Build configuration

@@ -1,6 +1,6 @@
 <template>
-  <div> {{$route.params.id }}
-    <ProfileInfo ></ProfileInfo>
+  <div> 
+    <ProfileInfo :iduser="$route.params.id"></ProfileInfo>
   </div>
 
 </template>

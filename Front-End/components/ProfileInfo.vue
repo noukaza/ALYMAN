@@ -2,13 +2,13 @@
   <b-container class="bv-example-row mt-5">
     <b-row class="justify-content-md-center">
       <b-col col lg="2">
-                    <b-img rounded="circle" alt="Circle image" v-bind:src= "'http://b601fad9.ngrok.io/'+$auth.user.profileImage" style = "width : 100% ; heitgh : 100%"></b-img>
+                    <b-img rounded="circle" alt="Circle image" src= "http://b601fad9.ngrok.io/" style = "width : 100% ; heitgh : 100%"></b-img>
 
       </b-col>
       <b-col>
         <b-row>
           <b-col sm="8">
-            <h2>{{$auth.user.firstName}} {{$auth.user.lastName}}</h2>
+            <h2>{{this.user}}</h2>
           </b-col>
           <b-col sm="4">
             <b-button v-b-modal.modal-1>Edit profile</b-button>
@@ -19,7 +19,7 @@
             </div>
           </b-col>
         </b-row>
-        <p>{{ $auth.user.bio }}</p>
+        <p></p>
       </b-col>
     </b-row>
     <b-row class="mb-3">
@@ -49,34 +49,31 @@ export default {
   components: {
     EditProfil
   },
-  
+  props: ['user', 'iduser'],
   data() {
     return {
-      mainProps: {
-        blank: true,
-        blankColor: '#777',
-        width: 100,
-        height: 100,
-        class: 'm1'
-      }
+      username: "",
     }
   },
   methods: {
-      onSubmit(evt) {
-        var configHeader = {
-      headers: {
+    onSubmit(evt) {
+      var configHeader = {
+        headers: {
           'accept': 'application/json',
           'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaG1vaEBnbWFpbC5jb20iLCJfaWQiOiI1ZGMzMGMxODVlYTVjYjAzMDhjMTY5OGYiLCJpYXQiOjE1NzMyOTcyMTAsImV4cCI6MTU3MzM4MzYxMH0.tfwFHmoxxC6qqlZ2aJTokW2UJq5beMQsRJzxOPubf4s"
+        }
       }
+      this.$axios.put(`http://localhost:3000/users`, data, configHeader)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(e => {
+
+        })
+    },
+  },
+  mounted:()=>{
+    // console.log(this.user)
   }
-         this.$axios.put(`http://localhost:3000/users`, data,configHeader)
-            .then(response => {
-              console.log(response)
-            })
-            .catch(e => {
-                
-          })
-      },
-}
 }
 </script>
