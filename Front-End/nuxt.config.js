@@ -53,7 +53,7 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/users/login', method: 'post', propertyName: 'token' },
+          login: { url: '/users/login', method: 'post', propertyName: 'data.token' },
           logout: { url: '/api/auth/logout', method: 'post' },
           user: { url: '/users/', method: 'get', propertyName: 'data' }
         },
@@ -74,7 +74,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL:"http://dev.local:3000"
+    baseURL:"http://41584f23.ngrok.io/"
   },
   /*
   ** Build configuration

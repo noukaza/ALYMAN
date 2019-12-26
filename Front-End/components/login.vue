@@ -55,18 +55,20 @@ export default {
   methods: {
     login(e) {
       e.preventDefault();
-      try {
         this.$auth.loginWith("local", {
           data: {
             email: this.email,
             password: this.password
           }
         })
-        this.$router.push("/profile")
-      }catch(e){
-          console.log("hi")
-      }
-
+        .then(data => {
+          this.$router.push("/profile")
+        })
+        .catch(e =>{
+          this.messageError = e.response.data.message;
+          this.show = true;
+        })
+   
 
     }
   },
