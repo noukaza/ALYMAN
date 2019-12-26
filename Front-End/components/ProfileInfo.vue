@@ -33,7 +33,7 @@
              <Label v-b-modal.modal-2 style="font-weight:bold; display:inline; margin-right:120px">Follower</Label>
             <div class="container">
               <b-modal id="modal-2" title="Follower">
-                <Follower  type = "follower"></Follower>
+                <Follower  type = "followers" :userId="iduser? iduser: user._id"></Follower>
               </b-modal>
             </div>
           </b-col>
@@ -41,7 +41,7 @@
             <Label v-b-modal.modal-3 style="font-weight:bold; display:inline; margin-right:120px">Following</Label>
             <div class="container">
               <b-modal id="modal-3" title="Following">
-                <Follower></Follower>
+                <Follower type = "followings" :userId="iduser? iduser: user._id" ></Follower>
               </b-modal>
             </div>
           </b-col>
