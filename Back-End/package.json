@@ -6,14 +6,18 @@
   "repository": "https://git-etudiants.lacl.fr/restProjet2019/litissia-negaa-yanis-tagherset-mohand-ameziane-messaoui-noureddine-amrane",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "author": "namrane",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "git-tag-version": "^1.3.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.3",
     "morgan": "^1.9.1",

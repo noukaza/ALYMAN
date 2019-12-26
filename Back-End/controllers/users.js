@@ -2,19 +2,26 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 const response = require("../configurations/responsesTempalte");
 const User = require("../models/user");
+const Follower = require('../models/follower');
 
+// TODO make this func async 
 exports.create_user = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
             response(res, 500, false, "error", err)
         } else {
+            let filePath = process.env.DEFAULT_PORFIL_IMAGE;
+            try {
+                filePath = req.file.path
+            } catch (e) {}
             const user = new User({
                 _id: mongoose.Types.ObjectId(),
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                profileImage: req.file.path,
+                profileImage: filePath,
                 bio: req.body.bio,
                 email: req.body.email,
                 password: hash
@@ -29,10 +36,9 @@ exports.create_user = (req, res, next) => {
                 })
         }
     });
-
-
 }
 
+// TODO make it async
 exports.delets_user = (req, res, next) => {
     if (req.userData._id === req.params.id) {
         User.remove({
@@ -52,68 +58,78 @@ exports.delets_user = (req, res, next) => {
 }
 
 
-exports.login_user = (req, res, next) => {
-    User.find({
-            email: req.body.email
-        }).exec()
-        .then(user => {
-            if (user.length < 1) {
-                response(res, 401, false, "Auth failed", err)
+exports.login_user = async (req, res, next) => {
+    let user = await User.find({
+        email: req.body.email
+    }).exec().catch(err => response(res, 500, false, "Auth failed", err));
+    if (user.length < 1) {
+        response(res, 401, false, "Auth failed")
+    } else {
+        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+            err ? response(res, 401, false, "Auth failed", err) : null;
+            if (result) {
+                const token = jwt.sign({
+                        email: user[0].email,
+                        _id: user[0]._id
+                    },
+                    process.env.JWT_KEY, {
+                        expiresIn: "1 days"
+                    })
+                    res.status(200).json({token})
+                // response(res, 200, true, "Auth successful", {
+                    // token
+                // })
             } else {
-                bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-                    if (err) {
-                        response(res, 401, false, "Auth failed", err)
-                    }
-                    if (result) {
-                        const token = jwt.sign({
-                                email: user[0].email,
-                                _id: user[0]._id
-                            },
-                            process.env.JWT_KEY, {
-                                expiresIn: "1 days"
-                            })
-
-                        response(res, 200, true, "Auth successful", {
-                            token
-                        })
-                    } else {
-                        response(res, 401, false, "Auth failed", err)
-                    }
-
-                })
+                response(res, 401, false, "Auth failed")
             }
 
         })
-        .catch(err => {
-            response(res, 500, false, "Auth failed", err)
-        })
-}
-
-exports.get_all_user = (req, res, next) => {
-    User
-        .find()
-        .select("_id firstName lastName profileImage bio email")
-        .exec()
-        .then(data => {
-            response(res, 200, true, "successful operation", data)
-        }).catch(err => {
-            response(res, 404, false, "errr", err)
-        })
+    }
 
 }
 
-exports.get_user_by_id = (req, res, next) => {
-    User
+exports.get_all_user = async (req, res, next) => {
+    const ID = req.userData._id
+    let users = await User.findOne({_id : ID}).select("_id firstName bio lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
+    (users.length === 0) ?
+    response(res, 404, false, "Zero user find"): response(res, 200, true, "successful operation", users)
+}
+
+exports.get_user_by_id = async (req, res, next) => {
+
+    let user = await User
         .find({
             _id: req.params.id
         })
-        .select("_id firstName lastName profileImage bio email")
+        .select("_id firstName lastName profileImage bio email followers followings")
+        .populate({
+            path: 'followers',
+            model: 'Follower'
+        })
         .exec()
-        .then(data => {
-            response(res, 200, true, "successful operation", data)
-        })
-        .catch(err => {
-            response(res, 404, false, "can't find user")
-        })
+        .catch(err => response(res, 404, false, "can't find user"));
 
+    (user.length === 0) ?
+    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", user)
+}
+
+exports.get_follower_for_user = async (req, res, next) => {
+    let follower = await Follower.find({
+            follower: req.params.id
+        })
+        .exec()
+        .catch(err => response(res, 404, false, "can't find user"));
+    (follower.length === 0) ?
+    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", follower);
+}
+
+
+exports.get_followings_for_user = async (req, res, next) => {
+    let follower = await Follower.find({
+            following: req.params.id
+        })
+        .exec()
+        .catch(err => response(res, 404, false, "can't find user"));
+    (follower.length === 0) ?
+    response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", follower);
 }
