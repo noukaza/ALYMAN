@@ -14,7 +14,7 @@
       @sliding-end="onSlideEnd"
     >
    
-      <b-carousel-slide v-for = "image in images">
+      <b-carousel-slide v-for = "image in images" v-bind:key="image">
         <template v-slot:img>
           <img
             class="d-block img-fluid w-100"

@@ -45,13 +45,36 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/auth'
+
   ],
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/users/login', method: 'post', propertyName: 'data.token' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/users/', method: 'get', propertyName: 'data' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    }
+    // Options
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL:"http://41584f23.ngrok.io/"
   },
   /*
   ** Build configuration

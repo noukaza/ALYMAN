@@ -1,13 +1,16 @@
 <template>
 <div class="container">
-
+  
   <div class="Col">
       <div class="row justify-content-md-center">
        <div class="Col Center">
              <b-img src="~/assets/Logo/logo.png" style="width :50%; height :auto"></b-img>
        </div>
       </div>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <div class="alert alert-danger" role="alert"  v-if="show">
+        {{messageError}}  
+      </div>
+      <b-form @submit="onSubmit" @reset="onReset">
 
         <b-form-group id="input-group-2" label="Your firstName*:" label-for="input-2" class="Row">
           <b-form-input
@@ -84,7 +87,8 @@
           confirmPassword:'',
           file: null,
         },
-        show: true
+        show: false,
+        messageError : ""
       }
     },
     methods: {
@@ -100,12 +104,14 @@
          data.append("email",this.form.email);
          data.append("password",this.form.password);
          data.append("profileImage",this.form.file);
-         this.$axios.post(`http://localhost:3000/users`, data)
-            .then(response => {
-              console.log(response)
+         this.$axios.post(`/users`, data)
+
+            .then(res => {
+                window.location.href = "/"
             })
             .catch(e => {
-                
+                 this.messageError = e.response.data.message;
+                 this.show = true;
           })
         }
       },

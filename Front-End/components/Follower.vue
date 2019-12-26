@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-     <b-modal id="modal-1" title="follower">
+     
       <li v-for="(dataFollower,index) in dataFollowers">
-        <b-row>
-          <b-col>
+        <b-row >
+          <b-col v-on:click="redirect(index)">
               <b-img rounded="circle" alt="Circle image" v-bind:src= "dataFollower.images" style = "width : 100% ; heitgh : 100%"></b-img>
           </b-col>
-          <b-col cols="8">
-            <span style= "font-size: 16px;">{{dataFollower.lastName + " " +dataFollower.firstName}}</span>
+          <b-col cols="8"  v-on:click="redirect(index)">
+             <span style= "font-size: 16px;">{{dataFollower.lastName + " " +dataFollower.firstName}}</span>
           </b-col>
           <b-col>
             <a v-on:click="onDelete(index)">
@@ -16,49 +16,46 @@
           </b-col>
         </b-row>
         </li>
-       </b-modal>
+       
   </div>
 </template>
 
 <script>
+export default {
+  props: ['type'],
+  data() {
+    return {
 
-  export default {
-    props:['type'],
-    data() {
-      return {
-
-        dataFollowers : [{
-          lastName : "messaoui",
-          firstName : "mohand",
-          images : "https://picsum.photos/125/125/?image=58"
+      dataFollowers: [{
+          id: "5e03a64b98f0cc23e95620b9",
+          lastName: "messaoui",
+          firstName: "mohand",
+          images: "https://picsum.photos/125/125/?image=58"
         },
         {
-          lastName : "messaoui",
-          firstName : "mohand",
-          images : "https://picsum.photos/125/125/?image=58"
+          id: "5e03a64b98f0cc23e95620b9",
+          lastName: "messaoui",
+          firstName: "mohand",
+          images: "https://picsum.photos/125/125/?image=58"
         },
         {
-          lastName : "messaoui",
-          firstName : "mohand",
-          images : "https://picsum.photos/125/125/?image=58"
+          id: "5e03a64b98f0cc23e95620b9",
+          lastName: "messaoui",
+          firstName: "mohand",
+          images: "https://picsum.photos/125/125/?image=58"
         }
-        ],
-      }
-    },
-   // mounted () {
-     // this.$axios.get('http://localhost:3000/users/')
-     // .then(response => (console.log(response.data)))
-  //},
-    methods: {
-      onSubmit(evt) {
-        },
-    onDelete(index) {
-       this.$delete(this.dataFollowers,index)
-        alert(this.dataFollowers[index].lastName)
-        
-        
+      ],
     }
-      }
-      
+  },
+  methods: {
+    onSubmit(evt) {},
+    onDelete(index) {
+      alert(this.type)
+      this.$delete(this.dataFollowers, index)
+    },
+    redirect(index) {
+      this.$router.push("/profile/" + this.dataFollowers[index].id)
+    }
   }
+}
 </script>
