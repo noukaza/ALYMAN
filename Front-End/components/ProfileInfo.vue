@@ -11,10 +11,10 @@
             <h2>{{this.user}}</h2>
           </b-col>
           <b-col sm="4">
-            <b-button v-b-modal.modal-1>Edit profile</b-button>
+            <font-awesome-icon icon="user-edit" v-b-modal.modal-1 style = "width :50% ; height : 50%"/>
             <div class="container">
               <b-modal id="modal-1" title="EditProfil">
-                <EditProfil></EditProfil>
+                <EditProfil  type = "follower"></EditProfil>
               </b-modal>
             </div>
           </b-col>
@@ -30,10 +30,20 @@
             <Label style="font-weight:bold; display:inline; margin-right:120px">Posts</Label>
           </b-col>
           <b-col>
-            <Label style="font-weight:bold; display:inline; margin-right:120px">Followers</Label>
+             <Label v-b-modal.modal-2 style="font-weight:bold; display:inline; margin-right:120px">Follower</Label>
+            <div class="container">
+              <b-modal id="modal-2" title="Follower">
+                <Follower  type = "follower"></Follower>
+              </b-modal>
+            </div>
           </b-col>
           <b-col>
-            <Label style="font-weight:bold; display:inline;">Following</Label>
+            <Label v-b-modal.modal-3 style="font-weight:bold; display:inline; margin-right:120px">Following</Label>
+            <div class="container">
+              <b-modal id="modal-3" title="Following">
+                <Follower></Follower>
+              </b-modal>
+            </div>
           </b-col>
         </b-row>
       </b-col>
@@ -44,10 +54,12 @@
 
 <script>
 import EditProfil from '~/components/EditProfil.vue'
+import Follower from '~/components/Follower.vue'
 
 export default {
   components: {
-    EditProfil
+    EditProfil,
+    Follower
   },
   props: ['user', 'iduser'],
   data() {
