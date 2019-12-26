@@ -5,7 +5,7 @@
         <b-col cols="1">
           <b-img class="comment" v-bind:src="images" rounded="circle" alt="Circle image"></b-img>
         </b-col>
-        <input type="text" class="saisir" v-model="msg" placeholder="Votre commentaire ...">
+        <input type="text" class="saisir" v-model="comment" placeholder="Votre commentaire ...">
       </b-row>
     </b-container>
   </div>
@@ -28,8 +28,13 @@
 
 <script>
     export default {
-        name: "CommentSaisie.vue",
-      props:['images','username']
+      name: "CommentSaisie.vue",
+      props: ['images', 'username'],
+      data: () => {
+        return {
+          comment: ""
+        }
+      }
     }
 </script>
 
