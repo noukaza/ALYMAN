@@ -1,9 +1,7 @@
 <template>
   <div>
-        <ProfileInfo :user="$auth.user"></ProfileInfo>
-
+    <ProfileInfo :user="$auth.user"></ProfileInfo>
   </div>
- 
 </template>
 
 

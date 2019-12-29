@@ -2,7 +2,6 @@
   <div> 
     <ProfileInfo :iduser="$route.params.id"></ProfileInfo>
   </div>
-
 </template>
 
 

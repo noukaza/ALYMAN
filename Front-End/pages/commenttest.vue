@@ -1,5 +1,4 @@
 <template>
-  
   <Comment :images="image" :username="username" :descriptions="description"></Comment>
 </template>
 
