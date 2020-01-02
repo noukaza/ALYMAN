@@ -9,12 +9,14 @@
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
+            <div v-if="isNotMyProfile">
               <div v-if="isFollowed">
                 <b-badge href="#" variant="primary" v-on:click="follow">Primary</b-badge>
               </div>
               <div v-else>
                 <b-badge href="#" variant="danger"  v-on:click="unFollow">danger</b-badge>
               </div>
+            </div>
           </b-col>
           <b-col sm="4">
             <font-awesome-icon icon="user-edit" v-b-modal.modal-1 style = "width :50% ; height : 50%"/>
@@ -104,6 +106,9 @@ export default {
      isFollowed: function () {
        // TODO check if is followed by the user or not
       return true;
+    },
+    isNotMyProfile: function (){
+      return this.user ? this.user._id !== this.$auth.user._id : this.iduser !== this.$auth.user._id;
     }
   }
 }
