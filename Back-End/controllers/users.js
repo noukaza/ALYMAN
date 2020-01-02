@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const response = require("../configurations/responsesTempalte");
 const User = require("../models/user");
 const Follower = require('../models/follower');
+const Images = require("../models/image");
 
 // TODO make this func async 
 exports.create_user = (req, res, next) => {
@@ -89,7 +90,9 @@ exports.login_user = async (req, res, next) => {
 
 exports.get_all_user = async (req, res, next) => {
     const ID = req.userData._id
-    let users = await User.findOne({_id : ID}).select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
+    let users = await User.findOne({
+        _id: ID
+    }).select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
     (users.length === 0) ?
     response(res, 404, false, "Zero user find"): response(res, 200, true, "successful operation", users)
 }
@@ -126,10 +129,20 @@ exports.get_follower_for_user = async (req, res, next) => {
 
 exports.get_followings_for_user = async (req, res, next) => {
     let follower = await Follower.find({
-        following: req.params.id
-    }).select("_id create_at follower ").populate(" follower", "_id firstName lastName profileImage")
-    .exec()
-    .catch(err => response(res, 404, false, "can't find user"));
+            following: req.params.id
+        }).select("_id create_at follower ").populate(" follower", "_id firstName lastName profileImage")
+        .exec()
+        .catch(err => response(res, 404, false, "can't find user"));
 
     response(res, 200, true, "successful operation", follower);
+}
+
+
+exports.get_images_for_user = async (req, res, next) => {
+    console.log(req.params)
+    let images = await Images.find({
+        user : req.params.id
+    }).exec().catch(err => response(res, 404, false, "error")); // TODO change msg
+    response(res, 200, true, "successful operation", images);
+
 }
