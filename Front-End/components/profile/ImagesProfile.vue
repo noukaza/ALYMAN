@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="Block"  v-for = "image in images" v-bind:key="image">
+   <div class="Block"  v-for = "image in images" v-bind:key="image">
+     <nuxt-link to="/imagecomment" :imageafficher="image">
       <div class="Block_img">
         <img
           width="220"
@@ -9,6 +10,7 @@
           alt="image slot"
         >
       </div>
+     </nuxt-link>
     </div>
   </div>
 </template>
@@ -25,6 +27,7 @@
   export default {
     components: {modalImageProfile},
     props: ['images'],
+
   }
 
 </script>
