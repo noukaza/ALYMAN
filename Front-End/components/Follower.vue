@@ -13,7 +13,7 @@
             style="width : 100% ; heitgh : 100%"></b-img>
         </b-col>
         <b-col cols="8" v-on:click="redirect(index)" >
-          <span style="font-size: 16px; align-items: center;" v-if="type === 'followers'" >
+          <span style="font-size: 16px; " v-if="type === 'followers'" >
 
             {{dataFollower.following.lastName + " " +dataFollower.following.firstName}}
 
