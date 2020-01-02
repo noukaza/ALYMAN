@@ -76,7 +76,7 @@ export default {
             'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaG1vaEBnbWFpbC5jb20iLCJfaWQiOiI1ZGMzMGMxODVlYTVjYjAzMDhjMTY5OGYiLCJpYXQiOjE1NzMyOTcyMTAsImV4cCI6MTU3MzM4MzYxMH0.tfwFHmoxxC6qqlZ2aJTokW2UJq5beMQsRJzxOPubf4s"
           }
         }
-        this.$axios.put(`http://5484d604.ngrok.io/users`, data, configHeader)
+        this.$axios.put(`/users`, data, configHeader)
           .then(response => {
             console.log(response)
           })

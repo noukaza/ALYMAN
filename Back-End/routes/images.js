@@ -2,35 +2,45 @@ const express = require('express');
 const router = express.Router();
 
 const imagesController = require("../controllers/images")
+const chekauth = require("../middleware/check_auth");
+
+/**
+ * Upload middleware
+ */
+const upload = require("../configurations/uploadImages")
 
 /* GET method */
 router.get("/", imagesController.get_all_images);
 
 /* POST method */
-/**
+
+
+ /**
  * @swagger
- *
- * /Image:
+ * /images:
  *   post:
  *     tags:
- *         - "Image"
+ *       - "Image"
+ *     summary: "uplaod image"
+ *     description: post image
+ *     consumes:
+ *       - multipart/form-data
  *     produces:
  *       - application/json
  *     parameters:
- *       - id: Image
- *         description: Image
- *         in:  body
- *         required: true
+ *       - in: formData
+ *         name: description
  *         type: string
- *         schema:
- *           $ref: '#/definitions/Image'
+ *         description: first name.
+ *       - in: formData
+ *         name: image
+ *         type: file
+ *         description: The file to upload.
  *     responses:
  *       200:
- *         description: Image
- *         schema:
- *           $ref: '#/definitions/Image'
+ *         description: image
  */
-router.post("/", imagesController.create_image);
+router.post("/", upload.single("image"), chekauth, imagesController.create_image);
 /**
  * @swagger
  * /Image/{id}:

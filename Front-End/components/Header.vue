@@ -8,6 +8,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item to="/">Home</b-nav-item>
+          <b-nav-item :to="'/profile/'+$auth.user._id" v-if="$auth.loggedIn">{{$auth.user.firstName}} {{$auth.user.lastName}}</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

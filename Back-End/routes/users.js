@@ -248,7 +248,6 @@ router.get('/:id/followers/', chekauth, userController.get_follower_for_user);
  */
 router.get('/:id/followings/', chekauth, userController.get_followings_for_user);
 
-
 /**
  * @swagger
  * /users/{id}/images/:
@@ -278,3 +277,4 @@ router.get('/:id/followings/', chekauth, userController.get_followings_for_user)
 router.get('/:id/images', chekauth, userController.get_images_for_user);
 
 module.exports = router;
+
