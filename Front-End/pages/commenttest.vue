@@ -1,18 +1,24 @@
 <template>
-  <Comment :images="image" :username="username" :descriptions="description"></Comment>
+<ImagesProfile :images="image">
+</ImagesProfile>
 </template>
 
 <script>
-  import Comment from "../components/publication/Comment";
-  import CommentSaisie from "../components/publication/CommentSaisie";
+  import ImagesProfile from "../components/profile/ImagesProfile"
   export default {
     components: {
-      CommentSaisie,
-      Comment
+      ImagesProfile,
     },
     data: function () {
       return {
-        image: "Pictures/image1.jpg",
+        image:[
+          "Pictures/image1.jpg",
+          "Pictures/image1.jpg",
+          "Pictures/image1.jpg",
+          "Pictures/image1.jpg",
+          "Pictures/image1.jpg",
+          "Pictures/image1.jpg",
+        ],
         username: "Litissia",
         description: "Ceci est un commentaire"
       }

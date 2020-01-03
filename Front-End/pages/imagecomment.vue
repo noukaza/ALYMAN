@@ -1,12 +1,17 @@
 <template>
-  <b-img v-bind:src="images" rounded="circle" alt="Circle image"></b-img>
+  <b-row class="justify-content-md-center m-5">
+    <b-col class="m-5" cols="10" md="7" >
+ <Post>
+ </Post>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
-  import CommentImage from "../components/profile/CommentImage";
+  import Post from "../components/publication/post";
   export default {
     components: {
-      CommentImage,
+      Post,
     },
     props:['images'],
 
