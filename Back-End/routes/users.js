@@ -276,5 +276,9 @@ router.get('/:id/followings/', chekauth, userController.get_followings_for_user)
  */
 router.get('/:id/images', chekauth, userController.get_images_for_user);
 
-module.exports = router;
 
+
+router.put('/', upload.single("profileImage"),
+    chekauth, userController.edit_user);
+
+module.exports = router;

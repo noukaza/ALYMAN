@@ -139,10 +139,48 @@ exports.get_followings_for_user = async (req, res, next) => {
 
 
 exports.get_images_for_user = async (req, res, next) => {
-    console.log(req.params)
     let images = await Images.find({
-        user : req.params.id
+        user: req.params.id
     }).exec().catch(err => response(res, 404, false, "error")); // TODO change msg
     response(res, 200, true, "successful operation", images);
+}
+
+exports.edit_user = async (req, res, next) => {
+    let user = await User.findOne({
+        _id: req.userData._id
+    }).exec()
+    if (req.body) {
+        if (req.body.password && req.body.oldPassword) {
+            bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
+                err ? response(res, 401, false, "Auth failed", err) : null;
+                if (result) {
+                    bcrypt.hash(req.body.password, 10, (err, hash) => {
+                        if (err) {
+                            response(res, 400, true, "error")
+                        } else {
+                            user.password = hash
+                            user.save()
+                            response(res, 200, true, "successful operation")
+                        }
+                    })
+                } else {
+                    response(res, 401, false, "Auth failed")
+                }
+            })
+        } else {
+            if(req.body.firstName){
+                user.firstName = req.body.firstName
+            }
+            if(req.body.lastName){
+                user.lastName = req.body.lastName
+            }
+            if(req.body.email){
+                user.email = req.body.email
+            }
+            user.save()
+        }
+    } else {
+        response(res, 400, false, "error");
+    }
 
 }
