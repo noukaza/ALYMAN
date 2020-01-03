@@ -19,12 +19,14 @@
             </div>
           </b-col>
           <b-col sm="4">
-            <font-awesome-icon icon="user-edit" v-b-modal.modal-1 style = "width :50% ; height : 50%"/>
-            <div class="container">
+            <font-awesome-icon icon="user-edit"  v-on:click="redirectEditProfil"  style = "width :50% ; height : 50%"/>
+           
+            <!-- v-b-modal.modal-1
+              <div class="container">
               <b-modal id="modal-1" title="EditProfil" >
                 <EditProfil  type = "follower"></EditProfil>
               </b-modal>
-            </div>
+            </div> -->
           </b-col>
         </b-row>
         <p></p>
@@ -85,19 +87,22 @@ export default {
     },
     unFollow(e){
       this.$axios.delete("/followers/"+this.iduser)
+    },
+    redirectEditProfil(e){
+      window.location.href = "/editProfil"
     }
   },
   created: async function (){
     if(this.user){
       this.username = `${this.user.firstName} ${this.user.lastName}`;
-      this.urlPicProfil = `http://41584f23.ngrok.io/${this.user.profileImage}`;
+      this.urlPicProfil = this.$axios.defaults.baseURL + `${this.user.profileImage}`;
       this.bio = this.user.bio;
 
     }else{
       let userProfile = await this.$axios.get(`/users/${this.iduser}`)
       .catch(e=>this.$router.push("/")) // TODO change url
       this.username = `${userProfile.data.data.firstName} ${userProfile.data.data.lastName}`;
-      this.urlPicProfil = `http://41584f23.ngrok.io/${userProfile.data.data.profileImage}`;
+      this.urlPicProfil = this.$axios.defaults.baseURL + `${userProfile.data.data.profileImage}`;
       this.bio = userProfile.data.data.bio;
     }
 

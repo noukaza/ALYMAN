@@ -10,8 +10,8 @@
         </b-col>
         <b-col cols="3"  class="m-5 "  md="3">
             <b-row class="ml-2 ">
-                <b-img  v-bind="mainProps" src="https://picsum.photos/600/300/?image=25" rounded="circle" alt="Circle image"></b-img>
-               <h5 class="m-4" >AMRANE NOUREDDINE  </h5>
+                <b-img  v-bind="mainProps" :src="this.$axios.defaults.baseURL + $auth.user.profileImage" rounded="circle" alt="Circle image"></b-img>
+               <h5 class="m-4" > {{$auth.user.firstName}} {{$auth.user.lastName}}  </h5>
             </b-row>
              <hr class="my-4">
                <b-row class="ml-2 w-100" >
@@ -51,7 +51,7 @@ import post from '~/components/publication/post';
     },
     data() {
       return {
-        mainProps: { blank: false, blankColor: '#777', width: 100, height: 100, class: 'align-middle' },
+        mainProps: { blank: false, blankColor: '#777', width: 80, height: 80, class: 'align-middle' },
         nanoProps: { blank: false, blankColor: '#777', width: 50, height: 50, class: 'align-middle' }
       }
     }

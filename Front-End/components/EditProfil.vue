@@ -47,9 +47,9 @@ export default {
   data() {
     return {
       form: {
-        firstName: '',
-        lastName: '',
-        email: '',
+        firstName: this.$auth.user.firstName,
+        lastName: this.$auth.user.lastName,
+        email: this.$auth.user.email,
         password: '',
         file: null,
       },
@@ -70,13 +70,8 @@ export default {
         data.append("email", this.form.email);
         data.append("password", this.form.password);
         data.append("profileImage", this.form.file);
-        var configHeader = {
-          headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaG1vaEBnbWFpbC5jb20iLCJfaWQiOiI1ZGMzMGMxODVlYTVjYjAzMDhjMTY5OGYiLCJpYXQiOjE1NzMyOTcyMTAsImV4cCI6MTU3MzM4MzYxMH0.tfwFHmoxxC6qqlZ2aJTokW2UJq5beMQsRJzxOPubf4s"
-          }
-        }
-        this.$axios.put(`/users`, data, configHeader)
+
+        this.$axios.put(`/users`, data)
           .then(response => {
             console.log(response)
           })
