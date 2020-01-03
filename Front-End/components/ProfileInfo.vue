@@ -2,8 +2,10 @@
   <b-container class="bv-example-row mt-5">
   {{this.user}}
     <b-row class="justify-content-md-center">
-      <b-col col lg="2">
-        <b-img rounded="circle" alt="Circle image" :src= "this.urlPicProfil" style = "width : 100% ; heitgh : 100%"></b-img>
+      <b-col col lg="2" >
+        <b-img  rounded="circle" alt="Circle image" :src= "this.urlPicProfil" style = "width : 100% ; heitgh : 100%">
+
+        </b-img>
       </b-col>
       <b-col>
         <b-row>
@@ -18,7 +20,7 @@
               </div>
             </div>
           </b-col>
-          <b-col sm="4">
+          <b-col sm="4" v-if = "!isNotMyProfile">
             <font-awesome-icon icon="user-edit"  v-on:click="redirectEditProfil"  style = "width :50% ; height : 50%"/>
            
             <!-- v-b-modal.modal-1
@@ -118,3 +120,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+.nounou :hover{
+  border: solid black 1px;
+}
+</style>

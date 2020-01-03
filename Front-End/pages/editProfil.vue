@@ -31,6 +31,11 @@
             <b-tab title="Edit Password">
                 <b-card-text>
                     <div class="col">
+                        <b-form-group id="input-group-2" label="old password*:" label-for="input-2" class="col">
+                        <b-form-input id="input-2" v-model="form.oldPassword" type="password" required placeholder="Enter password">
+                        </b-form-input>
+                        </b-form-group>
+
                         <b-form-group id="input-group-2" label="Your password*:" label-for="input-2" class="col">
                         <b-form-input id="input-2" v-model="form.password" type="password" required placeholder="Enter password">
                         </b-form-input>
@@ -41,6 +46,23 @@
                             placeholder="Enter password"></b-form-input>
                         </b-form-group>
                         <b-button v-on:click="submitPassword" variant="primary">Submit</b-button>
+                    </div>
+                </b-card-text>
+            </b-tab>
+             <b-tab title="Edit profil Image">
+                <b-card-text>
+                    <div class="col">
+                          <b-form-file
+                            v-model="form.file"
+                            :state="Boolean(form.file)"
+                            placeholder="Choose a file or drop it here..."
+                            drop-placeholder="Drop file here..."
+                          ></b-form-file>
+                          <div class="mt-3">Selected file: {{ form.file ? form.file.name : '' }}
+
+                          </div>
+
+                        <b-button v-on:click="submitProfilImage" variant="primary">Submit</b-button>
                     </div>
                 </b-card-text>
             </b-tab>
@@ -63,6 +85,8 @@ export default {
         lastName: this.$auth.user.lastName,
         email: this.$auth.user.email,
         password: '',
+        oldPassword: '',
+        file : null ,
       },
       show: false,
       messageError: "",
@@ -93,6 +117,7 @@ export default {
 
       } else {
           const data = new FormData();
+          data.append("oldPassword", this.form.oldPassword);
           data.append("password", this.form.password);
 
            this.$axios.put(`/users`, data)
@@ -104,6 +129,19 @@ export default {
             this.show = true;
           })
       }
+    },
+     submitProfilImage(){
+          const data = new FormData();
+          data.append("profileImage", this.form.file);
+          console.log("data",data)
+           this.$axios.put(`/users`, data)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(e => {
+            this.messageError = e.response.data.message;
+            this.show = true;
+          })
     },
     onReset(evt) {
       evt.preventDefault()
