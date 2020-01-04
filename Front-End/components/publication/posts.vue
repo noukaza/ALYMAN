@@ -56,25 +56,12 @@ import post from '~/components/publication/post';
       //this.IDUSER = this.userId
       let allImages = await this.$axios.get(`/images`)
       this.images = allImages.data.data
-      console.log(allImages.data.data)
     },
     data() {
       return {
         mainProps: { blank: false, blankColor: '#777', width: 80, height: 80, class: 'align-middle' },
         nanoProps: { blank: false, blankColor: '#777', width: 50, height: 50, class: 'align-middle' },
-        images:[ {
-            image:"https://picsum.photos/600/300/?image=25",
-            descriptions:" wawww il est beau le lac",
-            user:{
-                profileImage: "https://picsum.photos/600/300/?image=25",
-                firstName: "mohand ameziane",
-                lastName: "MESSAOUI",
-            },
-            
-            
-            
-          },
-            ]
+        images:[  ]
       }
     }
   }

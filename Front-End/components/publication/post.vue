@@ -11,7 +11,7 @@
     <li v-for="(comment,index) in comments" v-bind:key="(comment,index)" style="list-style: none; padding-bottom: 10px; ">
     <Comment
       :image="image.user.profileImage"
-      :lastName="image.user.lastName" :firstName=" image.user.firstName" :descriptions="comment.descriptions">
+      :lastName="image.user.lastName" :firstName=" image.user.firstName" :descriptions="comment.comment">
     </Comment>
     </li>
     <CommentSaisie :imageId="image._id"></CommentSaisie>
@@ -29,9 +29,8 @@
       CommentSaisie
     },
     created: async function () {
-      //this.IDUSER = this.userId
-      let comments = await this.$axios.get(`/images`)
-        this.comments = comments.data.data
+      let comments = await this.$axios.get(`/comments/image/${this.image._id}`)
+      this.comments = comments.data.data
     },
     data () {
       return {

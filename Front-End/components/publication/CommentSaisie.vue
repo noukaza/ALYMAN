@@ -2,14 +2,14 @@
     <b-container class="clearfix" style="padding: 10px 0px 10px 0px">
       <b-row>
         <b-col cols="2">
-          <b-img class="comment" v-bind:src="images" rounded="circle" alt="Circle image"></b-img>
+          <b-img class="comment" v-bind:src="this.$axios.defaults.baseURL + $auth.user.profileImage" rounded="circle" alt="Circle image"></b-img>
         </b-col>
        <!-- <input type="text" class="saisir" v-model="comment" placeholder="Votre commentaire ...">-->
         <b-col cols="8" >
-       <b-form-input v-model="comment" placeholder="Enter your comment"></b-form-input>
+       <b-form-input v-model="comment" placeholder="Enter your comment" v-on:keyup.enter="submit"></b-form-input>
        </b-col>
        <b-col cols="2">
-         <b-button pill variant="primary" v-on:click='submit'>Button</b-button>
+         <b-button pill variant="primary" v-on:click='like'>like</b-button>
        </b-col>
 
       </b-row>
@@ -39,6 +39,11 @@ export default {
     submit(){
       this.$axios.post("/comments",{
         "comment": this.comment,
+        "image": this.imageId
+      }).then(_ =>this.comment = "" ).catch(e=>console.log(e))
+    },
+    like(){
+      this.$axios.post("/likes",{
         "image": this.imageId
       }).then(_ =>this.comment = "" ).catch(e=>console.log(e))
     }
