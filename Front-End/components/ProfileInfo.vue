@@ -4,7 +4,6 @@
     <b-row class="justify-content-md-center">
       <b-col col lg="2" >
         <b-img  rounded="circle" alt="Circle image" :src= "this.urlPicProfil" style = "width : 100% ; heitgh : 100%">
-
         </b-img>
       </b-col>
       <b-col>
@@ -23,12 +22,6 @@
           <b-col sm="4" v-if = "!isNotMyProfile">
             <font-awesome-icon icon="user-edit"  v-on:click="redirectEditProfil"  style = "width :50% ; height : 50%"/>
            
-            <!-- v-b-modal.modal-1
-              <div class="container">
-              <b-modal id="modal-1" title="EditProfil" >
-                <EditProfil  type = "follower"></EditProfil>
-              </b-modal>
-            </div> -->
           </b-col>
         </b-row>
         <p></p>
@@ -39,7 +32,7 @@
       <b-col>
         <b-row>
           <b-col>
-            <Label style="font-weight:bold; display:inline; margin-right:120px">Posts</Label>
+            <Label style="font-weight:bold; display:inline; margin-right:120px">Posts {{nbrpost}}</Label>
           </b-col>
           <b-col>
              <Label v-b-modal.modal-2 style="font-weight:bold; display:inline; margin-right:120px">Follower</Label>
@@ -73,7 +66,7 @@ export default {
     EditProfil,
     Follower
   },
-  props: ['user', 'iduser'],
+  props: ['user', 'iduser',"nbrpost"],
   data() {
     return {
       username: "",
@@ -102,7 +95,7 @@ export default {
 
     }else{
       let userProfile = await this.$axios.get(`/users/${this.iduser}`)
-      .catch(e=>this.$router.push("/")) // TODO change url
+      .catch(e=>this.$router.push("/")) 
       this.username = `${userProfile.data.data.firstName} ${userProfile.data.data.lastName}`;
       this.urlPicProfil = this.$axios.defaults.baseURL + `${userProfile.data.data.profileImage}`;
       this.bio = userProfile.data.data.bio;
