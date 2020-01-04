@@ -1,15 +1,16 @@
 <template>
   <div class="container">
-    <div class="Block"  v-for = "image in images" v-bind:key="image">
-      <div class="Block_img"  v-on:click="say('salut')">
+   <div class="Block"  v-for = "image in images" v-bind:key="image">
+     <nuxt-link to="/imagecomment" :imageafficher="image">
+      <div class="Block_img">
         <img
           width="220"
           height="220"
           v-bind:src="image"
           alt="image slot"
         >
-        <modalImageProfile v-if="show"></modalImageProfile>
       </div>
+     </nuxt-link>
     </div>
   </div>
 </template>
@@ -26,18 +27,6 @@
   export default {
     components: {modalImageProfile},
     props: ['images'],
-    data() {
-      return {
-        show: false,
-
-      }},
-    methods: {
-      say: function (message) {
-        show=true;
-
-      }
-
-    }
 
   }
 
