@@ -159,7 +159,6 @@ exports.edit_user = async (req, res, next) => {
                             response(res, 400, true, "error")
                         } else {
                             user.password = hash
-                            user.save()
                             response(res, 200, true, "successful operation")
                         }
                     })
@@ -167,18 +166,24 @@ exports.edit_user = async (req, res, next) => {
                     response(res, 401, false, "Auth failed")
                 }
             })
-        } else {
-            if(req.body.firstName){
-                user.firstName = req.body.firstName
-            }
-            if(req.body.lastName){
-                user.lastName = req.body.lastName
-            }
-            if(req.body.email){
-                user.email = req.body.email
-            }
-            user.save()
         }
+
+        if (req.body.firstName) {
+            user.firstName = req.body.firstName
+        }
+        if (req.body.lastName) {
+            user.lastName = req.body.lastName
+        }
+        if (req.body.email) {
+            user.email = req.body.email
+        }
+        if(req.file){
+            user.profileImage = req.file.path
+        }
+        user.save()
+        response(res, 200, true, "successful operation")
+
+
     } else {
         response(res, 400, false, "error");
     }
