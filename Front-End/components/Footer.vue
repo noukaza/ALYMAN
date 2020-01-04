@@ -1,5 +1,5 @@
-<template>
-  <Footer class="layout-footer-center">2019 &copy; lyman</Footer>
+ <template>
+ <!--<Footer class="layout-footer-center">2019 &copy; lyman</Footer>-->
 </template>
 
 <style>

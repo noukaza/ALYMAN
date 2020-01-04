@@ -4,11 +4,9 @@
     <b-row style = "margin-top : 7%">
         <!--<b-col class="m-5" cols="10" md="7" >-->
         <b-col cols="8">
-             <post></post>
-             <post></post>
-             <post></post>
-             <post></post>
-             <post></post>
+            
+             <post :image = "img"  v-for="(img,index) in images" v-bind:key="(img,index)"></post>
+           
                 
         </b-col>
         <!--<b-col cols="3"  class="m-5 "  md="3"> -->
@@ -54,10 +52,29 @@ import post from '~/components/publication/post';
     components:{
         post
     },
+    created: async function () {
+      //this.IDUSER = this.userId
+      let allImages = await this.$axios.get(`/images`)
+      this.images = allImages.data.data
+      console.log(allImages.data.data)
+    },
     data() {
       return {
         mainProps: { blank: false, blankColor: '#777', width: 80, height: 80, class: 'align-middle' },
-        nanoProps: { blank: false, blankColor: '#777', width: 50, height: 50, class: 'align-middle' }
+        nanoProps: { blank: false, blankColor: '#777', width: 50, height: 50, class: 'align-middle' },
+        images:[ {
+            image:"https://picsum.photos/600/300/?image=25",
+            descriptions:" wawww il est beau le lac",
+            user:{
+                profileImage: "https://picsum.photos/600/300/?image=25",
+                firstName: "mohand ameziane",
+                lastName: "MESSAOUI",
+            },
+            
+            
+            
+          },
+            ]
       }
     }
   }

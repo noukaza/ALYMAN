@@ -9,7 +9,7 @@
        <b-form-input v-model="comment" placeholder="Enter your comment"></b-form-input>
        </b-col>
        <b-col cols="2">
-         <b-button pill variant="primary">Button</b-button>
+         <b-button pill variant="primary" v-on:click='submit'>Button</b-button>
        </b-col>
 
       </b-row>
@@ -34,7 +34,15 @@
 <script>
 export default {
   name: "CommentSaisie.vue",
-  props: ['images', 'username'],
+  props: ['images', 'username',"imageId"],
+  methods:{
+    submit(){
+      this.$axios.post("/comments",{
+        "comment": this.comment,
+        "image": this.imageId
+      }).then(_ =>this.comment = "" ).catch(e=>console.log(e))
+    }
+  },
   data: () => {
     return {
       comment: ""

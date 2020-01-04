@@ -2,9 +2,9 @@
   <div>
     <b-container v-if="show" class="clearfix" style="padding: 10px 0px 10px 0px">
       <div class="media">
-        <b-img class="img-pofil" v-bind="mainProps" :src="images" rounded="circle" alt="Circle image"></b-img>
+        <b-img class="img-pofil" v-bind="mainProps" :src=" this.$axios.defaults.baseURL + image " rounded="circle" alt="Circle image"></b-img>
         <div class="media-body">
-          <h5 class="mt-0">{{username}}</h5>
+          <h5 class="mt-0">{{lastName +" "+ firstName}} </h5>
           {{ descriptions }}
         </div>
       </div>
@@ -16,7 +16,7 @@
 
 export default {
 
-  props: ['images', 'username', 'descriptions'],
+  props: ['image', 'firstName', 'lastName', 'descriptions'],
 
   data() {
 
