@@ -10,7 +10,7 @@ const chekauth = require("../middleware/check_auth");
 const upload = require("../configurations/uploadImages")
 
 /* GET method */
-router.get("/", imagesController.get_all_images);
+router.get("/",chekauth, imagesController.get_all_images);
 
 /* POST method */
 
@@ -97,5 +97,9 @@ router.delete("/:id", imagesController.delete_image);
  */
 /* UPDATE method */
 router.put("/:id", imagesController.update_image);
+
+
+
+
 
 module.exports = router;

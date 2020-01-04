@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const chekauth = require("../middleware/check_auth");
 
 const commentsConttrollers = require("../controllers/commentes");
 /* POST method */
@@ -27,7 +28,7 @@ const commentsConttrollers = require("../controllers/commentes");
  *         schema:
  *           $ref: '#/definitions/Comments'
  */
-router.post("/", commentsConttrollers.post_comment);
+router.post("/", chekauth,commentsConttrollers.post_comment);
 
 /**
  * @swagger
@@ -85,4 +86,7 @@ router.delete("/:id", commentsConttrollers.delete_comment);
 /*Update method */
 router.put("/:id", commentsConttrollers.update_comment);
 
+
+
+router.get('/image/:id',commentsConttrollers.get_comments_for_image);
 module.exports = router;

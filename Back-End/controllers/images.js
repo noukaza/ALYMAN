@@ -4,15 +4,17 @@ const User = require("../models/user");
 const Image = require("../models/image");
 const response = require("../configurations/responsesTempalte");
 
-exports.get_all_images = (req, res, next) => {
-    Image
-        .find()
+exports.get_all_images = async (req, res, next) => {
+    let id = req.userData ? req.userData._id : "5e0f6b4eb3eb6e0d28c2948a"
+    let me = await User.findOne({_id :  id}).select().exec();
+    console.log(req.userData)
+    console.log(me.followers)
+    let img = await Image
+        .find({user: { $in: [...me.followers , id]   }})
         .select("_id user image likes comments description create_at update_at")
-        //.populate("images")
-        .exec()
-        .then(data => {
-            res.status(200).json(data)
-        }).catch(err => console.log(err))
+        .populate("user")
+        .exec().catch(err =>response(res, 404, false, "error", ));
+    response(res, 200, true, "successful operation", img)
 };
 
 exports.create_image = (req, res, next) => {
