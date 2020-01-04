@@ -122,7 +122,4 @@ export default {
 </script>
 <style scoped>
 
-.nounou :hover{
-  border: solid black 1px;
-}
 </style>
