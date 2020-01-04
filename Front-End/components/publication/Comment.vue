@@ -11,19 +11,7 @@
     </b-container>
   </div>
 </template>
-<style>
-.img-pofil {
-  margin: 10px;
-}
 
-.comment {
-  blank: false;
-  blankColor: '#777';
-  width: 40px;
-  height: 40px;
-  padding: 10px 0px 10px 0px;
-}
-</style>
 <script>
 
 export default {
@@ -55,3 +43,17 @@ export default {
 }
 
 </script>
+
+<style>
+.img-pofil {
+  margin: 10px;
+}
+
+.comment {
+  blank: false;
+  blankColor: '#777';
+  width: 40px;
+  height: 40px;
+  padding: 10px 0px 10px 0px;
+}
+</style>

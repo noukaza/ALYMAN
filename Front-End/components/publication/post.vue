@@ -1,6 +1,10 @@
 <template>
-  <b-card title="Card Title" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top tag="article"
-    class="mb-5">
+    
+  <!--<b-card img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top tag="article"
+    class="mb-5">-->
+    <b-card class="mb-5">
+      <h4> Ma photo a prague </h4>
+    <b-img style = "width : 100%" v-bind="mainProps" src="https://picsum.photos/600/300/?image=25" ></b-img>
     <b-card-text>
       Some quick example text to build on the card title and make up the bulk of the card's content.
     </b-card-text>
@@ -15,6 +19,7 @@
     </Comment>
     <CommentSaisie></CommentSaisie>
   </b-card>
+  
 </template>
 <script>
 import Comment from '~/components/publication/Comment';

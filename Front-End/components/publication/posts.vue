@@ -1,6 +1,9 @@
 <template>
-    <b-row class="justify-content-md-center m-5">
-        <b-col class="m-5" cols="10" md="7" >
+    <!--<b-row class="justify-content-md-center m-5">-->
+    <b-container class="bv-example-row">
+    <b-row style = "margin-top : 7%">
+        <!--<b-col class="m-5" cols="10" md="7" >-->
+        <b-col cols="8">
              <post></post>
              <post></post>
              <post></post>
@@ -8,7 +11,8 @@
              <post></post>
                 
         </b-col>
-        <b-col cols="3"  class="m-5 "  md="3">
+        <!--<b-col cols="3"  class="m-5 "  md="3"> -->
+        <b-col cols="4">    
             <b-row class="ml-2 ">
                 <b-img  v-bind="mainProps" :src="this.$axios.defaults.baseURL + $auth.user.profileImage" rounded="circle" alt="Circle image"></b-img>
                <h5 class="m-4" > {{$auth.user.firstName}} {{$auth.user.lastName}}  </h5>
@@ -41,6 +45,7 @@
             </b-row>
         </b-col>
     </b-row>
+    </b-container>
 </template>
 <script>
 

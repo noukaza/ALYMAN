@@ -1,14 +1,19 @@
 <template>
-  <div>
     <b-container class="clearfix" style="padding: 10px 0px 10px 0px">
       <b-row>
-        <b-col cols="1">
+        <b-col cols="2">
           <b-img class="comment" v-bind:src="images" rounded="circle" alt="Circle image"></b-img>
         </b-col>
-        <input type="text" class="saisir" v-model="comment" placeholder="Votre commentaire ...">
+       <!-- <input type="text" class="saisir" v-model="comment" placeholder="Votre commentaire ...">-->
+        <b-col cols="8" >
+       <b-form-input v-model="comment" placeholder="Enter your comment"></b-form-input>
+       </b-col>
+       <b-col cols="2">
+         <b-button pill variant="primary">Button</b-button>
+       </b-col>
+
       </b-row>
     </b-container>
-  </div>
 </template>
 <style>
   .comment{
