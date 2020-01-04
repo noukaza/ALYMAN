@@ -38,7 +38,6 @@ exports.create_user = (req, res, next) => {
         }
     });
 }
-
 // TODO make it async
 exports.delets_user = (req, res, next) => {
     if (req.userData._id === req.params.id) {
@@ -82,10 +81,8 @@ exports.login_user = async (req, res, next) => {
             } else {
                 response(res, 401, false, "Auth failed")
             }
-
         })
     }
-
 }
 
 exports.get_all_user = async (req, res, next) => {
@@ -110,8 +107,7 @@ exports.get_user_by_id = async (req, res, next) => {
         })
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-
-    (user.length === 0) ?
+    (user.length) ?
     response(res, 404, false, "can't find user"): response(res, 200, true, "successful operation", user)
 }
 
