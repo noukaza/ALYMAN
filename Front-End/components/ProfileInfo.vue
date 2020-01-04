@@ -3,19 +3,20 @@
   {{this.user}}
     <b-row class="justify-content-md-center">
       <b-col col lg="2" >
-        <b-img  rounded="circle" alt="Circle image" :src= "this.urlPicProfil" style = "width : 100% ; heitgh : 100%">
+        <b-img  rounded="circle" alt="Circle image" :src= "this.urlPicProfil" style = "width : 150px ; height : 150px">
         </b-img>
       </b-col>
       <b-col>
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
+            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos aliquam odio eveniet animi omnis aut rerum quia, non nisi, veniam ad. Aliquid magnam repudiandae fuga quis deleniti ipsum totam inventore.</span>
             <div v-if="isNotMyProfile">
-              <div v-if="isFollowed">
-                <b-badge href="#" variant="primary" v-on:click="follow">Primary</b-badge>
+              <div v-if="!followdsss">
+                <b-badge href="#" variant="primary" v-on:click="follow">follow</b-badge>
               </div>
               <div v-else>
-                <b-badge href="#" variant="danger"  v-on:click="unFollow">danger</b-badge>
+                <b-badge href="#" variant="danger"  v-on:click="unFollow">unfollow</b-badge>
               </div>
             </div>
           </b-col>
@@ -32,7 +33,7 @@
       <b-col>
         <b-row>
           <b-col>
-            <Label style="font-weight:bold; display:inline; margin-right:120px">Posts {{nbrpost}}</Label>
+            <Label style="font-weight:bold; display:inline; margin-right:120px"><strong> {{nbrpost}}</strong> Posts</Label>
           </b-col>
           <b-col>
              <Label v-b-modal.modal-2 style="font-weight:bold; display:inline; margin-right:120px">Follower</Label>
@@ -66,50 +67,70 @@ export default {
     EditProfil,
     Follower
   },
-  props: ['user', 'iduser',"nbrpost"],
+  props: ['user', 'iduser', "nbrpost"],
   data() {
     return {
       username: "",
-      urlPicProfil : "",
-      bio :""    }
+      urlPicProfil: "",
+      bio: "",
+      followdsss: false
+    }
   },
   methods: {
-    follow(e){
+    follow(e) {
       console.log("hi")
-      this.$axios.post("/followers",{
-        following : this.iduser
+      this.$axios.post("/followers", {
+        following: this.iduser
       })
     },
-    unFollow(e){
-      this.$axios.delete("/followers/"+this.iduser)
+    unFollow(e) {
+      // this.$axios.delete("/followers", {
+      //   following: this.iduser
+      // })
+      this.$axios.delete("/followers/" + this.iduser).then(_ => {
+        console.log("hi")
+})
     },
-    redirectEditProfil(e){
+    redirectEditProfil(e) {
       window.location.href = "/editProfil"
     }
   },
-  created: async function (){
-    if(this.user){
+  created: async function () {
+    if (this.user) {
       this.username = `${this.user.firstName} ${this.user.lastName}`;
       this.urlPicProfil = this.$axios.defaults.baseURL + `${this.user.profileImage}`;
       this.bio = this.user.bio;
 
-    }else{
+    } else {
       let userProfile = await this.$axios.get(`/users/${this.iduser}`)
-      .catch(e=>this.$router.push("/")) 
+        .catch(e => this.$router.push("/"))
       this.username = `${userProfile.data.data.firstName} ${userProfile.data.data.lastName}`;
       this.urlPicProfil = this.$axios.defaults.baseURL + `${userProfile.data.data.profileImage}`;
       this.bio = userProfile.data.data.bio;
     }
 
   },
-  computed:{
-     isFollowed: function () {
-       // TODO check if is followed by the user or not
+  computed: {
+    isFollowed: function () {
+      // TODO check if is followed by the user or not
+
       return true;
     },
-    isNotMyProfile: function (){
+    isNotMyProfile: function () {
       return this.user ? this.user._id !== this.$auth.user._id : this.iduser !== this.$auth.user._id;
     }
+  },
+  mounted: function () {
+    let isFoll = false;
+    let follows = this.$axios.get(`/users/${this.iduser}/followings`).then(e => {
+      e.data.data.forEach(element => {
+        if (element.follower._id === this.$auth.user._id) {
+          isFoll = true
+        }
+      });
+      this.followdsss = isFoll;
+    })
+
   }
 }
 </script>
