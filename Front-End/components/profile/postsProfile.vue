@@ -8,20 +8,9 @@
 <script>
 import PostProfile from "./PostProfile";
 export default {
-  data: function () {
-    return {
-      posts:[]
-    }
-  },
+  props:["posts"],
   components: {
     PostProfile
-  },
-  created: async function () {
-
-    let posts = await this.$axios.get(`/users/${this.$route.params.id}/images`)
-      .catch(e => this.$router.push("/"));
-    console.log(posts.data)
-    this.posts = posts.data.data
-  },
+  }
 }
 </script>
