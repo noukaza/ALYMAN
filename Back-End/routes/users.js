@@ -248,4 +248,37 @@ router.get('/:id/followers/', chekauth, userController.get_follower_for_user);
  */
 router.get('/:id/followings/', chekauth, userController.get_followings_for_user);
 
- module.exports = router;
+/**
+ * @swagger
+ * /users/{id}/images/:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "user"
+ *      summary: "get all images for a user"
+ *      description: "get all images for a user ."
+ *      operationId: "imagesForUsers"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *       - name: "id"
+ *         in: "path"
+ *         required: true
+ *         type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ */
+router.get('/:id/images', chekauth, userController.get_images_for_user);
+
+
+
+router.put('/', upload.single("profileImage"),
+    chekauth, userController.edit_user);
+
+module.exports = router;
