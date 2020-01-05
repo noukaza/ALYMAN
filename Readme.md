@@ -6,12 +6,12 @@
 
 
 # 1) Installer les dépendances du Backend.
-$		cd BackEnd
-$		npm install / npm i
+    $ cd BackEnd
+    $ npm install / npm i
 
 # 2) Installer les dépendances du Frontend.
-   $	cd FrontEnd
-   $	npm install / npm i
+    $ cd FrontEnd
+    $ npm install / npm i
 
 
 ******************************Lancement en mode Prod**********************************
@@ -19,7 +19,7 @@ $		npm install / npm i
 
 # 1) Aller dans le fichiers ".env" et mettez les bonnes configurations dans lesquelles vous voulez travailler.
 # 2) Lancez la commande  : 
- $ npm start
+    $ npm start
 
 
 ******************************Lancement en mode Dev***********************************
@@ -34,7 +34,7 @@ $		npm install / npm i
 
 # En utilisant le fichier MakeFile, vous trouverez également les étapes à suivres.
 # L'execution de la commande 
-$ make -j2 run-app
+    $ make -j2 run-app
 # devrait installer et lancer l'application. =D =D 
 
 
