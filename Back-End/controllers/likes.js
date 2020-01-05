@@ -27,21 +27,29 @@ exports.poste_like = (req, res, next) => {
         .exec()
         .then(img => {
             if (img.length >= 1) {
-                const like = new Like({
-                    _id: mongoose.Types.ObjectId(),
-                    user: req.userData._id,
-                    image: req.body.image,
-                   // create_at: req.body.create_at, // TODO : c pas a l'utilisateur de faire ca 
-                   // update_at: req.body.update_at // TODO : c pas a l'utilisateur de faire ca 
-                })
-                like
-                    .save()
-                    .then(data => {
-                        response(res, 201, true, "successful operation", data) // TODO : changer le msg "successful operation"
-                    })
-                    .catch(err => {
+                Like.findOne({user: req.userData._id,
+                    image: req.body.image,}).exec().then(res =>{
+                        if(!res){
+                            const like = new Like({
+                                _id: mongoose.Types.ObjectId(),
+                                user: req.userData._id,
+                                image: req.body.image,
+                            })
+                            like
+                                .save()
+                                .then(data => {
+                                    response(res, 201, true, "successful operation", data) // TODO : changer le msg "successful operation"
+                                })
+                                .catch(err => {
+                                    response(res, 500, false, "error", err)
+                                })
+                        }else{
+                            response(res, 500, false, "like existe")
+                        }
+                    }).catch(err =>{
                         response(res, 500, false, "error", err)
                     })
+                
             } else {
                 response(res, 409, false, "l'image n'existe pas", err) // TODO : changer le msg "l'image n'existe pas" => par une phrase du genre vous avez essayé de liker une images qui n'existe pas ... etc 
             }
