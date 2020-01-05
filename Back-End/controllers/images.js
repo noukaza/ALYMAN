@@ -7,8 +7,6 @@ const response = require("../configurations/responsesTempalte");
 exports.get_all_images = async (req, res, next) => {
     let id = req.userData ? req.userData._id : "5e0f6b4eb3eb6e0d28c2948a"
     let me = await User.findOne({_id :  id}).select().exec();
-    console.log(req.userData)
-    console.log(me.followers)
     let img = await Image
         .find({user: { $in: [...me.followers , id]   }})
         .select("_id user image likes comments description create_at update_at")
