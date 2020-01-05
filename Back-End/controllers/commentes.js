@@ -4,6 +4,7 @@ const response = require("../configurations/responsesTempalte");
 const Commente = require("../models/comment");
 const User = require("../models/user");
 const Image = require("../models/image");
+const response = require("../configurations/responsesTempalte");
 
 
 exports.post_comment = (req, res, next) => {

@@ -53,7 +53,7 @@ router.post("/", chekauth,commentsConttrollers.post_comment);
  *               description: "Comment not found"
  */
 /* DELETE method*/
-router.delete("/:id", commentsConttrollers.delete_comment);
+router.delete("/:id", check_auth,commentsConttrollers.delete_comment);
 
 /**
  * @swagger
@@ -84,7 +84,7 @@ router.delete("/:id", commentsConttrollers.delete_comment);
  *               description: "error server"
 */
 /*Update method */
-router.put("/:id", commentsConttrollers.update_comment);
+router.put("/:id", check_auth, commentsConttrollers.update_comment);
 
 
 
