@@ -40,7 +40,10 @@ export default {
       this.$axios.post("/comments",{
         "comment": this.comment,
         "image": this.imageId
-      }).then(_ =>this.comment = "" ).catch(e=>console.log(e))
+      }).then(a =>{
+         console.log(a)
+
+        this.comment = ""} ).catch(e=>console.log(e))
     },
     like(){
       this.$axios.post("/likes",{

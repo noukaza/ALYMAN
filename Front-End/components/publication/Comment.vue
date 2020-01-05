@@ -7,6 +7,10 @@
           <h5 class="mt-0">{{lastName +" "+ firstName}} </h5>
           {{ descriptions }}
         </div>
+      <b-btn  class="btn btn-light" v-if="userID == $auth.user._id" v-on:click="deleteComment">
+        X
+      </b-btn>
+
       </div>
     </b-container>
   </div>
@@ -16,7 +20,7 @@
 
 export default {
 
-  props: ['image', 'firstName', 'lastName', 'descriptions'],
+  props: ['image', 'firstName', 'lastName', 'descriptions', 'userID','commentID'],
 
   data() {
 
@@ -39,7 +43,18 @@ export default {
       }
     }
 
-  }
+  },
+
+methods: {
+deleteComment(){
+  console.log('hi')
+  this.$axios.delete(`/comments/${this.commentID}`)
+  .then(e => {
+    console.log("suppriméééééééééé ya lyly ")
+  })
+     
+}
+}
 }
 
 </script>

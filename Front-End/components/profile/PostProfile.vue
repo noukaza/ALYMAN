@@ -1,5 +1,5 @@
 <template>
-    <b-img thumbnail class="post" v-bind="mainProps" :src="url" :alt="alt"  v-on:click='openPost'></b-img>
+      <b-img thumbnail class="post" v-bind="mainProps" :src="url" :alt="alt"  v-on:click='openPost'></b-img>
 </template>
 <script>
 export default {
@@ -19,5 +19,11 @@ export default {
 <style scoped>
 .post{
     margin: 10px;
+    position: relative;
+    width:  250px;
+    height: 250px;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+
 }
 </style>

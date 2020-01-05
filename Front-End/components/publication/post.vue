@@ -10,8 +10,8 @@
     </b-card-text>
     <li v-for="(comment,index) in comments" v-bind:key="(comment,index)" style="list-style: none; padding-bottom: 10px; ">
     <Comment
-      :image="image.user.profileImage"
-      :lastName="image.user.lastName" :firstName=" image.user.firstName" :descriptions="comment.comment">
+      :image="image.user.profileImage" :userID ="image.user._id"
+      :lastName="image.user.lastName" :firstName=" image.user.firstName" :descriptions="comment.comment" :commentID="comment._id">
     </Comment>
     </li>
     <CommentSaisie :imageId="image._id"></CommentSaisie>
