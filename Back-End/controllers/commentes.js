@@ -4,7 +4,6 @@ const response = require("../configurations/responsesTempalte");
 const Commente = require("../models/comment");
 const User = require("../models/user");
 const Image = require("../models/image");
-const response = require("../configurations/responsesTempalte");
 
 
 exports.post_comment = (req, res, next) => {
@@ -91,6 +90,6 @@ exports.update_comment = async (req, res, next) => {
 exports.get_comments_for_image = async (req, res, next) => {
     let comments = await Commente.find({
         image: req.params.id
-    }).exec();
+    }).populate("user","profileImage firstName lastName _id").exec();
     response(res, 200, true, "", comments)
 }

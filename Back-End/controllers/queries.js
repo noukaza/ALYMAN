@@ -4,12 +4,25 @@ const response = require("../configurations/responsesTempalte");
 
 
 exports.searchUser = async (req, res, next) => {
+    console.log('yes')
     const name = req.params.q
-    console.log(name)
-    let users = await User.find({
+    const lowName = name.toLowerCase();
+
+    let users = await User.find({$or:[{
             firstName: {
                 $regex: '.*' + name + '.*'
-            }
+            }},
+            {lastName: {
+                $regex: '.*' + name + '.*'
+            },
+        },{
+            firstName: {
+                $regex: '.*' + lowName + '.*'
+            }},
+            {lastName: {
+                $regex: '.*' + lowName + '.*'
+            },
+        }]
         })
         .select(" _id firstName lastName profileImage")
         .exec();
