@@ -7,9 +7,7 @@ const Image = require("../models/image");
 
 
 exports.post_comment = (req, res, next) => {
-    // console.log('hi')
     let userID = req.userData._id;
-    // console.log(req.body.image)
         Image.find({
                 _id: req.body.image
             })
