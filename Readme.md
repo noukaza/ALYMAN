@@ -16,8 +16,15 @@
 
 ******************************Lancement en mode Prod**********************************
 
-
+# BACKEND
 # 1) Aller dans le fichiers ".env" et mettez les bonnes configurations dans lesquelles vous voulez travailler.
+# 2) Lancez la commande  : 
+    $ npm start
+
+# FRONTEND
+# 1) Lancez la commande  : 
+    $ npm run build
+
 # 2) Lancez la commande  : 
     $ npm start
 
@@ -37,5 +44,8 @@
     $ make -j2 run-app
 # devrait installer et lancer l'application. =D =D 
 
+******************************Version***********************************
+#  en cas de problems de version mettez ajourt la version de node
+    $ v13.3.0
 
 ```
