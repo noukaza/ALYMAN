@@ -47,25 +47,18 @@ exports.create_follower = async (req, res, next) => {
     }
 }
 
-exports.delete_follower = (req, res, next) => {
+exports.delete_follower =  (req, res, next) => {
     id = req.userData._id;
     Follower
-    .findById({ _id: req.params.id })
+    .remove({ follower: req.params.id ,following :id})
     .exec()
     .then(data => {
-        if (data.follower == id  || data.following == id)  {
-            Follower.remove({ _id: req.params.id })
-            .exec()
-            .then(result => {
-                response(res, 200, true, "Follower supprimer ")
+        data.n !== 0 
+        ?    response(res, 200, true, "Follower supprimer ")
+        :   response(res, 400, true, "follower n'existe pas   ")
     })
     .catch(err => {
-        response(res, 500, false, "error", err)
+        response(res, 501, false, "error", err)
     })
-        } else {
-            response(res, 409, false, "c'est pas le bon following", err)
-        }
-    }).catch(err =>{ 
-        response(res, 500, false, "error", err)
-    });
+  
 }
