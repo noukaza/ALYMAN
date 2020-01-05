@@ -9,13 +9,17 @@
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
-            <div v-if="isNotMyProfile">
-              <div v-if="!followdsss">
-                <b-badge href="#" variant="primary" v-on:click="follow">follow</b-badge>
-              </div>
-              <div v-else>
-                <b-badge href="#" variant="danger"  v-on:click="unFollow">unfollow</b-badge>
-              </div>
+            <col v-if="isNotMyProfile">
+              <b-row>
+                <b-col lg="2" >
+                <h5><b-badge  style="margin-left : 20% "  href="#" variant="primary" v-on:click="follow">follow</b-badge></h5>
+              </b-col >
+              <b-col lg="2">
+                <h5><b-badge style=" margin-right : 100%"  href="#" variant="danger"  v-on:click="unFollow">unfollow</b-badge></h5>
+              </b-col >
+              </b-row>
+              
+
             </div>
           </b-col>
           <b-col sm="4" v-if = "!isNotMyProfile">
