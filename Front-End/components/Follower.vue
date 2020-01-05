@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <li v-for="(dataFollower,index) in dataFollowers" v-bind:key="(dataFollower,index)" style="list-style: none; padding-bottom: 10px; ">
-      <b-row style="align-items: center;" >
-        <b-col v-on:click="redirect(index)" v-if="type === 'followers'" >
+    <li v-for="(dataFollower,index) in dataFollowers" v-bind:key="(dataFollower,index)"
+      style="list-style: none; padding-bottom: 10px; ">
+      <b-row style="align-items: center;">
+        <b-col v-on:click="redirect(index)" v-if="type === 'followers'">
           <b-img rounded="circle" alt="Circle image"
             v-bind:src="$axios.defaults.baseURL + dataFollower.following.profileImage"
             style="width : 100% ; heitgh : 100% "></b-img>
@@ -12,8 +13,8 @@
             v-bind:src="$axios.defaults.baseURL + dataFollower.follower.profileImage"
             style="width : 100% ; heitgh : 100%"></b-img>
         </b-col>
-        <b-col cols="8" v-on:click="redirect(index)" >
-          <span style="font-size: 16px; " v-if="type === 'followers'" >
+        <b-col cols="8" v-on:click="redirect(index)">
+          <span style="font-size: 16px; " v-if="type === 'followers'">
 
             {{dataFollower.following.lastName + " " +dataFollower.following.firstName}}
 
@@ -25,7 +26,7 @@
           </span>
         </b-col>
         <b-col>
-          <a v-if ="isNotMyProfile == true" v-on:click="onDelete(index)">
+          <a v-if="isNotMyProfile == true" v-on:click="onDelete(index)">
             <font-awesome-icon icon="trash-alt" />
           </a>
         </b-col>
@@ -61,8 +62,8 @@
 
       },
       isNotMyProfile: function () {
-      return (this.userId  !== this.$auth.user._id );
-    }
+        return (this.userId !== this.$auth.user._id);
+      }
 
     },
     created: async function () {
