@@ -1,6 +1,5 @@
 <template style="background-color: lightgoldenrodyellow;">
   <b-container class="bv-example-row mt-5">
-  {{this.user}}
     <b-row class="justify-content-md-center">
       <b-col col lg="2" >
         <b-img  rounded="circle" alt="Circle image" :src= "this.urlPicProfil" style = "width : 150px ; height : 150px">
@@ -84,9 +83,6 @@ export default {
       })
     },
     unFollow(e) {
-      // this.$axios.delete("/followers", {
-      //   following: this.iduser
-      // })
       this.$axios.delete("/followers/" + this.iduser).then(_ => {
         console.log("hi")
 })

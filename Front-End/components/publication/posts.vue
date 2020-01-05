@@ -4,10 +4,7 @@
     <b-row style = "margin-top : 7%">
         <!--<b-col class="m-5" cols="10" md="7" >-->
         <b-col cols="8">
-            
              <post :image = "img"  v-for="(img,index) in images" v-bind:key="(img,index)"></post>
-           
-                
         </b-col>
         <!--<b-col cols="3"  class="m-5 "  md="3"> -->
         <b-col cols="4">    
