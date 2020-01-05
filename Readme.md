@@ -45,7 +45,7 @@
 # devrait installer et lancer l'application. =D =D 
 
 ******************************Version***********************************
-#  en cas de problems de version mettez ajourt la version de node
+#  en cas de problems de version mettez a jour la version de node
     $ v13.3.0
 
 ```
