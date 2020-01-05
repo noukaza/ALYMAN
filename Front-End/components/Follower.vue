@@ -25,7 +25,7 @@
           </span>
         </b-col>
         <b-col>
-          <a v-on:click="onDelete(index)">
+          <a v-if ="isNotMyProfile == true" v-on:click="onDelete(index)">
             <font-awesome-icon icon="trash-alt" />
           </a>
         </b-col>
@@ -59,7 +59,10 @@
           this.$router.push("/profile/" + this.dataFollowers[index].following._id) :
           this.$router.push("/profile/" + this.dataFollowers[index].follower._id)
 
-      }
+      },
+      isNotMyProfile: function () {
+      return (this.userId  !== this.$auth.user._id );
+    }
 
     },
     created: async function () {

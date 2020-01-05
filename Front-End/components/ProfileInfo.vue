@@ -9,7 +9,6 @@
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos aliquam odio eveniet animi omnis aut rerum quia, non nisi, veniam ad. Aliquid magnam repudiandae fuga quis deleniti ipsum totam inventore.</span>
             <div v-if="isNotMyProfile">
               <div v-if="!followdsss">
                 <b-badge href="#" variant="primary" v-on:click="follow">follow</b-badge>
@@ -83,6 +82,7 @@ export default {
       })
     },
     unFollow(e) {
+      console.log(this.iduser)
       this.$axios.delete("/followers/" + this.iduser).then(_ => {
         console.log("hi")
 })

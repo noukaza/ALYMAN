@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-show="show">
     <b-container v-if="show" class="clearfix" style="padding: 10px 0px 10px 0px">
       <div class="media">
-        <b-img class="img-pofil" v-bind="mainProps" :src=" this.$axios.defaults.baseURL + image " rounded="circle" alt="Circle image"></b-img>
+        <b-img class="img-pofil" v-bind="mainProps" :src=" this.$axios.defaults.baseURL + comment.user.profileImage" rounded="circle" alt="Circle image"></b-img>
         <div class="media-body">
-          <h5 class="mt-0">{{lastName +" "+ firstName}} </h5>
-          {{ descriptions }}
+          <h5 class="mt-0">{{ comment.user.lastName +" "+  comment.user.firstName}} </h5>
+          {{ comment.comment }}
         </div>
       <b-btn  class="btn btn-light" v-if="userID == $auth.user._id" v-on:click="deleteComment">
         X
@@ -20,7 +20,7 @@
 
 export default {
 
-  props: ['image', 'firstName', 'lastName', 'descriptions', 'userID','commentID'],
+  props: ['image', 'firstName', 'lastName', 'descriptions', 'userID','commentID',"comment"],
 
   data() {
 
@@ -48,9 +48,9 @@ export default {
 methods: {
 deleteComment(){
   console.log('hi')
-  this.$axios.delete(`/comments/${this.commentID}`)
+  this.$axios.delete(`/comments/${this.comment._id}`)
   .then(e => {
-    console.log("suppriméééééééééé ya lyly ")
+  this.show = false
   })
      
 }

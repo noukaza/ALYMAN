@@ -34,14 +34,25 @@
 <script>
 export default {
   name: "CommentSaisie.vue",
-  props: ['images', 'username',"imageId"],
+  props: ['images', 'username',"imageId", 'comments'],
   methods:{
     submit(){
       this.$axios.post("/comments",{
         "comment": this.comment,
         "image": this.imageId
-      }).then(a =>{
-         console.log(a)
+      }).then(data =>{
+        console.log(data.data)
+        let test = {
+          comment : this.comment,
+          user:{
+            lastName : this.$auth.user.lastName,
+            firstName :this.$auth.user.firstName,
+            profileImage :this.$auth.user.profileImage
+          }
+        }
+        this.comments.push(test)
+         //console.log("images",this.images)
+          //console.log("comments",this.comments)
 
         this.comment = ""} ).catch(e=>console.log(e))
     },

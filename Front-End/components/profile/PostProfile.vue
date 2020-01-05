@@ -1,5 +1,5 @@
 <template>
-      <b-img thumbnail class="post" v-bind="mainProps" :src="url" :alt="alt"  v-on:click='openPost'></b-img>
+      <b-img thumbnail class="post" v-bind="mainProps" :src="url" :alt="alt"></b-img>
 </template>
 <script>
 export default {
