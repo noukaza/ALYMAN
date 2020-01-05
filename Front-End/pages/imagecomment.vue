@@ -10,6 +10,8 @@
 <script>
   import Post from "../components/publication/post";
   export default {
+      middleware : "auth",
+
     components: {
       Post,
     },

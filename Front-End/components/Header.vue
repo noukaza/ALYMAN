@@ -19,20 +19,14 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit" v-on:click ="search">Search</b-button>
           </b-nav-form>
 
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item href="#" v-on:click = "logOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
@@ -64,6 +58,13 @@ export default {
       //console.log("hi")
       //this.$axios.post(`/q/`).then(data => console.log(data))
     },
+    logOut(){
+      console.log("hi")
+        localStorage.clear()
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        this.$router.push('/')
+        window.location.reload()
+    }
   }
 }
 </script>
