@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const chekauth = require("../middleware/check_auth");
 const chekUser = require("../middleware/check_user");
+const userFeild = require("../middleware/userFields");
+
+
 /**
  * Upload middleware
  */
@@ -58,11 +61,12 @@ const userController = require("../controllers/users");
  *           $ref: '#/definitions/user'
  */
 router.post(
-            "/",
-            upload.single("profileImage"),
-            chekUser.notUsedEmail,
-            userController.create_user
-        );
+    "/",
+    upload.single("profileImage"),
+    chekUser.notUsedEmail,
+    userFeild.ValidPassword,
+    userController.create_user
+);
 
 /**
  * @swagger
@@ -88,27 +92,29 @@ router.post(
  *            404:
  *               description: "User not found"
  */
-router.delete('/:id',chekauth, userController.delets_user)
+router.delete('/:id', chekauth, userController.delets_user)
 
 /**
  * @swagger
+ *
  * /users/login:
  *   post:
- *      tags:
- *       - "user"
- *      summary: "get user"
- *      operationId: "getUser"
- *      produces:
- *            - "application/json"
- *      consumes:
- *            - "application/json"
- *      parameters:
- *      - in: "body"
- *        name: "body"
- *        required: true
- *        schema:
- *          $ref: "#/definitions/userLogin"
- *      responses:
+ *     tags: 
+ *         - "user"
+ *     consumes: 
+ *        -multipart/form-data
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: formData
+ *         name: email
+ *         type: string
+ *         description: id following.
+ *       - in: formData
+ *         name: password
+ *         type: string
+ *         description: id following.
+ *     responses:
  *            200:
  *               description: "Auth successful"
  *               schema:
@@ -119,14 +125,42 @@ router.delete('/:id',chekauth, userController.delets_user)
  *               description: "error"
  */
 router.post("/login", userController.login_user)
-
-router.get('/', userController.get_all_user)
-
-
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "user"
+ *      summary: "get all users"
+ *      description: "get all users info ."
+ *      operationId: "getAllUsers"
+ *      produces:
+ *            - "application/json"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ *            304:
+ *               description: "successful operation "
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ *            404:
+ *               description: "User not found"
+ */
+router.get('/', chekauth, userController.get_all_user)
 /**
  * @swagger
  * /users/{id}:
  *   get:
+ *      security:
+ *         - Bearer: [] 
  *      tags:
  *       - "user"
  *      summary: "get user"
@@ -146,7 +180,7 @@ router.get('/', userController.get_all_user)
  *                 type: "object"
  *                 items:
  *                 $ref: "#/definitions/user"
-*            304:
+ *            304:
  *               description: "successful operation "
  *               schema:
  *                 type: "object"
@@ -155,6 +189,96 @@ router.get('/', userController.get_all_user)
  *            404:
  *               description: "User not found"
  */
-router.get('/:id', userController.get_user_by_id)
+router.get('/:id', chekauth, userController.get_user_by_id)
+
+
+/**
+ * @swagger
+ * /users/{id}/followers/:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "user"
+ *      summary: "get all followers for a user"
+ *      description: "get all followers for a user ."
+ *      operationId: "followersForUsers"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *       - name: "id"
+ *         in: "path"
+ *         required: true
+ *         type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ */
+router.get('/:id/followers/', chekauth, userController.get_follower_for_user);
+
+/**
+ * @swagger
+ * /users/{id}/followings/:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "user"
+ *      summary: "get all followings for a user"
+ *      description: "get all followings for a user ."
+ *      operationId: "followingsForUsers"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *       - name: "id"
+ *         in: "path"
+ *         required: true
+ *         type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ */
+router.get('/:id/followings/', chekauth, userController.get_followings_for_user);
+
+/**
+ * @swagger
+ * /users/{id}/images/:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "user"
+ *      summary: "get all images for a user"
+ *      description: "get all images for a user ."
+ *      operationId: "imagesForUsers"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *       - name: "id"
+ *         in: "path"
+ *         required: true
+ *         type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ */
+router.get('/:id/images', chekauth, userController.get_images_for_user);
+
+
+
+router.put('/', upload.single("profileImage"),
+    chekauth, userController.edit_user);
 
 module.exports = router;

@@ -17,4 +17,20 @@ const userSchema = mongoose.Schema({
     update_at: { type: String, default: new Date().toISOString() }
 });
 
+
+
+// userSchema.pre('validate', function() {
+//     console.log('this gets printed first');
+//   });
+//   userSchema.post('validate', function() {
+//     console.log('this gets printed second');
+//   });
+//   userSchema.pre('save', function() {
+//     console.log('this gets printed third');
+//   });
+//   userSchema.post('save', function() {
+//     console.log('this gets printed fourth');
+//   });
+
+
 module.exports = mongoose.model("User", userSchema);

@@ -22,14 +22,14 @@ exports.get_like_by_id = (req, res, next) => {
 exports.poste_like = (req, res, next) => {
     
     Image.find({
-            image: req.body.image
+            _id: req.body.image
         })
         .exec()
         .then(img => {
             if (img.length >= 1) {
                 const like = new Like({
                     _id: mongoose.Types.ObjectId(),
-                    user: id,
+                    user: req.userData._id,
                     image: req.body.image,
                    // create_at: req.body.create_at, // TODO : c pas a l'utilisateur de faire ca 
                    // update_at: req.body.update_at // TODO : c pas a l'utilisateur de faire ca 
