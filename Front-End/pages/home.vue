@@ -7,6 +7,8 @@
 import Carousel from '~/components/Carousel.vue'
 
 export default {
+    middleware : "auth",
+
   components:{
      Carousel
   },

@@ -4,7 +4,6 @@ const response = require("../configurations/responsesTempalte");
 const Commente = require("../models/comment");
 const User = require("../models/user");
 const Image = require("../models/image");
-const response = require("../configurations/responsesTempalte");
 
 
 exports.post_comment = (req, res, next) => {
@@ -45,21 +44,25 @@ exports.post_comment = (req, res, next) => {
                     error: err
                 })
             });
-   
-
-
 }
 
-exports.delete_comment = (req, res, next) => {
-    //TODO : verify that the user is the owner of the pic using the token
+exports.delete_comment = async (req, res, next) => {
     Commente.remove({
+            user: req.userData._id,
             _id: req.params.id
         })
         .exec()
         .then(result => {
-            res.status(200).json({
-                message: "Done !"
-            });
+            if(result.n ===1){
+                res.status(200).json({
+                    message: "Done !"
+                });
+            }else{
+                res.status(404).json({
+                    message: "eroor it's not your comment !"
+                });
+            }
+                
         })
         .catch(err => {
             res.status(500).json({
@@ -68,20 +71,25 @@ exports.delete_comment = (req, res, next) => {
         })
 }
 
-exports.update_comment = (req, res, next) => {
-    const comment = {
-        id_comment: req.params.id,
-        comment: req.body.comment
-    };
-    res.status(201).json(comment)
+exports.update_comment = async (req, res, next) => {
+    let comment = await Commente.findOne({
+        _id:req.params.id,
+        user : req.userData._id
+    })
+    if(comment){
+        if(req.body.comment){
+            commente.comment = req.body.comment
+            commente.save()
+        }
+        response(res, 201, true, "done",commente)
+    }else{
+        response(res, 404, false, "error")
+    }
 }
 
 exports.get_comments_for_image = async (req, res, next) => {
-    console.log("id" ,req.params.id)
     let comments = await Commente.find({
         image: req.params.id
-    }).exec();
+    }).populate("user","profileImage firstName lastName _id").exec();
     response(res, 200, true, "", comments)
-
-
 }

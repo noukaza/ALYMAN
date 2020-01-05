@@ -5,7 +5,7 @@
         "MONGODB_PROTOCOL" : "mongodb",
         "MONGODB_HOST": "localhost",
         "MONGODB_PORT": "27017",
-        "MONGODB_DATA": "preprods",
+        "MONGODB_DATA": "new",
         "SWAGGER_DOC_ROUTE": "/doc",
         "JWT_KEY": "KEY",
         "PORT": "3000",

@@ -66,7 +66,7 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
  *
  */
 /* DELETE method */
-router.delete("/:id", check_auth,imagesController.delete_image);
+router.delete("/:id", chekauth,imagesController.delete_image);
 /**
  * @swagger
  * /Image/{id}:
@@ -96,7 +96,7 @@ router.delete("/:id", check_auth,imagesController.delete_image);
  *               description: "error server"
  */
 /* UPDATE method */
-router.put("/:id", check_auth, imagesController.update_image);
+router.put("/:id", chekauth, imagesController.update_image);
 
 
 
