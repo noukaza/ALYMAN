@@ -1,11 +1,13 @@
 <template>
   <div v-show="show">
-    <vs-list-item :title=" comment.user.lastName +' '+  comment.user.firstName" :subtitle="comment.comment">
+    <b-link :to="'/profile/'+comment.user._id" style="color:black;">
+      <vs-list-item :title=" comment.user.lastName +' '+  comment.user.firstName" :subtitle="comment.comment">
         <template slot= "avatar">
           <vs-avatar :src=" this.$axios.defaults.baseURL + comment.user.profileImage"/>
         </template>
        <vs-button color="dark"  v-if="userID == $auth.user._id" type="flat" v-on:click="deleteComment">X</vs-button>
       </vs-list-item>
+    </b-link>
   </div>
 </template>
 

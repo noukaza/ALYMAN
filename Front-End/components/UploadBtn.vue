@@ -2,7 +2,7 @@
 <div id="mybutton">
 
  <div>
-    <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
+    <b-button v-b-modal.modal-prevent-closing style="width: 200px; height:50px"  variant="info">NEW POST</b-button>
 
     <b-modal
       id="modal-prevent-closing"
