@@ -10,6 +10,40 @@ const chekauth = require("../middleware/check_auth");
 const upload = require("../configurations/uploadImages")
 
 /* GET method */
+/**
+ * @swagger
+ * /images:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "Image"
+ *      summary: "get images that you are allowed to see"
+ *      description: "get images that you are allowed to see."
+ *      operationId: "getAllImages"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/image"
+ *            304:
+ *               description: "successful operation "
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ *            404:
+ *               description: "User not found"
+ */
 router.get("/",chekauth, imagesController.get_all_images);
 
 /* POST method */

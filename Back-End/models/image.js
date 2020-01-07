@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 
 const imageSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -10,5 +11,5 @@ const imageSchema = mongoose.Schema({
     create_at: { type: String, default: new Date().toISOString() },
     update_at: { type: String, default: new Date().toISOString() }
 });
-
+imageSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Image", imageSchema);

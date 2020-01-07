@@ -1,5 +1,5 @@
 <template>
-  <b-container class="clearfix" style="padding: 10px 0px 10px 0px">
+  <b-container class="clearfix " style="padding: 10px 0px 0px 0px">
     <b-row>
       <b-col cols="1">
           <vs-avatar size="50px" v-bind:src="this.$axios.defaults.baseURL + $auth.user.profileImage" />
@@ -11,6 +11,7 @@
   </b-container>
 </template>
 <style>
+
   .comment {
     blank: false;
     blankColor: '#777';
