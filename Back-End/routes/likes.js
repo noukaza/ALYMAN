@@ -12,6 +12,8 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *
  * /Like:
  *   post:
+ *     security:
+ *         - Bearer: []
  *     tags:
  *         - "Like"
  *     summary: "Create like"
@@ -40,6 +42,8 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
  *
  * /Like/{id}:
  *   delete:
+ *      security:
+ *         - Bearer: []
  *      tags:
  *         - "Like"
  *      summary: "Delete like"

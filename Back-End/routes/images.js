@@ -19,6 +19,8 @@ router.get("/",chekauth, imagesController.get_all_images);
  * @swagger
  * /images:
  *   post:
+ *     security:
+ *         - Bearer: []
  *     tags:
  *       - "Image"
  *     summary: "uplaod image"
@@ -45,6 +47,8 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
  * @swagger
  * /Image/{id}:
  *   delete:
+ *      security:
+ *         - Bearer: []
  *      tags:
  *         - "Image"
  *      summary: "Delete Image"
@@ -71,6 +75,8 @@ router.delete("/:id", chekauth,imagesController.delete_image);
  * @swagger
  * /Image/{id}:
  *   put:
+ *      security:
+ *         - Bearer: []
  *      tags:
  *         - "Image"
  *      summary: "Update Image"
