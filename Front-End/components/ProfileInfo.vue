@@ -9,6 +9,7 @@
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
+            {{isNotMyProfile}}
             <col v-if="isNotMyProfile">
             <b-row>
               <b-col lg="2">
