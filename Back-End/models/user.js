@@ -8,11 +8,9 @@ const userSchema = mongoose.Schema({
     bio: { type: String, required: false },
     email: { type: String, required: true, match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/ },
     password: { type: String, required: true },
-    images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }],
-    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Follower' }],
-    followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Follower' }],
+    images: { type: Number, default: 0 },
+    followers: { type: Number, default: 0 },
+    followings: { type: Number, default: 0 },
     create_at: { type: String, default: new Date().toISOString() },
     update_at: { type: String, default: new Date().toISOString() }
 });
