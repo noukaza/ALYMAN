@@ -43,6 +43,21 @@
         </b-row>
       </b-col>
     </b-row>
+    <vs-row
+      vs-align="flex-start"
+      vs-type="flex" vs-justify="center" vs-w="12">
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+        <vs-button  type="gradient" v-on:click='showMore'>show more </vs-button>
+
+      </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+      </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+      </vs-col>
+    </vs-row>
+    <b-row  vs-justify="center"  >
+    </b-row>
+
   </b-container>
 </template>
 <script>
@@ -53,8 +68,16 @@
     },
     created: async function () {
       //this.IDUSER = this.userId
-      let allImages = await this.$axios.get(`/images`)
-      this.images = allImages.data.data
+      let allImages = await this.$axios.get(`/images?page=${this.page}&prePage=${this.prePage}`)
+      this.images = allImages.data.data.docs
+      this.page++;
+    },
+    methods:{
+      async showMore(){
+        let allImages = await this.$axios.get(`/images?page=${this.page}&prePage=${this.prePage}`)
+        this.images = this.images.concat(allImages.data.data.docs)
+        this.page++;
+      }
     },
     data() {
       return {
@@ -72,7 +95,9 @@
           height: 50,
           class: 'align-middle'
         },
-        images: []
+        images: [],
+        prePage : 2,
+        page:1
       }
     }
   }

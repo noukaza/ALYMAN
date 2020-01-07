@@ -6,7 +6,7 @@ const queryController = require("../controllers/queries")
 
 /**
  * @swagger
- * /q/users/{firstName}:
+ * /q/users/{name}:
  *   get:
  *      security:
  *         - Bearer: []
@@ -17,7 +17,7 @@ const queryController = require("../controllers/queries")
  *      produces:
  *            - "application/json"
  *      parameters:
- *      - name: "firstName"
+ *      - name: "name"
  *        in: "path"
  *        required: true
  *        type: "string"

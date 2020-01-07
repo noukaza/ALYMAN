@@ -21,15 +21,17 @@ exports.get_like_by_id = (req, res, next) => {
 
 exports.poste_like = (req, res, next) => {
     
-    Image.find({
+    Image.findOne({
             _id: req.body.image
         })
         .exec()
         .then(img => {
-            if (img.length >= 1) {
+            if (img) {
                 Like.findOne({user: req.userData._id,
-                    image: req.body.image,}).exec().then(res =>{
-                        if(!res){
+                    image: req.body.image,}).exec().then(dataImage =>{
+
+                        if(!dataImage){
+
                             const like = new Like({
                                 _id: mongoose.Types.ObjectId(),
                                 user: req.userData._id,
@@ -38,18 +40,19 @@ exports.poste_like = (req, res, next) => {
                             like
                                 .save()
                                 .then(data => {
+                                    img.likes++;
+                                    img.save()
                                     response(res, 201, true, "successful operation", data) // TODO : changer le msg "successful operation"
                                 })
                                 .catch(err => {
                                     response(res, 500, false, "error", err)
                                 })
                         }else{
-                            response(res, 500, false, "like existe")
+                            response(res, 500, false, "like existe",dataImage)
                         }
                     }).catch(err =>{
-                        response(res, 500, false, "error", err)
+                        response(res, 501, false, "errorr")
                     })
-                
             } else {
                 response(res, 409, false, "l'image n'existe pas", err) // TODO : changer le msg "l'image n'existe pas" => par une phrase du genre vous avez essayé de liker une images qui n'existe pas ... etc 
             }
@@ -66,18 +69,25 @@ exports.delete_like = (req, res, next) => {
      * TODO : redondance => avoir des middleware 
      */
     Like
-        .findById({
-            _id: req.params.id
+        .findOne({
+            image: req.params.id,
+            user : req.userData._id
         })
         .exec()
         .then(data => {
             if (data.user == id) {
                 Like.remove({
-                        _id: req.params.id
+                    image: req.params.id,
+                    user : req.userData._id
                     })
                     .exec()
                     .then(result => {
+                        Image.findOne({_id: data.image}).exec().then(d =>{
+                            d.likes--;
+                            d.save();
+                        })
                         response(res, 200, true, "Like supprimer ") // TODO : changer le message 
+                        
                     })
                     .catch(err => {
                         response(res, 500, false, "error", err) // TODO : changer le message 

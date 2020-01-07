@@ -10,6 +10,40 @@ const chekauth = require("../middleware/check_auth");
 const upload = require("../configurations/uploadImages")
 
 /* GET method */
+/**
+ * @swagger
+ * /images:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "Image"
+ *      summary: "get images that you are allowed to see"
+ *      description: "get images that you are allowed to see."
+ *      operationId: "getAllImages"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/image"
+ *            304:
+ *               description: "successful operation "
+ *               schema:
+ *                 type: "object"
+ *                 items:
+ *                 $ref: "#/definitions/user"
+ *            404:
+ *               description: "User not found"
+ */
 router.get("/",chekauth, imagesController.get_all_images);
 
 /* POST method */
@@ -19,6 +53,8 @@ router.get("/",chekauth, imagesController.get_all_images);
  * @swagger
  * /images:
  *   post:
+ *     security:
+ *         - Bearer: []
  *     tags:
  *       - "Image"
  *     summary: "uplaod image"
@@ -45,6 +81,8 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
  * @swagger
  * /Image/{id}:
  *   delete:
+ *      security:
+ *         - Bearer: []
  *      tags:
  *         - "Image"
  *      summary: "Delete Image"
@@ -71,6 +109,8 @@ router.delete("/:id", chekauth,imagesController.delete_image);
  * @swagger
  * /Image/{id}:
  *   put:
+ *      security:
+ *         - Bearer: []
  *      tags:
  *         - "Image"
  *      summary: "Update Image"

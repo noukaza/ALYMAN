@@ -4,7 +4,6 @@ const response = require("../configurations/responsesTempalte");
 
 
 exports.searchUser = async (req, res, next) => {
-    console.log('yes')
     const name = req.params.q
     const lowName = name.toLowerCase();
 

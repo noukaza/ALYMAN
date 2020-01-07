@@ -11,7 +11,7 @@ module.exports = {
             },
             version: versionGit,
         },
-        host: "localhost:" + process.env.PORT,
+        host:  process.env.SWAGGER_BASE_URL + ":" + process.env.PORT,
         basePath: "/",
         schemes: ["http", "https"]
     },

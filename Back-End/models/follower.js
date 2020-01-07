@@ -43,14 +43,12 @@ followerSchema.post('save', async function () {
     let following = await user.findOne(this.following._id)
         .select(" _id firstName lastName profileImage followers followings")
         .exec();
-    // console.log(follower.followers)
      follower.followers.push(following);
     await follower.save();
     
     following.followings.push(follower);   
     await following.save();
     //postSave
-    // console.log(follower)
 
 });
 

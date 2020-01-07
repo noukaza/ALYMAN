@@ -20,6 +20,7 @@ const swaggerDocRoute = process.env.SWAGGER_DOC_ROUTE;
 const response = require("./configurations/responsesTempalte");
 const configMongo = require('./configurations/mognodb')
 const swaggerConfig = require("./configurations/swaggerConfig");
+const headersConfig = require ("./middleware/check_header");
 
 /* Connect to BDD */
 mongoose.connect(configMongo.mongoUri, configMongo.option);
@@ -40,18 +41,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 /* allow cors */
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-    /* config allow methods  */
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
-    }
-    next();
-});
+app.use(headersConfig);
 
 /* filter routes*/
 app.use('/users', usersRoutes); // url : /users
