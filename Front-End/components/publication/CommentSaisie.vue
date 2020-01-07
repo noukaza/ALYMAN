@@ -1,18 +1,12 @@
 <template>
   <b-container class="clearfix" style="padding: 10px 0px 10px 0px">
     <b-row>
-      <b-col cols="2">
-        <b-img class="comment" v-bind:src="this.$axios.defaults.baseURL + $auth.user.profileImage" rounded="circle"
-          alt="Circle image"></b-img>
+      <b-col cols="1">
+          <vs-avatar size="50px" v-bind:src="this.$axios.defaults.baseURL + $auth.user.profileImage" />
       </b-col>
-      <!-- <input type="text" class="saisir" v-model="comment" placeholder="Votre commentaire ...">-->
-      <b-col cols="8">
-        <b-form-input v-model="comment" placeholder="Enter your comment" v-on:keyup.enter="submit"></b-form-input>
+      <b-col cols="11">
+         <vs-textarea v-model="comment" placeholder="Enter your comment" v-on:keyup.enter="submit"/>
       </b-col>
-      <b-col cols="2">
-        <b-button pill variant="primary" v-on:click='like'>like</b-button>
-      </b-col>
-
     </b-row>
   </b-container>
 </template>
@@ -54,9 +48,6 @@
             }
           }
           this.comments.push(test)
-          //console.log("images",this.images)
-          //console.log("comments",this.comments)
-
           this.comment = ""
         }).catch(e => console.log(e))
       },

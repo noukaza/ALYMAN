@@ -1,19 +1,11 @@
 <template>
   <div v-show="show">
-    <b-container v-if="show" class="clearfix" style="padding: 10px 0px 10px 0px">
-      <div class="media">
-        <b-img class="img-pofil" v-bind="mainProps" :src=" this.$axios.defaults.baseURL + comment.user.profileImage"
-          rounded="circle" alt="Circle image"></b-img>
-        <div class="media-body">
-          <h5 class="mt-0">{{ comment.user.lastName +" "+  comment.user.firstName}} </h5>
-          {{ comment.comment }}
-        </div>
-        <b-btn class="btn btn-light" v-if="userID == $auth.user._id" v-on:click="deleteComment">
-          X
-        </b-btn>
-
-      </div>
-    </b-container>
+    <vs-list-item :title=" comment.user.lastName +' '+  comment.user.firstName" :subtitle="comment.comment">
+        <template slot= "avatar">
+          <vs-avatar :src=" this.$axios.defaults.baseURL + comment.user.profileImage"/>
+        </template>
+       <vs-button color="dark"  v-if="userID == $auth.user._id" type="flat" v-on:click="deleteComment">X</vs-button>
+      </vs-list-item>
   </div>
 </template>
 
@@ -42,7 +34,6 @@
           class: 'align-middle'
         }
       }
-
     },
 
     methods: {
