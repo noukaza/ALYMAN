@@ -101,13 +101,7 @@
  *       - IdUser
  *       - createAt
  *     properties:
- *       id_like:
- *          type: integer
- *       IdImage:
- *         type: integer
- *       IdUser:
- *         type: integer
- *       createAt:
+ *       image:
  *         type: string
  *   Comments:
  *     type: object

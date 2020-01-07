@@ -26,10 +26,14 @@ exports.poste_like = (req, res, next) => {
         })
         .exec()
         .then(img => {
+
             if (img) {
+
                 Like.findOne({user: req.userData._id,
-                    image: req.body.image,}).exec().then(res =>{
-                        if(!res){
+                    image: req.body.image,}).exec().then(dataImage =>{
+
+                        if(!dataImage){
+
                             const like = new Like({
                                 _id: mongoose.Types.ObjectId(),
                                 user: req.userData._id,
@@ -46,10 +50,12 @@ exports.poste_like = (req, res, next) => {
                                     response(res, 500, false, "error", err)
                                 })
                         }else{
+
                             response(res, 500, false, "like existe")
+
                         }
                     }).catch(err =>{
-                        response(res, 500, false, "error", err)
+                        response(res, 501, false, "errorr")
                     })
                 
             } else {

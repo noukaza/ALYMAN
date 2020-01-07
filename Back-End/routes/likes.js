@@ -8,39 +8,39 @@ const likesController = require("../controllers/likes")
 router.get("/:id", chekauth, likesController.get_like_by_id);
 
 /**
- * @swagger
- *
- * /Like:
- *   post:
- *     security:
+*  @swagger
+*  
+*   /likes:
+*     post:
+*       tags:
+*       - "Like"
+*       summary: "Add a new Likes to the image"
+*       description: ""
+*       operationId: "addLikes"
+*       consumes:
+*       - "application/json"
+*       - "application/xml"
+*       produces:
+*       - "application/xml"
+*       - "application/json"
+*       parameters:
+*       - in: "body"
+*         name: "body"
+*         description: "Likes object that needs to be added to the image"
+*         required: true
+*         schema:
+*           $ref: "#/definitions/Like"
+*       responses:
+*         405:
+*           description: "Invalid input"
+*       security:
  *         - Bearer: []
- *     tags:
- *         - "Like"
- *     summary: "Create like"
- *     description: "Create like"
- *     operationId: "createLike"
- *     produces:
- *       - application/json
- *     parameters:
- *       - id: Like
- *         description: Like
- *         in:  body
- *         required: true
- *         type: string
- *         schema:
- *           $ref: '#/definitions/Like'
- *     responses:
- *       200:
- *         description: Like
- *         schema:
- *           $ref: '#/definitions/Like'
- *
- */
- router.post("/",chekauth,likesController.poste_like);
+ */ 
+router.post("/",chekauth,likesController.poste_like);
 /**
  * @swagger
  *
- * /Like/{id}:
+ * /likes/{id}:
  *   delete:
  *      security:
  *         - Bearer: []
