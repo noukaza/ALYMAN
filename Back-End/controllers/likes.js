@@ -51,7 +51,7 @@ exports.poste_like = (req, res, next) => {
                                 })
                         }else{
 
-                            response(res, 500, false, "like existe")
+                            response(res, 500, false, "like existe",dataImage)
 
                         }
                     }).catch(err =>{

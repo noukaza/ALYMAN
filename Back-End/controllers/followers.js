@@ -12,7 +12,6 @@ exports.get_all_followers = async (req, res, next) => {
         .catch(err => {
             response(res, 404, false, "error", err)
         })
-    // TODO change message 
     followers.length === 0 ?
         response(res, 404, false, " 404 ") :
         response(res, 200, true, "successful operation", followers)
