@@ -21,12 +21,12 @@ exports.get_like_by_id = (req, res, next) => {
 
 exports.poste_like = (req, res, next) => {
     
-    Image.find({
+    Image.findOne({
             _id: req.body.image
         })
         .exec()
         .then(img => {
-            if (img.length >= 1) {
+            if (img) {
                 Like.findOne({user: req.userData._id,
                     image: req.body.image,}).exec().then(res =>{
                         if(!res){
@@ -38,6 +38,8 @@ exports.poste_like = (req, res, next) => {
                             like
                                 .save()
                                 .then(data => {
+                                    img.likes++;
+                                    img.save()
                                     response(res, 201, true, "successful operation", data) // TODO : changer le msg "successful operation"
                                 })
                                 .catch(err => {

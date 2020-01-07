@@ -15,7 +15,7 @@
 
     <b-img style="width : 100%" v-bind:src="this.$axios.defaults.baseURL + image.image"></b-img>
     <b-card-text>
-      {{image.description}}
+      {{image.description}} | Like :  {{image.likes}} 
     </b-card-text>
     <li v-for="(comment,index) in comments" v-bind:key="(comment,index)"
       style="list-style: none; padding-bottom: 10px; ">
