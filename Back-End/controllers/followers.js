@@ -31,7 +31,7 @@ exports.create_follower = async (req, res, next) => {
     if (user) {
         let following = await User.findOne({
             _id: req.body.following
-        }).select(" _id firstName lastName profileImage").exec().catch(err => response(res, 409, false, "following n'existe pas", err))
+        }).select(" _id firstName lastName profileImage").exec().catch(err => response(res, 409, false, "following does not exist", err))
         if (following) {
             const follower = new Follower({
                 _id: mongoose.Types.ObjectId(),
@@ -58,8 +58,8 @@ exports.delete_follower = (req, res, next) => {
         .exec()
         .then(data => {
             data.n !== 0 ?
-                response(res, 200, true, "Follower supprimer ") :
-                response(res, 400, true, "follower n'existe pas   ")
+                response(res, 200, true, " follower has been deleted") :
+                response(res, 400, true, "Follower does not exist   ")
         })
         .catch(err => {
             response(res, 501, false, "error", err)

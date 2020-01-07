@@ -13,7 +13,7 @@ exports.get_like_by_id = (req, res, next) => {
         //.populate("images")
         .exec()
         .then(data => {
-            response(res, 200, true, "successful operation", data) // TODO : changer le msg "successful operation" par un msg qui décrit le resultat il sera probablement afficher en FRONT
+            response(res, 200, true, "like has been recovered", data)
         }).catch(err => {
             response(res, 404, false, "error", err)
         })
@@ -42,7 +42,7 @@ exports.poste_like = (req, res, next) => {
                                 .then(data => {
                                     img.likes++;
                                     img.save()
-                                    response(res, 201, true, "successful operation", data) // TODO : changer le msg "successful operation"
+                                    response(res, 201, true, "you made a like on the picture", data)
                                 })
                                 .catch(err => {
                                     response(res, 500, false, "error", err)
@@ -54,7 +54,7 @@ exports.poste_like = (req, res, next) => {
                         response(res, 501, false, "errorr")
                     })
             } else {
-                response(res, 409, false, "l'image n'existe pas", err) // TODO : changer le msg "l'image n'existe pas" => par une phrase du genre vous avez essayé de liker une images qui n'existe pas ... etc 
+                response(res, 409, false, "you like an image that doesn't exist", err)
             }
         })
         .catch(err => {
@@ -86,7 +86,7 @@ exports.delete_like = (req, res, next) => {
                             d.likes--;
                             d.save();
                         })
-                        response(res, 200, true, "Like supprimer ") // TODO : changer le message 
+                        response(res, 200, true, "Like has been deleted ")
                         
                     })
                     .catch(err => {
@@ -94,7 +94,7 @@ exports.delete_like = (req, res, next) => {
                         // TODO : pas besoin d envoyer les err en paramètres elles peuvent contenire des infos sensible. si besoin c a nous de sérialiser les donnees a envoyer  
                     })
             } else {
-                response(res, 409, false, "Like n'appartien pas a l'utilisateur", err) // TODO : changer le message 
+                response(res, 409, false, "can not delete like, it doesn't belong to you", err)
                 // TODO : pas besoin d envoyer les err; si besoin c a nous de sérialiser les donnees a envoyer
             }
         }).catch(err => {

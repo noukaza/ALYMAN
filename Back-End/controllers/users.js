@@ -30,7 +30,7 @@ exports.create_user = (req, res, next) => {
             user
                 .save()
                 .then(data => {
-                    response(res, 201, true, "successful operation", data)
+                    response(res, 201, true, "the user has been created", data)
                 })
                 .catch(err => {
                     response(res, 500, false, "error", err)

@@ -34,7 +34,7 @@ exports.post_comment = (req, res, next) => {
                         })
                 } else {
                     res.status(409).json({
-                        message: "l'image n'existe pas"
+                        message: "the picture does not exist"
                     })
                 }
             })
