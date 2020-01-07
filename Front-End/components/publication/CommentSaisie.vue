@@ -39,16 +39,17 @@
           "comment": this.comment,
           "image": this.imageId
         }).then(data => {
-          console.log(data.data)
-          let test = {
+          let comm = {
+            _id: data.data._id,
             comment: this.comment,
             user: {
+              _id : this.$auth.user._id,
               lastName: this.$auth.user.lastName,
               firstName: this.$auth.user.firstName,
               profileImage: this.$auth.user.profileImage
             }
           }
-          this.comments.push(test)
+          this.comments.push(comm)
           this.comment = ""
         }).catch(e => console.log(e))
       },
