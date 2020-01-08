@@ -55,6 +55,8 @@ const userController = require("../controllers/users");
  *         description: users
  *         schema:
  *           $ref: '#/definitions/user'
+ *       500:
+ *         description: "Error"
  */
 router.post(
     "/",
