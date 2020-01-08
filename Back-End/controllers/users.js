@@ -29,7 +29,14 @@ exports.create_user = (req, res, next) => {
             user
                 .save()
                 .then(data => {
-                    response(res, 201, true, "the user has been created", data)
+                    let userRes = {
+                        "profileImage": data.profileImage,
+                        "_id": data._id,
+                        "firstName": data.firstName,
+                        "lastName": data.lastName,
+                        "email": data.email,
+                    }
+                    response(res, 201, true, "the user has been created", userRes)
                 })
                 .catch(err => {
                     response(res, 500, false, "error", err)
