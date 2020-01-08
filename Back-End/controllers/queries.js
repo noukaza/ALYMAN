@@ -2,7 +2,6 @@ const User = require("../models/user");
 
 const response = require("../configurations/responsesTempalte");
 
-
 exports.searchUser = async (req, res, next) => {
     const name = req.params.q
     const lowName = name.toLowerCase();
