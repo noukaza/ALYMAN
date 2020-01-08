@@ -34,9 +34,14 @@ router.get("/", followersController.get_all_followers);
  * 
  *     responses:
  *       200:
- *         description: Follow
+ *         description: "Successful operation"
  *         schema:
  *           $ref: '#/definitions/Follower'
+ *       404:
+ *         description: "Not found"
+ *       500:
+ *         description: "Error"
+ *
  */
  router.post("/", check_auth, followerMiddleware.followAlreadyExists, followersController.create_follower);
  /** 
@@ -58,10 +63,12 @@ router.get("/", followersController.get_all_followers);
  *        required: true
  *        type: "string"
  *      responses:
- *            400:
- *               description: "Invalid id supplied"
+ *            200:
+ *               description: "successful operation"
  *            404:
- *               description: "follower not found"
+ *               description: "Not Found"
+ *            500:
+ *               description: "Error"
  */
 
 router.delete("/:id", check_auth, followersController.delete_follower);
