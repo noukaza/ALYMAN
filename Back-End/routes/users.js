@@ -134,6 +134,17 @@ router.post("/login", userController.login_user)
  *      operationId: "getAllUsers"
  *      produces:
  *            - "application/json"
+ *      parameters:
+ *            - in: query
+ *              name: page
+ *              schema:
+ *                type: integer
+ *              description: page
+ *            - in: query
+ *              name: prePage
+ *              schema:
+ *                type: integer
+ *              description: The numbers of items to return
  *      responses:
  *            200:
  *               description: "successful operation"
