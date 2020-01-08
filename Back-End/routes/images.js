@@ -24,23 +24,19 @@ const upload = require("../configurations/uploadImages")
  *      produces:
  *            - "application/json"
  *      parameters:
- *      - name: "id"
- *        in: "path"
- *        required: true
- *        type: "string"
+ *            - in: query
+ *              name: page
+ *              schema:
+ *                type: integer
+ *              description: page
+ *            - in: query
+ *              name: prePage
+ *              schema:
+ *                type: integer
+ *              description: The numbers of items to return
  *      responses:
  *            200:
  *               description: "successful operation"
- *               schema:
- *                 type: "object"
- *                 items:
- *                 $ref: "#/definitions/image"
- *            304:
- *               description: "successful operation "
- *               schema:
- *                 type: "object"
- *                 items:
- *                 $ref: "#/definitions/user"
  *            404:
  *               description: "User not found"
  */
@@ -67,7 +63,6 @@ router.get("/",chekauth, imagesController.get_all_images);
  *       - in: formData
  *         name: description
  *         type: string
- *         description: first name.
  *       - in: formData
  *         name: image
  *         type: file
@@ -79,7 +74,7 @@ router.get("/",chekauth, imagesController.get_all_images);
 router.post("/", upload.single("image"), chekauth, imagesController.create_image);
 /**
  * @swagger
- * /Image/{id}:
+ * /images/{id}:
  *   delete:
  *      security:
  *         - Bearer: []
@@ -89,7 +84,6 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
  *      description: "Image"
  *      operationId: "deleteImage"
  *      produces:
- *            - "application/xml"
  *            - "application/json"
  *      parameters:
  *      - name: "id"
@@ -105,41 +99,40 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
  */
 /* DELETE method */
 router.delete("/:id", chekauth,imagesController.delete_image);
+
+
 /**
  * @swagger
- * /Image/{id}:
- *   put:
- *      security:
- *         - Bearer: []
+ * /images/{id}:
+ *    put:
  *      tags:
- *         - "Image"
- *      summary: "Update Image"
- *      description: "Update Image"
+ *      - "Image"
+ *      summary: "Update an existing image"
+ *      description: ""
  *      operationId: "updateImage"
  *      consumes:
- *              - "application/json"
+ *      - "application/json"
  *      produces:
- *              - "application/json"
+ *      - "application/json"
  *      parameters:
- *              - in: "body"
- *                name: "body"
- *                description: "Put a Image"
- *                required: true
- *                schema:
- *                     $ref: "#/definitions/Image"
+ *        - name: "id"
+ *          in: "path"
+ *          required: true
+ *          type: "string"
+ *        - in: formData
+ *          name: description
+ *          type: string
+ *          description: new description.
  *      responses:
- *            200:
- *               description: "successful deletion"
- *            401:
- *               description: " operation failed"
- *            500:
- *               description: "error server"
+ *        400:
+ *          description: "Invalid ID supplied"
+ *        404:
+ *          description: "user not found"
+ *      security:
+ *         - Bearer: [] 
  */
 /* UPDATE method */
 router.put("/:id", chekauth, imagesController.update_image);
-
-
-
 
 
 module.exports = router;
