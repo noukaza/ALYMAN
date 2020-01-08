@@ -9,7 +9,7 @@
         <b-row>
           <b-col sm="8">
             <h2>{{ username }}</h2>
-            <col v-if="isNotMyProfile">
+            <b-col v-if="isNotMyProfile">
             <b-row>
               <b-col lg="2">
                 <h5>
@@ -23,9 +23,7 @@
                 </h5>
               </b-col>
             </b-row>
-
-
-            </div>
+          </b-col>
           </b-col>
           <b-col sm="4" v-if="!isNotMyProfile">
             <font-awesome-icon icon="user-edit" v-on:click="redirectEditProfil" style="width :50% ; height : 50%" />

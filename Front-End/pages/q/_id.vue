@@ -1,44 +1,53 @@
 <template>
+  <div class="container mt-5">
+    <vs-breadcrumb align="left">Home / Search</vs-breadcrumb>
+    <vs-alert class="mt-3" title="Sorry" active="true" color="danger" v-if="tabs.length == 0">
+      no users found </vs-alert>
+    <b-container class="mt-4 p-3 bg-dark text-center" v-else>
+      <vs-row vs-justify="center">
+        <div v-for="tab in tabs" class="col-3" v-bind:key="tab">
+          <vs-card class="cardx " actionable>
 
+              <div slot="media">
+                <img :src="$axios.defaults.baseURL +tab.profileImage" style="width:100%; height: 300px;">
+              </div>
+            <b-link :to="'/profile/'+tab._id">
 
-  <div class="container">
-    <div class="row profile">
-      <div v-for="tab in tabs" class="col-md-3">
-        <div class="profile-sidebar">
-          <!-- SIDEBAR USERPIC -->
-          <div class="profile-userpic">
-            <b-img rounded="circle" alt="Circle image" :src="$axios.defaults.baseURL +tab.profileImage"
-              style="width : 70px ; height : 70px;">
-            </b-img>
-          </div>
-          <!-- END SIDEBAR USERPIC -->
-          <!-- SIDEBAR USER TITLE -->
-          <div class="profile-usertitle">
-            <div class="profile-usertitle-name">
-              {{tab.firstName}} {{tab.lastName}}
+              <div>
+                <span>
+                  <h5>
+                    {{tab.firstName}} {{tab.lastName}}
+                  </h5>
+                </span>
+              </div>
+            </b-link>
+
+            <div slot="footer">
+              <vs-row vs-justify="flex-end">
+                <vs-button type="gradient" color="primary" icon="person_add" v-on:click="follow(tab._id)"></vs-button>
+                <vs-button color="danger" icon="person_add_disabled" v-on:click="unFollow(tab._id)"></vs-button>
+              </vs-row>
             </div>
-          </div>
-          <!-- END SIDEBAR USER TITLE -->
-          <!-- SIDEBAR BUTTONS -->
-          <b-row>
-            <b-col>
-              <button type="button" class="btn btn-success btn-sm" v-on:click="follow(tab._id)">Follow</button>
-            </b-col>
-            <b-col>
-              <button type="button" class="btn btn-danger btn-sm" v-on:click="unFollow(tab._id)">Unfllow</button>
-              <!--	<button type="button" class="btn btn-danger btn-sm">Message</button>-->
-            </b-col>
-          </b-row>
+          </vs-card>
         </div>
-      </div>
-    </div>
-  </div>
 
+      </vs-row>
+    </b-container>
+  </div>
 </template>
+
+<style>
+  .cardx {
+    margin: 15px;
+  }
+
+</style>
+
+
 
 <script>
   export default {
-      middleware : "auth",
+    middleware: "auth",
 
     props: ['user', 'iduser', "nbrpost"],
     data() {
@@ -51,18 +60,50 @@
       follow(id) {
         this.$axios.post("/followers", {
           following: id
+        }).then(data => {
+          this.$vs.notify({
+            title: ':D',
+            text: data.data.message + ' :D',
+            color: 'success',
+            icon: 'favorite'
+          })
+        }).catch(e => {
+          this.$vs.notify({
+            title: ':/',
+            text: e.response.data.message + ' :/',
+            color: 'danger',
+            icon: 'favorite'
+          })
         })
       },
       unFollow(id) {
-        this.$axios.delete("/followers/" + id).then(_ => {
+        this.$axios.delete("/followers/" + id).then(data => {
+          this.$vs.notify({
+            title: ':D',
+            text: data.data.message + ' :D',
+            color: 'success',
+            icon: 'favorite'
+          })
+        }).catch(e => {
+          this.$vs.notify({
+            title: ':/',
+            text: e.response.data.message + ' :/',
+            color: 'danger',
+            icon: 'favorite'
+          })
         })
       },
     },
     created: function () {
-      this.$axios.get("/q/users/" + this.$route.params.id).then(data => {
-        this.tabs = data.data.data
+      if (this.$route.params.id) {
+        this.$axios.get("/q/users/" + this.$route.params.id).then(data => {
+          this.tabs = data.data.data
 
-      }).catch(_ => this.$router.push("/"))
+        }).catch(_ => this.$router.push("/"))
+
+      } else {
+        this.$router.push("/")
+      }
     },
 
   }
@@ -74,109 +115,41 @@
     background: #F1F3FA;
   }
 
-  /* Profile container */
-  .profile {
-    margin: 20px 0;
-  }
-
-  /* Profile sidebar */
-  .profile-sidebar {
-    background: #fff;
-    border: 1px solid gray;
-    padding: 30px
-  }
-
-  .profile-userpic img {
-    float: none;
-    margin: 0 auto;
-    width: 50%;
-    height: 50%;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
-    border-radius: 50% !important;
-  }
-
-  .profile-usertitle {
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
     text-align: center;
-    margin-top: 20px;
+    font-family: arial;
   }
 
-  .profile-usertitle-name {
-    color: #5a7391;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 7px;
+  .title {
+    color: grey;
+    font-size: 18px;
   }
 
-  .profile-usertitle-job {
-    text-transform: uppercase;
-    color: #5b9bd1;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
-
-  .profile-userbuttons {
+  button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
     text-align: center;
-    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
   }
 
-  .profile-userbuttons .btn {
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 6px 15px;
-    margin-right: 5px;
+  a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
   }
 
-  .profile-userbuttons .btn:last-child {
-    margin-right: 0px;
-  }
-
-  .profile-usermenu {
-    margin-top: 30px;
-  }
-
-  .profile-usermenu ul li {
-    border-bottom: 1px solid #f0f4f7;
-  }
-
-  .profile-usermenu ul li:last-child {
-    border-bottom: none;
-  }
-
-  .profile-usermenu ul li a {
-    color: #93a3b5;
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-  .profile-usermenu ul li a i {
-    margin-right: 8px;
-    font-size: 14px;
-  }
-
-  .profile-usermenu ul li a:hover {
-    background-color: #fafcfd;
-    color: #5b9bd1;
-  }
-
-  .profile-usermenu ul li.active {
-    border-bottom: none;
-  }
-
-  .profile-usermenu ul li.active a {
-    color: #5b9bd1;
-    background-color: #f6f9fb;
-    border-left: 2px solid #5b9bd1;
-    margin-left: -2px;
-  }
-
-  /* Profile Content */
-  .profile-content {
-    padding: 20px;
-    background: #fff;
-    min-height: 460px;
+  button:hover,
+  a:hover {
+    opacity: 0.7;
   }
 
 </style>

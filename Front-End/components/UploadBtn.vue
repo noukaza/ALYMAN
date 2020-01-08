@@ -2,7 +2,9 @@
 <div id="mybutton">
 
  <div>
-    <b-button v-b-modal.modal-prevent-closing style="width: 200px; height:50px"  variant="info">NEW POST</b-button>
+    <b-button color="colorx" gradient-color-secondary="colorx2" type="gradient" v-b-modal.modal-prevent-closing style="width: 200px; height:50px"  variant="info"> <i class="material-icons">
+post_add
+</i>NEW POST</b-button>
 
     <b-modal
       id="modal-prevent-closing"

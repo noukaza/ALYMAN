@@ -131,13 +131,31 @@ exports.get_followings_for_user = async (req, res, next) => {
 
 
 exports.get_images_for_user = async (req, res, next) => {
-    let images = await Images.find({
+    let page = req.query.page
+    let limit = req.query.prePage
+    if (page) {
+        page = parseInt(page, 10) > 0 ? parseInt(page, 10) : 1;
+    }
+    if (limit) {
+        limit = parseInt(limit, 10) > 0 && limit <= 10 ? parseInt(limit, 10) : 10;
+    }
+
+    const option = {
+        page: parseInt(page, 10) || 1,
+        limit: parseInt(limit, 10) || 10,
+        sort: {
+            create_at: -1
+        },
+        select: "_id user image likes comments description create_at "
+    }
+    let images = await Images.paginate({
         user: req.params.id
-    }).exec().catch(err => response(res, 404, false, "error")); // TODO change msg
+    },option)
     response(res, 200, true, "successful operation", images);
 }
 
 exports.edit_user = async (req, res, next) => {
+    console.log(req.file)
     let user = await User.findOne({
         _id: req.userData._id
     }).exec()
@@ -151,29 +169,31 @@ exports.edit_user = async (req, res, next) => {
                             response(res, 400, true, "error")
                         } else {
                             user.password = hash
+                            user.save()
                             response(res, 200, true, "successful operation")
                         }
                     })
                 } else {
-                    response(res, 401, false, "Auth failed")
+                    response(res, 401, false, "wrong old password")
                 }
             })
         }
-
-        if (req.body.firstName) {
-            user.firstName = req.body.firstName
+        if (req.body.firstName || req.body.lastName || req.body.email || req.file) {
+            if (req.body.firstName) {
+                user.firstName = req.body.firstName
+            }
+            if (req.body.lastName) {
+                user.lastName = req.body.lastName
+            }
+            if (req.body.email) {
+                user.email = req.body.email
+            }
+            if (req.file) {
+                user.profileImage = req.file.path
+            }
+            user.save()
+            response(res, 200, true, "successful operation")
         }
-        if (req.body.lastName) {
-            user.lastName = req.body.lastName
-        }
-        if (req.body.email) {
-            user.email = req.body.email
-        }
-        if(req.file){
-            user.profileImage = req.file.path
-        }
-        user.save()
-        response(res, 200, true, "successful operation")
 
 
     } else {
