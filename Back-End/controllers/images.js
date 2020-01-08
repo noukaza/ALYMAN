@@ -83,12 +83,8 @@ exports.delete_image = (req, res, next) => {
         })
         .exec()
         .then(result => {
-            console.log(result)
-            if(result.n === 0){
-                response(res, 500, false, "it's not your image ")
-            }else{
+            
                 response(res, 200, false, "successful operation")
-            }
           
         })
         .catch(err => {

@@ -1,8 +1,18 @@
 <template>
   <b-container class="p-3 bg-dark text-center" >
-    <PostProfile :url="$axios.defaults.baseURL + post.image" :postId="post._id" v-for="post in posts"
+    <vs-row vs-justify="center">
+
+    <PostProfile :url="$axios.defaults.baseURL + post.image" :image="post" :postId="post._id" v-for="post in posts"
       v-bind:key="post"></PostProfile> 
+
+  </vs-row>
+
+
   </b-container>
+
+
+
+
 
 </template>
 <script>
