@@ -25,7 +25,7 @@ exports.post_comment = (req, res, next) => {
                     commente
                         .save()
                         .then(data => {
-                            res.status(201).json(data) 
+                            res.status(200).json(data)
                         })
                         .catch(err => {
                             res.status(500).json({
@@ -33,7 +33,7 @@ exports.post_comment = (req, res, next) => {
                             })
                         })
                 } else {
-                    res.status(409).json({
+                    res.status(404).json({
                         message: "the picture does not exist"
                     })
                 }
@@ -59,7 +59,7 @@ exports.delete_comment = async (req, res, next) => {
             }
         })
         .catch(err => {
-            response(res, 500, false, "erro",err)
+            response(res, 500, false, "Error",err)
 
         })
 }
@@ -74,9 +74,9 @@ exports.update_comment = async (req, res, next) => {
             commente.comment = req.body.comment
             commente.save()
         }
-        response(res, 201, true, "done",commente)
+        response(res, 200, true, "done",commente)
     }else{
-        response(res, 404, false, "error")
+        response(res, 500, false, "error")
     }
 }
 
