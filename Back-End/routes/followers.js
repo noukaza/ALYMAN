@@ -3,6 +3,7 @@ const router = express.Router();
 
 const followersController = require("../controllers/followers");
 const check_auth = require("../middleware/check_auth");
+const followerMiddleware = require("../middleware/followers");
 
 
 /* GET method */
@@ -12,7 +13,7 @@ router.get("/", followersController.get_all_followers);
 /**
  * @swagger
  *
- * /follower:
+ * /followers:
  *   post:
  *     security:
  *         - Bearer: []
@@ -26,10 +27,6 @@ router.get("/", followersController.get_all_followers);
  *       - application/json
  *     parameters:
  *       - in: formData
- *         name: follower
- *         type: mongoose.Schema.Types.ObjectId
- *         description: id follower.
- *       - in: formData
  *         name: following
  *         type: mongoose.Schema.Types.ObjectId
  *         description: id following.
@@ -41,10 +38,10 @@ router.get("/", followersController.get_all_followers);
  *         schema:
  *           $ref: '#/definitions/Follower'
  */
- router.post("/", check_auth,  followersController.create_follower);
+ router.post("/", check_auth, followerMiddleware.followAlreadyExists, followersController.create_follower);
  /** 
  * @swagger
- * /follower/{id}:
+ * /followers/{id}:
  *   delete:
  *      security:
  *          - Bearer: []

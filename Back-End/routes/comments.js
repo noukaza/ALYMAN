@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const check_auth = require("../middleware/check_auth");
+const chekauth = require("../middleware/check_auth");
+
 
 
 const commentsConttrollers = require("../controllers/commentes");
@@ -10,6 +11,8 @@ const commentsConttrollers = require("../controllers/commentes");
  *
  * /comments:
  *   post:
+ *     security:
+ *       - Bearer: [] 
  *     tags:
  *       - "comments"
  *     summary: " Create comments"
@@ -29,12 +32,14 @@ const commentsConttrollers = require("../controllers/commentes");
  *         schema:
  *           $ref: '#/definitions/Comments'
  */
-router.post("/", check_auth,commentsConttrollers.post_comment);
+router.post("/", chekauth,commentsConttrollers.post_comment);
 
 /**
  * @swagger
  * /comments/{id}:
  *   delete:
+ *      security:
+ *       - Bearer: [] 
  *      tags:
  *       - "comments"
  *      summary: "Delete user"
@@ -54,12 +59,14 @@ router.post("/", check_auth,commentsConttrollers.post_comment);
  *               description: "Comment not found"
  */
 /* DELETE method*/
-router.delete("/:id", check_auth,commentsConttrollers.delete_comment);
+router.delete("/:id", chekauth,commentsConttrollers.delete_comment);
 
 /**
  * @swagger
  * /comments/{id}:
  *   put:
+ *      security:
+ *         - Bearer: [] 
  *      tags:
  *         - "comments"
  *      summary: "Update comment"
@@ -85,6 +92,34 @@ router.delete("/:id", check_auth,commentsConttrollers.delete_comment);
  *               description: "error server"
 */
 /*Update method */
-router.put("/:id", check_auth, commentsConttrollers.update_comment);
+router.put("/:id", chekauth, commentsConttrollers.update_comment);
 
+
+/**
+ * @swagger
+ * /comments/image/{id}:
+ *   get:
+ *      security:
+ *       - Bearer: [] 
+ *      tags:
+ *       - "comments"
+ *      summary: "get comment for image by id"
+ *      description: "get comment for image by id ."
+ *      operationId: "getCommentId"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *            404:
+ *               description: "image not found"
+ *            401:
+ *               description: "Auth failed"
+ */
+router.get('/image/:id',chekauth,commentsConttrollers.get_comments_for_image);
 module.exports = router;

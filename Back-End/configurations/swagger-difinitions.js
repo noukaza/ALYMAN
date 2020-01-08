@@ -25,20 +25,12 @@
  *       - updateAt
  *       - password
  *     properties:
- *       id:
- *         type: integer
  *       firstName:
  *         type: string
  *       lastName:
  *         type: string
  *       urlProfilPic:
  *          type: string
- *       bio:
- *        type: string
- *       createAt:
- *         type: string
- *       updateAt:
- *         type: string
  *       password:
  *         type: string
  *         format: password
@@ -101,13 +93,7 @@
  *       - IdUser
  *       - createAt
  *     properties:
- *       id_like:
- *          type: integer
- *       IdImage:
- *         type: integer
- *       IdUser:
- *         type: integer
- *       createAt:
+ *       image:
  *         type: string
  *   Comments:
  *     type: object

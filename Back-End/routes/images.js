@@ -2,48 +2,88 @@ const express = require('express');
 const router = express.Router();
 
 const imagesController = require("../controllers/images")
-const check_auth = require("../middleware/check_auth");
+const chekauth = require("../middleware/check_auth");
 
+/**
+ * Upload middleware
+ */
+const upload = require("../configurations/uploadImages")
 
 /* GET method */
-router.get("/", imagesController.get_all_images);
-
-/* POST method */
 /**
  * @swagger
- *
- * /Image:
+ * /images:
+ *   get:
+ *      security:
+ *         - Bearer: [] 
+ *      tags:
+ *       - "Image"
+ *      summary: "get images that you are allowed to see"
+ *      description: "get images that you are allowed to see."
+ *      operationId: "getAllImages"
+ *      produces:
+ *            - "application/json"
+ *      parameters:
+ *            - in: query
+ *              name: page
+ *              schema:
+ *                type: integer
+ *              description: page
+ *            - in: query
+ *              name: prePage
+ *              schema:
+ *                type: integer
+ *              description: The numbers of items to return
+ *      responses:
+ *            200:
+ *               description: "successful operation"
+ *            404:
+ *               description: "User not found"
+ */
+router.get("/",chekauth, imagesController.get_all_images);
+
+/* POST method */
+
+
+ /**
+ * @swagger
+ * /images:
  *   post:
+ *     security:
+ *         - Bearer: []
  *     tags:
- *         - "Image"
+ *       - "Image"
+ *     summary: "uplaod image"
+ *     description: post image
+ *     consumes:
+ *       - multipart/form-data
  *     produces:
  *       - application/json
  *     parameters:
- *       - id: Image
- *         description: Image
- *         in:  body
- *         required: true
+ *       - in: formData
+ *         name: description
  *         type: string
- *         schema:
- *           $ref: '#/definitions/Image'
+ *       - in: formData
+ *         name: image
+ *         type: file
+ *         description: The file to upload.
  *     responses:
  *       200:
- *         description: Image
- *         schema:
- *           $ref: '#/definitions/Image'
+ *         description: image
  */
-router.post("/", check_auth, imagesController.create_image);
+router.post("/", upload.single("image"), chekauth, imagesController.create_image);
 /**
  * @swagger
- * /Image/{id}:
+ * /images/{id}:
  *   delete:
+ *      security:
+ *         - Bearer: []
  *      tags:
  *         - "Image"
  *      summary: "Delete Image"
  *      description: "Image"
  *      operationId: "deleteImage"
  *      produces:
- *            - "application/xml"
  *            - "application/json"
  *      parameters:
  *      - name: "id"
@@ -58,36 +98,40 @@ router.post("/", check_auth, imagesController.create_image);
  *
  */
 /* DELETE method */
-router.delete("/:id", check_auth,imagesController.delete_image);
+router.delete("/:id", chekauth,imagesController.delete_image);
+
 /**
  * @swagger
- * /Image/{id}:
- *   put:
+ * /images/{id}:
+ *    put:
  *      tags:
- *         - "Image"
- *      summary: "Update Image"
- *      description: "Update Image"
+ *      - "Image"
+ *      summary: "Update an existing image"
+ *      description: ""
  *      operationId: "updateImage"
  *      consumes:
- *              - "application/json"
+ *      - "application/json"
  *      produces:
- *              - "application/json"
+ *      - "application/json"
  *      parameters:
- *              - in: "body"
- *                name: "body"
- *                description: "Put a Image"
- *                required: true
- *                schema:
- *                     $ref: "#/definitions/Image"
+ *        - name: "id"
+ *          in: "path"
+ *          required: true
+ *          type: "string"
+ *        - in: formData
+ *          name: description
+ *          type: string
+ *          description: new description.
  *      responses:
- *            200:
- *               description: "successful deletion"
- *            401:
- *               description: " operation failed"
- *            500:
- *               description: "error server"
+ *        400:
+ *          description: "Invalid ID supplied"
+ *        404:
+ *          description: "user not found"
+ *      security:
+ *         - Bearer: [] 
  */
 /* UPDATE method */
-router.put("/:id", check_auth, imagesController.update_image);
+router.put("/:id", chekauth, imagesController.update_image);
+
 
 module.exports = router;

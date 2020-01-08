@@ -7,7 +7,7 @@ PORTBACK?=8000
 install-back: ## install dependencies for the backend app
 	cd Back-End; npm i
 run-back:  ## run backend app 
-	cd Back-End; npm start
+	cd Back-End; npm run dev
 
 install-front:  ## install dependencies for the frontend app
 	cd Front-End; npm i
