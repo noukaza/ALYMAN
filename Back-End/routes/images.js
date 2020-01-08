@@ -100,7 +100,6 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
 /* DELETE method */
 router.delete("/:id", chekauth,imagesController.delete_image);
 
-
 /**
  * @swagger
  * /images/{id}:

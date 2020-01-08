@@ -138,6 +138,7 @@ exports.get_images_for_user = async (req, res, next) => {
 }
 
 exports.edit_user = async (req, res, next) => {
+    console.log(req.file)
     let user = await User.findOne({
         _id: req.userData._id
     }).exec()
@@ -160,7 +161,7 @@ exports.edit_user = async (req, res, next) => {
                 }
             })
         }
-        if (req.body.firstName || req.body.lastName || req.body.email || req.body.file) {
+        if (req.body.firstName || req.body.lastName || req.body.email || req.file) {
             if (req.body.firstName) {
                 user.firstName = req.body.firstName
             }
