@@ -20,22 +20,17 @@ const followerSchema = mongoose.Schema({
 });
 
 followerSchema.pre('validate', function () {
-    // preValidate
+    
 });
 followerSchema.post('validate', function () {
-    //postValidate
+    
 
 });
 followerSchema.pre('save', function () {
-    // return new Promise((resolve, reject) => {
-    //     reject(new Error('something went wrong'));
-    //   });
-    // throw new Error('something went wrong');
 
-    //PreSave
 });
 followerSchema.post('save', async function () {
-    // throw new Error('something went wrong');
+   
     let follower = await user.findOne(this.follower._id)
         .select(" _id firstName lastName profileImage followers followings")
         .exec();
@@ -48,8 +43,7 @@ followerSchema.post('save', async function () {
     
     following.followings.push(follower);   
     await following.save();
-    //postSave
-
+   
 });
 
 

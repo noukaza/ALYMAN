@@ -72,7 +72,7 @@ exports.create_image = (req, res, next) => {
                 response(res, 500, false, "error", err)
             })
     } else {
-        response(res, 401, false, "the picture is missing") //TODO wish stat code to use
+        response(res, 401, false, "the picture is missing")
     }
 }
 
@@ -116,6 +116,6 @@ exports.update_image = (req, res, next) => {
         })
         .catch(e => {
             console.log(e);
-            response(res, 500, false, "errorrr", err)
+            response(res, 500, false, "error", err)
         });
 }

@@ -10,7 +10,7 @@ exports.followAlreadyExists = async (req, res, next) => {
         following: "" + following,
 
     }).exec();
-    // TODO : changer le message 
+    
     follow.length !== 0 ?
         response(res, 500, false, "follow exist", follow) :
         next();
