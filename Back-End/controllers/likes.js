@@ -14,7 +14,7 @@ exports.get_like_by_id = (req, res, next) => {
         .then(data => {
             response(res, 200, true, "like has been recovered", data)
         }).catch(err => {
-            response(res, 404, false, "error", err)
+            response(res, 500, false, "error", err)
         })
 }
 
@@ -50,7 +50,7 @@ exports.poste_like = (req, res, next) => {
                         response(res, 501, false, "errorr")
                     })
             } else {
-                response(res, 409, false, "you like an image that doesn't exist", err)
+                response(res, 404, false, "you like an image that doesn't exist", err)
             }
         })
         .catch(err => {
@@ -86,7 +86,7 @@ exports.delete_like = (req, res, next) => {
                         response(res, 500, false, "error", err) 
                     })
             } else {
-                response(res, 409, false, "can not delete like, it doesn't belong to you", err)
+                response(res, 404, false, "can not delete like, it doesn't belong to you", err)
                 
             }
         }).catch(err => {

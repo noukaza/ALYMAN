@@ -37,8 +37,6 @@ const upload = require("../configurations/uploadImages")
  *      responses:
  *            200:
  *               description: "successful operation"
- *            404:
- *               description: "User not found"
  */
 router.get("/",chekauth, imagesController.get_all_images);
 
@@ -68,8 +66,12 @@ router.get("/",chekauth, imagesController.get_all_images);
  *         type: file
  *         description: The file to upload.
  *     responses:
- *       200:
- *         description: image
+ *       201:
+ *          description: "successful operation"
+ *       404:
+ *          description: "Not Found"
+ *       500:
+  *         description: "Error"
  */
 router.post("/", upload.single("image"), chekauth, imagesController.create_image);
 /**
@@ -91,10 +93,10 @@ router.post("/", upload.single("image"), chekauth, imagesController.create_image
  *        required: true
  *        type: "string"
  *      responses:
- *            400:
- *               description: "Invalid id supplied"
- *            404:
- *               description: "Image not found"
+ *            200:
+ *               description: "successful operation"
+ *            500:
+ *               description: "Not found"
  *
  */
 /* DELETE method */
@@ -123,10 +125,12 @@ router.delete("/:id", chekauth,imagesController.delete_image);
  *          type: string
  *          description: new description.
  *      responses:
- *        400:
- *          description: "Invalid ID supplied"
+ *        200:
+ *          description: "successful operation"
  *        404:
- *          description: "user not found"
+ *          description: "Not found"
+ *        500:
+ *          description: "Error"
  *      security:
  *         - Bearer: [] 
  */

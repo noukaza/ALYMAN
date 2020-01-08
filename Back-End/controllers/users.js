@@ -52,13 +52,13 @@ exports.delets_user = (req, res, next) => {
             })
             .exec()
             .then(result => {
-                response(res, 200, true, "Done ! has been deleted  ")
+                response(res, 200, true, "Done ! has been deleted")
             })
             .catch(err => {
-                response(res, 500, false, "user notfond ", err)
+                response(res, 404, false, "user not found ", err)
             })
     } else {
-        response(res, 401, false, "you are not the user ")
+        response(res, 403, false, "you are not the user ")
     }
 }
 
@@ -93,7 +93,7 @@ exports.get_all_user = async (req, res, next) => {
     const ID = req.userData._id
     let users = await User.findOne({
         _id: ID
-    }).select("_id firstName lastName profileImage bio email").catch(err => response(res, 404, false, "errr", err));
+    }).select("_id firstName lastName profileImage bio email").catch(err => response(res, 500, false, "error", err));
     (users.length === 0) ?
     response(res, 404, false, "Zero user find"): response(res, 200, true, "successful operation", users)
 }
@@ -167,7 +167,7 @@ exports.edit_user = async (req, res, next) => {
                 if (result) {
                     bcrypt.hash(req.body.password, 10, (err, hash) => {
                         if (err) {
-                            response(res, 400, true, "error")
+                            response(res, 500, true, "error")
                         } else {
                             user.password = hash
                             user.save()
@@ -198,7 +198,7 @@ exports.edit_user = async (req, res, next) => {
 
 
     } else {
-        response(res, 400, false, "error");
+        response(res, 500, false, "error");
     }
 
 }

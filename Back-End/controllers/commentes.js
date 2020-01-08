@@ -25,23 +25,26 @@ exports.post_comment = (req, res, next) => {
                     commente
                         .save()
                         .then(data => {
-                            res.status(201).json(data) 
-                        })
-                        .catch(err => {
-                            res.status(500).json({
-                                error: err
+                            let userRes =
+                            {
+                                "_id": data._id,
+                                "image": data.image,
+                                "user": data.user,
+                                "comment": data.comment,
+                            }
+                            response(res, 200, false, "Successful operation",userRes)
                             })
+
+                        .catch(err => {
+
+                                response(res, 500, false, "Error",err)
                         })
                 } else {
-                    res.status(409).json({
-                        message: "the picture does not exist"
-                    })
+                    response(res, 404, false, "the picture does not exist",err)
                 }
             })
             .catch(err => {
-                res.status(500).json({
-                    error: err
-                })
+                response(res, 500, false, "Error",err)
             });
 }
 
@@ -59,7 +62,7 @@ exports.delete_comment = async (req, res, next) => {
             }
         })
         .catch(err => {
-            response(res, 500, false, "erro",err)
+            response(res, 500, false, "Error",err)
 
         })
 }
@@ -74,9 +77,9 @@ exports.update_comment = async (req, res, next) => {
             commente.comment = req.body.comment
             commente.save()
         }
-        response(res, 201, true, "done",commente)
+        response(res, 200, true, "done",commente)
     }else{
-        response(res, 404, false, "error")
+        response(res, 500, false, "error")
     }
 }
 exports.get_comments_for_image = async (req, res, next) => {

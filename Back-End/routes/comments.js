@@ -31,6 +31,10 @@ const commentsConttrollers = require("../controllers/commentes");
  *         description: Comments
  *         schema:
  *           $ref: '#/definitions/Comments'
+ *       404:
+ *         description: "Not Found"
+ *       500:
+ *         description: "Error"
  */
 router.post("/", chekauth,commentsConttrollers.post_comment);
 
@@ -53,10 +57,12 @@ router.post("/", chekauth,commentsConttrollers.post_comment);
  *        required: true
  *        type: "string"
  *      responses:
+ *            200:
+ *                description: "successful operation"
  *            400:
- *               description: "Invalid id supplied"
- *            404:
- *               description: "Comment not found"
+ *               description: "Not found"
+ *            500:
+ *               description: "Error"
  */
 /* DELETE method*/
 router.delete("/:id", chekauth,commentsConttrollers.delete_comment);
@@ -86,10 +92,8 @@ router.delete("/:id", chekauth,commentsConttrollers.delete_comment);
  *      responses:
  *            200:
  *               description: "successful deletion"
- *            401:
- *               description: " operation failed"
  *            500:
- *               description: "error server"
+ *               description: "Error"
 */
 /*Update method */
 router.put("/:id", chekauth, commentsConttrollers.update_comment);
@@ -116,10 +120,6 @@ router.put("/:id", chekauth, commentsConttrollers.update_comment);
  *      responses:
  *            200:
  *               description: "successful operation"
- *            404:
- *               description: "image not found"
- *            401:
- *               description: "Auth failed"
  */
 router.get('/image/:id',chekauth,commentsConttrollers.get_comments_for_image);
 module.exports = router;

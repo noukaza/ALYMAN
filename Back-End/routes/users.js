@@ -48,10 +48,10 @@ const userController = require("../controllers/users");
  *         name: password
  *         type: string
  *         description: password.
- * 
- * 
+ *
+ *
  *     responses:
- *       200:
+ *       201:
  *         description: users
  *         schema:
  *           $ref: '#/definitions/user'
@@ -83,10 +83,12 @@ router.post(
  *        required: true
  *        type: "string"
  *      responses:
- *            400:
- *               description: "Invalid id supplied"
+ *            200:
+ *                description: "successful operation"
  *            404:
  *               description: "User not found"
+ *            403:
+ *                description: "you are not the user"
  */
 router.delete('/:id', chekauth, userController.delets_user)
 
@@ -112,13 +114,11 @@ router.delete('/:id', chekauth, userController.delets_user)
  *         description: id following.
  *     responses:
  *            200:
- *               description: "Auth successful"
- *               schema:
- *                 type: "string"
+ *               description: "Authentication successful"
  *            401:
- *               description: "Auth failed" 
+ *               description: "Authentication failed"
  *            500:
- *               description: "error"
+ *               description: "Error"
  */
 router.post("/login", userController.login_user)
 /**
@@ -141,14 +141,10 @@ router.post("/login", userController.login_user)
  *                 type: "object"
  *                 items:
  *                 $ref: "#/definitions/user"
- *            304:
- *               description: "successful operation "
- *               schema:
- *                 type: "object"
- *                 items:
- *                 $ref: "#/definitions/user"
  *            404:
- *               description: "User not found"
+ *                description: "Not found"
+ *            500:
+ *               description: "Erreur"
  */
 router.get('/', chekauth, userController.get_all_user)
 /**
@@ -172,12 +168,6 @@ router.get('/', chekauth, userController.get_all_user)
  *      responses:
  *            200:
  *               description: "successful operation"
- *               schema:
- *                 type: "object"
- *                 items:
- *                 $ref: "#/definitions/user"
- *            304:
- *               description: "successful operation "
  *               schema:
  *                 type: "object"
  *                 items:
@@ -213,6 +203,8 @@ router.get('/:id', chekauth, userController.get_user_by_id)
  *                 type: "object"
  *                 items:
  *                 $ref: "#/definitions/user"
+ *            404:
+ *               description: "successful operation"
  */
 router.get('/:id/followers/', chekauth, userController.get_follower_for_user);
 
@@ -241,6 +233,8 @@ router.get('/:id/followers/', chekauth, userController.get_follower_for_user);
  *                 type: "object"
  *                 items:
  *                 $ref: "#/definitions/user"
+ *            404:
+ *               description: "Not found"
  */
 router.get('/:id/followings/', chekauth, userController.get_followings_for_user);
 
@@ -317,6 +311,8 @@ router.get('/:id/images', chekauth, userController.get_images_for_user);
  *          type: string
  *          description: password.
  *      responses:
+ *        200:
+ *          description: "successful operation"
  *        400:
  *          description: "Invalid ID supplied"
  *        404:

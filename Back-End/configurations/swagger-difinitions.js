@@ -19,7 +19,7 @@
  *       - id
  *       - firstName
  *       - lastName
- *       - urlProfilPic
+ *       - profileImage
  *       - bio
  *       - createAt
  *       - updateAt
@@ -29,11 +29,17 @@
  *         type: string
  *       lastName:
  *         type: string
- *       urlProfilPic:
+ *       profileImage:
  *          type: string
  *       password:
  *         type: string
  *         format: password
+ *       bio:
+ *         type: string
+ *       createAt:
+ *         type: string
+ *       updateAt:
+ *         type: string
  *   userLogin:
  *     type: object
  *     required:
@@ -49,21 +55,27 @@
  *   Image:
  *     type: object
  *     required:
- *       - id_image
- *       - userId
- *       - url
+ *       - id
+ *       - user
+ *       - image
+ *       - likes
+ *       - comments
  *       - description
  *       - createAt
  *       - updateAt
  *     properties:
- *       id_image:
- *          type: integer
- *       userId:
+ *       id:
  *         type: integer
- *       url:
+ *       user:
+ *         type: integer
+ *       image:
  *         type: string
+ *       comments:
+ *         type: integer
+ *       likes:
+ *         type: integer
  *       description:
- *          type: string
+ *         type: string
  *       createAt:
  *         type: string
  *       updateAt:
@@ -72,46 +84,58 @@
  *   Follower:
  *     type: object
  *     required:
- *       - id_follow
- *       - IdUserFrom
- *       - IdUserTo
+ *       - id
+ *       - follower
+ *       - following
  *       - createAt
  *     properties:
- *       id_follow:
+ *       id:
  *         type: integer
- *       IdUserFrom:
+ *       follower:
  *         type: integer
- *       IdUserTo:
+ *       following:
  *         type: integer
  *       createAt:
  *         type: string
  *   Like:
  *     type: object
  *     required:
- *       - id_like
- *       - IdImage
- *       - IdUser
+ *       - id
+ *       - user
+ *       - image
  *       - createAt
+ *       - updateAt
  *     properties:
+ *       id:
+ *         type: integer
+ *       user:
+ *         type: integer
  *       image:
+ *         type: integer
+ *       createAt:
+ *         type: string
+ *       updateAt:
  *         type: string
  *   Comments:
  *     type: object
  *     required:
- *       - id_comment
- *       - IdImage
- *       - IdUser
+ *       - id
+ *       - image
+ *       - user
  *       - comment
  *       - createAt
+ *       - updateAt
  *     properties:
- *       id_comment:
+ *       id:
  *         type: integer
- *       IdImage:
+ *       image:
  *         type: integer
- *       IdUser:
+ *       user:
  *         type: integer
  *       comment:
- *          type: string
+ *         type: string
  *       createAt:
+ *         type: string
+ *       updateAt:
  *         type: string
  */

@@ -31,11 +31,15 @@ router.get("/:id", chekauth, likesController.get_like_by_id);
 *         schema:
 *           $ref: "#/definitions/Like"
 *       responses:
-*         405:
-*           description: "Invalid input"
+*         200:
+*           description: "Successful operation"
+*         404:
+*           description: "Not found"
+*         500:
+*           description: "Error"
 *       security:
- *         - Bearer: []
- */ 
+*          - Bearer: []
+*/
 router.post("/",chekauth,likesController.poste_like);
 /**
  * @swagger
@@ -59,10 +63,10 @@ router.post("/",chekauth,likesController.poste_like);
  *      responses:
  *            200:
  *               description: "successful deletion"
- *            401:
- *               description: " deletion failed"
+ *            404:
+ *               description: "Not found"
  *            500:
- *               description: "error server"
+ *               description: "Error"
  */
 
 router.delete("/:id",chekauth, likesController.delete_like);
