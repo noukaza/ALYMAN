@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const User = require("../models/user");
 const Image = require("../models/image");
+const Comment = require("../models/comment");
+
 const response = require("../configurations/responsesTempalte");
 
 exports.get_all_images = async (req, res, next) => {
@@ -13,7 +15,6 @@ exports.get_all_images = async (req, res, next) => {
     if (limit) {
         limit = parseInt(limit, 10) > 0 && limit <= 10 ? parseInt(limit, 10) : 10;
     }
-
     const option = {
         page: parseInt(page, 10) || 1,
         limit: parseInt(limit, 10) || 10,
@@ -83,11 +84,15 @@ exports.delete_image = (req, res, next) => {
         })
         .exec()
         .then(result => {
-            
-                response(res, 200, false, "successful operation")
-          
+                Comment.remove({image :req.params.id })
+                    .exec()
+                    .then(_ => response(res, 200, false, "successful operation"))
+                    .catch(e =>{
+                        response(res, 200, false, "successful operation")
+                    })
         })
         .catch(err => {
+            console.log(err)
             response(res, 500, false, "error", err)
 
         })

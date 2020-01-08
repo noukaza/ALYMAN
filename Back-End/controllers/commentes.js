@@ -82,7 +82,6 @@ exports.update_comment = async (req, res, next) => {
         response(res, 500, false, "error")
     }
 }
-
 exports.get_comments_for_image = async (req, res, next) => {
     let comments = await Commente.find({
         image: req.params.id
