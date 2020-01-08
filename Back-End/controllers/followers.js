@@ -19,12 +19,25 @@ exports.get_all_followers = async (req, res, next) => {
 
 exports.create_follower = async (req, res, next) => {
     const id = req.userData._id;
-    if(req.userData._id === req.body.following){
-        response(res, 500, false, "you can't follow yourself")
-    }else{
-            let user = await User
-            .findOne({
-                _id: id
+    let user = await User
+        .findOne({
+            _id: id
+        })
+        .select(" _id firstName lastName profileImage")
+        .exec()
+        .catch(err => {
+            response(res, 500, false, "error", err)
+        });
+    if (user) {
+        let following = await User.findOne({
+            _id: req.body.following
+        }).select(" _id firstName lastName profileImage").exec().catch(err => response(res, 409, false, "following does not exist", err))
+        if (following) {
+            const follower = new Follower({
+                _id: mongoose.Types.ObjectId(),
+                follower: user,
+                following: following,
+                create_at: req.body.create_at
             })
             .select(" _id firstName lastName profileImage")
             .exec()
@@ -60,8 +73,8 @@ exports.delete_follower = (req, res, next) => {
         .exec()
         .then(data => {
             data.n !== 0 ?
-                response(res, 200, true, "Follower supprimer ") :
-                response(res, 400, true, "follower n'existe pas   ")
+                response(res, 200, true, " follower has been deleted") :
+                response(res, 400, true, "Follower does not exist   ")
         })
         .catch(err => {
             response(res, 501, false, "error", err)

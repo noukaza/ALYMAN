@@ -72,7 +72,7 @@ exports.create_image = (req, res, next) => {
                 response(res, 500, false, "error", err)
             })
     } else {
-        response(res, 500, false, "il manque la photo ")
+        response(res, 401, false, "the picture is missing") //TODO wish stat code to use
     }
 }
 
@@ -108,10 +108,10 @@ exports.update_image = (req, res, next) => {
                         response(res, 201, true, "successful operation", data)
                     })
                     .catch(err => {
-                        response(res, 500, false, "errors", err)
-                    })
-            } else {
-                response(res, 409, false, "l'image n'existe pas ou l'utilisateur na pas le droit")
+                        response(res, 500, false, "error", err)
+                    })                        }
+                     else {
+                        response(res, 409, false, "the image does not exist or the user does not have the privilege", err)
             }
         })
         .catch(e => {
