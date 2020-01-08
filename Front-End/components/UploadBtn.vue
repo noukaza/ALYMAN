@@ -9,7 +9,7 @@ post_add
     <b-modal
       id="modal-prevent-closing"
       ref="modal"
-      title="Submit Your Name"
+      title="New Post !"
       @show="resetModal"
       @hidden="resetModal"
       @ok="handleOk"
