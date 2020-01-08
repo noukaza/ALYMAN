@@ -131,9 +131,26 @@ exports.get_followings_for_user = async (req, res, next) => {
 
 
 exports.get_images_for_user = async (req, res, next) => {
-    let images = await Images.find({
+    let page = req.query.page
+    let limit = req.query.prePage
+    if (page) {
+        page = parseInt(page, 10) > 0 ? parseInt(page, 10) : 1;
+    }
+    if (limit) {
+        limit = parseInt(limit, 10) > 0 && limit <= 10 ? parseInt(limit, 10) : 10;
+    }
+
+    const option = {
+        page: parseInt(page, 10) || 1,
+        limit: parseInt(limit, 10) || 10,
+        sort: {
+            create_at: -1
+        },
+        select: "_id user image likes comments description create_at "
+    }
+    let images = await Images.paginate({
         user: req.params.id
-    }).exec().catch(err => response(res, 404, false, "error")); // TODO change msg
+    },option)
     response(res, 200, true, "successful operation", images);
 }
 
