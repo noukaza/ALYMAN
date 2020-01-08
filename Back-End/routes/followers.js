@@ -46,7 +46,7 @@ router.get("/", followersController.get_all_followers);
  router.post("/", check_auth, followerMiddleware.followAlreadyExists, followersController.create_follower);
  /** 
  * @swagger
- * /followers/{id}:
+ * /followers/{userId}:
  *   delete:
  *      security:
  *          - Bearer: []
@@ -58,7 +58,7 @@ router.get("/", followersController.get_all_followers);
  *      produces:
  *            - "application/json"
  *      parameters:
- *      - name: "id"
+ *      - name: "userId"
  *        in: "path"
  *        required: true
  *        type: "string"

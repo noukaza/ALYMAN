@@ -1,9 +1,9 @@
 <template>
 <div>
-  <b-card class="mb-6 mb-4" v-show="show">
+  <b-card class="mb-6 mb-4 " v-show="show">
     <b-row class="">
       <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="12">
-        <vs-card actionable class="cardx">
+        <vs-card actionable class="cardx border border-dark">
           <div slot="header">
             <b-link style="color:black;" :to="'/profile/'+ image.user._id">
               <h3>
@@ -15,7 +15,7 @@
           <div slot="media" style=" position: relative; height: 400px; width: 100%;">
             <img style=" position: absolute; right: 0; bottom: 0 " :src="this.$axios.defaults.baseURL + image.image ">
           </div>
-          <div>
+          <div >
             <h4>
               <i class="material-icons">
                 favorite
