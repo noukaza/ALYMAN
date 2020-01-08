@@ -41,10 +41,6 @@ const userController = require("../controllers/users");
  *         type: file
  *         description: The file to upload.
  *       - in: formData
- *         name: bio
- *         type: string
- *         description: The bio.
- *       - in: formData
  *         name: email
  *         type: string
  *         description: email.
@@ -276,9 +272,51 @@ router.get('/:id/followings/', chekauth, userController.get_followings_for_user)
  */
 router.get('/:id/images', chekauth, userController.get_images_for_user);
 
-
+/**
+ * @swagger
+ * /users:
+ *    put:
+ *      tags:
+ *      - "user"
+ *      summary: "Update an existing user"
+ *      description: ""
+ *      operationId: "updateUser"
+ *      consumes:
+ *      - "application/json"
+ *      produces:
+ *      - "application/json"
+ *      parameters:
+ *        - in: formData
+ *          name: firstName
+ *          type: string
+ *          description: first name.
+ *        - in: formData
+ *          name: lastName
+ *          type: string
+ *          description: last name.
+ *        - in: formData
+ *          name: profileImage
+ *          type: file
+ *          description: The file to upload.
+ *        - in: formData
+ *          name: email
+ *          type: string
+ *          description: email.
+ *        - in: formData
+ *          name: password
+ *          type: string
+ *          description: password.
+ *      responses:
+ *        400:
+ *          description: "Invalid ID supplied"
+ *        404:
+ *          description: "user not found"
+ *      security:
+ *         - Bearer: [] 
+ */
 
 router.put('/', upload.single("profileImage"),
-    chekauth, userController.edit_user);
+    chekauth,     userFeild.ValidPassword,
+    userController.edit_user);
 
 module.exports = router;

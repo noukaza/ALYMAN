@@ -105,11 +105,20 @@ export default {
 
         this.$axios.put(`/users`, data)
           .then(response => {
-            console.log(response)
+            this.$vs.notify({
+              title: ':D',
+              text: response.data.message+ ' :D',
+              color: 'success',
+              icon: 'favorite'
+            })
           })
           .catch(e => {
-            this.messageError = e.response.data.message;
-            this.show = true;
+            this.$vs.notify({
+              title: ':/',
+              text: response.data.message+ ' :/',
+              color: 'success',
+              icon: 'favorite'
+            })
           })
       
     },
@@ -124,11 +133,21 @@ export default {
 
            this.$axios.put(`/users`, data)
           .then(response => {
-            console.log(response)
+            this.$vs.notify({
+              title: ':D',
+              text: response.data.message+ ' :D',
+              color: 'success',
+              icon: 'favorite'
+            })
           })
           .catch(e => {
-            this.messageError = e.response.data.message;
-            this.show = true;
+            this.$vs.notify({
+              title: ':/',
+              text: e.response.data.message+ ' :/',
+              color: 'danger',
+              icon: 'favorite'
+            })
+            
           })
       }
     },
@@ -138,11 +157,20 @@ export default {
           console.log("data",data)
            this.$axios.put(`/users`, data)
           .then(response => {
-            console.log(response)
+             this.$vs.notify({
+              title: ':D',
+              text: response.data.message+ ' :D',
+              color: 'success',
+              icon: 'favorite'
+            })
           })
           .catch(e => {
-            this.messageError = e.response.data.message;
-            this.show = true;
+            this.$vs.notify({
+              title: ':/',
+              text: e.response.data.message+ ' :/',
+              color: 'success',
+              icon: 'favorite'
+            })
           })
     },
     onReset(evt) {

@@ -138,6 +138,7 @@ exports.get_images_for_user = async (req, res, next) => {
 }
 
 exports.edit_user = async (req, res, next) => {
+    console.log(req.file)
     let user = await User.findOne({
         _id: req.userData._id
     }).exec()
@@ -151,29 +152,31 @@ exports.edit_user = async (req, res, next) => {
                             response(res, 400, true, "error")
                         } else {
                             user.password = hash
+                            user.save()
                             response(res, 200, true, "successful operation")
                         }
                     })
                 } else {
-                    response(res, 401, false, "Auth failed")
+                    response(res, 401, false, "wrong old password")
                 }
             })
         }
-
-        if (req.body.firstName) {
-            user.firstName = req.body.firstName
+        if (req.body.firstName || req.body.lastName || req.body.email || req.file) {
+            if (req.body.firstName) {
+                user.firstName = req.body.firstName
+            }
+            if (req.body.lastName) {
+                user.lastName = req.body.lastName
+            }
+            if (req.body.email) {
+                user.email = req.body.email
+            }
+            if (req.file) {
+                user.profileImage = req.file.path
+            }
+            user.save()
+            response(res, 200, true, "successful operation")
         }
-        if (req.body.lastName) {
-            user.lastName = req.body.lastName
-        }
-        if (req.body.email) {
-            user.email = req.body.email
-        }
-        if(req.file){
-            user.profileImage = req.file.path
-        }
-        user.save()
-        response(res, 200, true, "successful operation")
 
 
     } else {
