@@ -25,23 +25,26 @@ exports.post_comment = (req, res, next) => {
                     commente
                         .save()
                         .then(data => {
-                            res.status(200).json(data)
-                        })
-                        .catch(err => {
-                            res.status(500).json({
-                                error: err
+                            let userRes =
+                            {
+                                "_id": data._id,
+                                "image": data.image,
+                                "user": data.user,
+                                "comment": data.comment,
+                            }
+                            response(res, 200, false, "Successful operation",userRes)
                             })
+
+                        .catch(err => {
+
+                                response(res, 500, false, "Error",err)
                         })
                 } else {
-                    res.status(404).json({
-                        message: "the picture does not exist"
-                    })
+                    response(res, 404, false, "the picture does not exist",err)
                 }
             })
             .catch(err => {
-                res.status(500).json({
-                    error: err
-                })
+                response(res, 500, false, "Error",err)
             });
 }
 
