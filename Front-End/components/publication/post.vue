@@ -28,7 +28,7 @@
             <vs-row vs-justify="flex-end">
               <vs-button class="m-1" color="primary" type="gradient" v-on:click='like' icon="thumb_up"></vs-button>
               <vs-button class="m-1" color="danger" type="gradient" v-on:click='dislike' icon="thumb_down"></vs-button>
-              <vs-button color="#3dd495" gradient-color-secondary="rgb(130, 207, 23)"  icon="edit" type="gradient"  class="m-1" v-if="image.user._id === $auth.user._id" v-on:click='editImage'></vs-button>
+              <!-- <vs-button color="#3dd495" gradient-color-secondary="rgb(130, 207, 23)"  icon="edit" type="gradient"  class="m-1" v-if="image.user._id === $auth.user._id" v-on:click='editImage'></vs-button> -->
 
               <vs-button color="dark" color-text="rgb(50,50,50)" icon="delete_forever" type="gradient"  class="m-1" v-if="image.user._id === $auth.user._id" v-on:click='deleteImage'></vs-button>
             </vs-row>
