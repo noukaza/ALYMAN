@@ -17,18 +17,6 @@ const userSchema = mongoose.Schema({
 
 
 
-// userSchema.pre('validate', function() {
-//     console.log('this gets printed first');
-//   });
-//   userSchema.post('validate', function() {
-//     console.log('this gets printed second');
-//   });
-//   userSchema.pre('save', function() {
-//     console.log('this gets printed third');
-//   });
-//   userSchema.post('save', function() {
-//     console.log('this gets printed fourth');
-//   });
 
 
 module.exports = mongoose.model("User", userSchema);
