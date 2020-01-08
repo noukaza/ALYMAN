@@ -138,7 +138,6 @@ exports.get_images_for_user = async (req, res, next) => {
 }
 
 exports.edit_user = async (req, res, next) => {
-    console.log(req.body)
     let user = await User.findOne({
         _id: req.userData._id
     }).exec()
@@ -152,6 +151,7 @@ exports.edit_user = async (req, res, next) => {
                             response(res, 400, true, "error")
                         } else {
                             user.password = hash
+                            user.save()
                             response(res, 200, true, "successful operation")
                         }
                     })
