@@ -67,7 +67,7 @@ router.post(
 );
 
 /**
- * @swagger
+ * swagger
  * /users/{id}:
  *   delete:
  *      security:
@@ -92,7 +92,7 @@ router.post(
  *            403:
  *                description: "you are not the user"
  */
-router.delete('/:id', chekauth, userController.delets_user)
+// router.delete('/:id', chekauth, userController.delets_user)
 
 /**
  * @swagger
