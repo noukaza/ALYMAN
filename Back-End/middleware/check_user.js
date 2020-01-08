@@ -2,16 +2,16 @@ const response = require("../configurations/responsesTempalte");
 const User = require("../models/user");
 
 exports.UserExists = (req, res, next) => {
-    // TODO : je ne vois pas l'intérêt de faire ça !! 0_o
+ 
     User.find({
             _id: id
         })
         .exec()
         .then(user => {
-            user.length >= 1 ? next() : response(res, 409, false, "l'utilisateur n'existe pas", err); // TODO : changer le message   
+            user.length >= 1 ? next() : response(res, 409, false, "user does not exist", err);   
         })
         .catch(err => {
-            response(res, 500, false, "error", err) // TODO : changer le message 
+            response(res, 500, false, "error", err) 
         });
 }
 

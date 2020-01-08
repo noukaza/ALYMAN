@@ -58,16 +58,13 @@ exports.poste_like = (req, res, next) => {
             }
         })
         .catch(err => {
-            response(res, 500, false, "error", err) // TODO : changer le message 
+            response(res, 500, false, "error", err) 
         });
 
 }
 
 exports.delete_like = (req, res, next) => {
     id = req.userData._id;
-    /**
-     * TODO : redondance => avoir des middleware 
-     */
     Like
         .findOne({
             image: req.params.id,
@@ -90,15 +87,13 @@ exports.delete_like = (req, res, next) => {
                         
                     })
                     .catch(err => {
-                        response(res, 500, false, "error", err) // TODO : changer le message 
-                        // TODO : pas besoin d envoyer les err en paramètres elles peuvent contenire des infos sensible. si besoin c a nous de sérialiser les donnees a envoyer  
+                        response(res, 500, false, "error", err) 
                     })
             } else {
                 response(res, 409, false, "can not delete like, it doesn't belong to you", err)
-                // TODO : pas besoin d envoyer les err; si besoin c a nous de sérialiser les donnees a envoyer
+                
             }
         }).catch(err => {
-            response(res, 500, false, "error", err) // TODO : changer le message 
-            // TODO : pas besoin d envoyer les err .si besoin c a nous de sérialiser les donnees a envoyer 
+            response(res, 500, false, "error", err)
         });
 }

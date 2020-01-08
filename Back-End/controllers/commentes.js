@@ -25,7 +25,7 @@ exports.post_comment = (req, res, next) => {
                     commente
                         .save()
                         .then(data => {
-                            res.status(201).json(data) // TODO : serlaize new data 
+                            res.status(201).json(data) 
                         })
                         .catch(err => {
                             res.status(500).json({
