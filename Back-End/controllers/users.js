@@ -36,7 +36,7 @@ exports.create_user = (req, res, next) => {
                         "lastName": data.lastName,
                         "email": data.email,
                     }
-                    response(res, 201, true, "the user has been created", userRes)
+                    response(res, 200, true, "the user has been created", userRes)
                 })
                 .catch(err => {
                     response(res, 500, false, "error", err)
@@ -55,10 +55,10 @@ exports.delets_user = (req, res, next) => {
                 response(res, 200, true, "Done ! has been deleted  ")
             })
             .catch(err => {
-                response(res, 500, false, "user notfond ", err)
+                response(res, 304, false, "user notfond ", err)
             })
     } else {
-        response(res, 401, false, "you are not the user ")
+        response(res, 404, false, "you are not the user ")
     }
 
 }
