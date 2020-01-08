@@ -53,20 +53,14 @@ exports.delete_comment = async (req, res, next) => {
         .exec()
         .then(result => {
             if(result.n ===1){
-                res.status(200).json({
-                    message: "Done !"
-                });
+                response(res, 200, true, "done")
             }else{
-                res.status(404).json({
-                    message: "error it's not your comment !"
-                });
+                response(res, 404, false, "error it's not your comment !")
             }
-                
         })
         .catch(err => {
-            res.status(500).json({
-                error: err
-            });
+            response(res, 500, false, "erro",err)
+
         })
 }
 
