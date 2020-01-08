@@ -8,7 +8,6 @@ const User = require("../models/user");
 const Follower = require('../models/follower');
 const Images = require("../models/image");
 
-// TODO make this func async 
 exports.create_user = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
@@ -38,7 +37,7 @@ exports.create_user = (req, res, next) => {
         }
     });
 }
-// TODO make it async
+
 exports.delets_user = (req, res, next) => {
     if (req.userData._id === req.params.id) {
         User.remove({
@@ -113,8 +112,7 @@ exports.get_follower_for_user = async (req, res, next) => {
         }).select("_id create_at following ").populate(" following", "_id firstName lastName profileImage")
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-    // (follower.length === 0) ?
-    // response(res, 404, false, "can't find user"): 
+   
     response(res, 200, true, "successful operation", follower);
 }
 

@@ -33,6 +33,18 @@
 
 
 # 1) Aller dans le fichiers "nodemon.json" et mettez les bonnes configurations dans lesquelles vous voulez travailler.
+  # Exemple de configuration 
+    ```JavaScript   
+     {"env": {
+        "MONGODB_USER": "yourName",
+        "MONGODB_PASSWORD": "password",
+        "MONGODB_PROTOCOL" : "mongodb+srv",
+        "MONGODB_HOST": "cluster0-hlbkz.mongodb.net",
+        "MONGODB_PORT": "",
+        "MONGODB_DATA": "dbname?retryWrites=true&w=majority",
+        "JWT_KEY": "KEY",
+        "PORT": "3000"}
+}```
 # 2) Lancez la commande  :
     $ npm run dev
 

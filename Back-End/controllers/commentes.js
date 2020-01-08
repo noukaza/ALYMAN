@@ -58,7 +58,7 @@ exports.delete_comment = async (req, res, next) => {
                 });
             }else{
                 res.status(404).json({
-                    message: "eroor it's not your comment !"
+                    message: "error it's not your comment !"
                 });
             }
                 
