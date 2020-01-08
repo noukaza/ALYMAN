@@ -160,7 +160,7 @@ exports.edit_user = async (req, res, next) => {
                 }
             })
         }
-        if(req.body.firstName || req.body.lastName || req.body.email || req.body.file){
+        if (req.body.firstName || req.body.lastName || req.body.email || req.body.file) {
             if (req.body.firstName) {
                 user.firstName = req.body.firstName
             }
@@ -170,7 +170,7 @@ exports.edit_user = async (req, res, next) => {
             if (req.body.email) {
                 user.email = req.body.email
             }
-            if(req.file){
+            if (req.file) {
                 user.profileImage = req.file.path
             }
             user.save()

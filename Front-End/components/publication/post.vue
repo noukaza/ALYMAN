@@ -15,9 +15,13 @@
             <img :src="this.$axios.defaults.baseURL + image.image ">
           </div>
           <div>
-            <h5>
-              <b-badge pill variant="danger">Like : {{image.likes}}</b-badge>
-            </h5>
+            
+            <h4>
+              <i class="material-icons">
+                favorite
+              </i>
+              {{image.likes}}
+            </h4>
             <span> {{image.description}} </span>
           </div>
           <div slot="footer">
@@ -101,8 +105,7 @@
             icon: 'favorite'
           })
         })
-      }
-      ,
+      },
       randomIcon() {
         function getRandomInt(min, max) {
           return Math.floor(Math.random() * (max - min)) + min;
