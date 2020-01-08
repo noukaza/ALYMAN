@@ -15,7 +15,6 @@
             <img :src="this.$axios.defaults.baseURL + image.image ">
           </div>
           <div>
-            
             <h4>
               <i class="material-icons">
                 favorite

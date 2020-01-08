@@ -19,38 +19,40 @@ exports.get_all_followers = async (req, res, next) => {
 
 exports.create_follower = async (req, res, next) => {
     const id = req.userData._id;
-    let user = await User
-        .findOne({
-            _id: id
-        })
-        .select(" _id firstName lastName profileImage")
-        .exec()
-        .catch(err => {
-            response(res, 500, false, "error", err)
-        });
-    if (user) {
-        let following = await User.findOne({
-            _id: req.body.following
-        }).select(" _id firstName lastName profileImage").exec().catch(err => response(res, 409, false, "following n'existe pas", err))
-        if (following) {
-            const follower = new Follower({
-                _id: mongoose.Types.ObjectId(),
-                follower: user,
-                following: following,
-                create_at: req.body.create_at
+    if(req.userData._id === req.body.following){
+        response(res, 500, false, "you can't follow yourself")
+    }else{
+            let user = await User
+            .findOne({
+                _id: id
             })
-            follow = await follower.save();
+            .select(" _id firstName lastName profileImage")
+            .exec()
+            .catch(err => {
+                response(res, 500, false, "error", err)
+            });
+        if (user) {
+            let following = await User.findOne({
+                _id: req.body.following
+            }).select(" _id firstName lastName profileImage").exec().catch(err => response(res, 409, false, "following n'existe pas", err))
+            if (following) {
+                const follower = new Follower({
+                    _id: mongoose.Types.ObjectId(),
+                    follower: user,
+                    following: following,
+                    create_at: req.body.create_at
+                })
+                follow = await follower.save();
 
-            response(res, 201, true, "successful operation", follow)
+                response(res, 201, true, "successful operation", follow)
+            }
         }
     }
 }
 
 exports.delete_follower = (req, res, next) => {
     id = req.userData._id;
-
     Follower
-
         .remove({
             following: req.params.id,
             follower: id
