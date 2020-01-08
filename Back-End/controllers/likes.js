@@ -10,7 +10,6 @@ exports.get_like_by_id = (req, res, next) => {
     Like
         .find()
         .select("_id user create_at update_at")
-        //.populate("images")
         .exec()
         .then(data => {
             response(res, 200, true, "like has been recovered", data)
@@ -20,7 +19,6 @@ exports.get_like_by_id = (req, res, next) => {
 }
 
 exports.poste_like = (req, res, next) => {
-    
     Image.findOne({
             _id: req.body.image
         })
@@ -29,9 +27,7 @@ exports.poste_like = (req, res, next) => {
             if (img) {
                 Like.findOne({user: req.userData._id,
                     image: req.body.image,}).exec().then(dataImage =>{
-
                         if(!dataImage){
-
                             const like = new Like({
                                 _id: mongoose.Types.ObjectId(),
                                 user: req.userData._id,

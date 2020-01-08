@@ -15,7 +15,6 @@ exports.get_all_images = async (req, res, next) => {
     if (limit) {
         limit = parseInt(limit, 10) > 0 && limit <= 10 ? parseInt(limit, 10) : 10;
     }
-
     const option = {
         page: parseInt(page, 10) || 1,
         limit: parseInt(limit, 10) || 10,

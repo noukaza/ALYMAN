@@ -60,9 +60,7 @@ exports.delets_user = (req, res, next) => {
     } else {
         response(res, 401, false, "you are not the user ")
     }
-
 }
-
 
 exports.login_user = async (req, res, next) => {
     let user = await User.find({
@@ -119,7 +117,6 @@ exports.get_follower_for_user = async (req, res, next) => {
         }).select("_id create_at following ").populate(" following", "_id firstName lastName profileImage")
         .exec()
         .catch(err => response(res, 404, false, "can't find user"));
-   
     response(res, 200, true, "successful operation", follower);
 }
 
@@ -144,7 +141,6 @@ exports.get_images_for_user = async (req, res, next) => {
     if (limit) {
         limit = parseInt(limit, 10) > 0 && limit <= 10 ? parseInt(limit, 10) : 10;
     }
-
     const option = {
         page: parseInt(page, 10) || 1,
         limit: parseInt(limit, 10) || 10,

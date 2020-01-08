@@ -43,19 +43,15 @@ exports.create_follower = async (req, res, next) => {
                     create_at: req.body.create_at
                 })
                 follow = await follower.save();
-    
                 response(res, 201, true, "successful operation", follow)
             }
         }
     }
-    
 }
 
 exports.delete_follower = (req, res, next) => {
     id = req.userData._id;
-
     Follower
-
         .remove({
             following: req.params.id,
             follower: id
@@ -69,5 +65,4 @@ exports.delete_follower = (req, res, next) => {
         .catch(err => {
             response(res, 501, false, "error", err)
         })
-
 }
