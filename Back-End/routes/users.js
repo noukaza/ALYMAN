@@ -134,17 +134,6 @@ router.post("/login", userController.login_user)
  *      operationId: "getAllUsers"
  *      produces:
  *            - "application/json"
- *      parameters:
- *            - in: query
- *              name: page
- *              schema:
- *                type: integer
- *              description: page
- *            - in: query
- *              name: prePage
- *              schema:
- *                type: integer
- *              description: The numbers of items to return
  *      responses:
  *            200:
  *               description: "successful operation"
@@ -273,6 +262,16 @@ router.get('/:id/followings/', chekauth, userController.get_followings_for_user)
  *         in: "path"
  *         required: true
  *         type: "string"
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: page
+ *       - in: query
+ *         name: prePage
+ *         schema:
+ *           type: integer
+ *         description: The numbers of items to return
  *      responses:
  *            200:
  *               description: "successful operation"
