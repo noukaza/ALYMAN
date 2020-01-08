@@ -45,22 +45,22 @@ exports.create_user = (req, res, next) => {
     });
 }
 
-exports.delets_user = (req, res, next) => {
-    if (req.userData._id === req.params.id) {
-        User.remove({
-                _id: req.params.id
-            })
-            .exec()
-            .then(result => {
-                response(res, 200, true, "Done ! has been deleted")
-            })
-            .catch(err => {
-                response(res, 404, false, "user not found ", err)
-            })
-    } else {
-        response(res, 403, false, "you are not the user ")
-    }
-}
+// exports.delets_user = (req, res, next) => {
+//     if (req.userData._id === req.params.id) {
+//         User.remove({
+//                 _id: req.params.id
+//             })
+//             .exec()
+//             .then(result => {
+//                 response(res, 200, true, "Done ! has been deleted")
+//             })
+//             .catch(err => {
+//                 response(res, 404, false, "user not found ", err)
+//             })
+//     } else {
+//         response(res, 403, false, "you are not the user ")
+//     }
+// }
 
 exports.login_user = async (req, res, next) => {
     let user = await User.find({

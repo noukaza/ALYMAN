@@ -6,7 +6,6 @@ const imageSchema = mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     image: { type: String, required: true },
     likes: { type: Number, default: 0 },
-    comments: { type: Number, default: 0 },
     description: { type: String, required: true },
     create_at: { type: String, default: new Date().toISOString() },
     update_at: { type: String, default: new Date().toISOString() }
