@@ -72,7 +72,7 @@ exports.create_image = (req, res, next) => {
                 response(res, 500, false, "error", err)
             })
     } else {
-        response(res, 401, false, "the picture is missing")
+        response(res, 404, false, "the picture is missing")
     }
 }
 
@@ -105,13 +105,13 @@ exports.update_image = (req, res, next) => {
                 img
                     .save()
                     .then(data => {
-                        response(res, 201, true, "successful operation", data)
+                        response(res, 200, true, "successful operation", data)
                     })
                     .catch(err => {
                         response(res, 500, false, "error", err)
                     })                        }
                      else {
-                        response(res, 409, false, "the image does not exist or the user does not have the privilege", err)
+                        response(res, 404, false, "the image does not exist or the user does not have the privilege", err)
             }
         })
         .catch(e => {

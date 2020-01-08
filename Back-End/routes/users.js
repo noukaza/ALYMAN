@@ -48,10 +48,10 @@ const userController = require("../controllers/users");
  *         name: password
  *         type: string
  *         description: password.
- * 
- * 
+ *
+ *
  *     responses:
- *       200:
+ *       201:
  *         description: users
  *         schema:
  *           $ref: '#/definitions/user'

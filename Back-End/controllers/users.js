@@ -36,7 +36,7 @@ exports.create_user = (req, res, next) => {
                         "lastName": data.lastName,
                         "email": data.email,
                     }
-                    response(res, 200, true, "the user has been created", userRes)
+                    response(res, 201, true, "the user has been created", userRes)
                 })
                 .catch(err => {
                     response(res, 500, false, "error", err)
