@@ -156,7 +156,6 @@ exports.get_images_for_user = async (req, res, next) => {
 }
 
 exports.edit_user = async (req, res, next) => {
-    console.log(req.file)
     let user = await User.findOne({
         _id: req.userData._id
     }).exec()

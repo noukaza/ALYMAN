@@ -92,14 +92,12 @@ exports.delete_image = (req, res, next) => {
                     })
         })
         .catch(err => {
-            console.log(err)
             response(res, 500, false, "error", err)
 
         })
 }
 
 exports.update_image = (req, res, next) => {
-    console.log(req.body)
     Image.findOne({
             _id: req.params.id
         })
