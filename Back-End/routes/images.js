@@ -120,10 +120,12 @@ router.delete("/:id", chekauth,imagesController.delete_image);
  *          in: "path"
  *          required: true
  *          type: "string"
- *        - in: formData
+ *        - in: "body"
  *          name: description
  *          type: string
  *          description: new description.
+ *          schema:
+ *            $ref: "#/definitions/imageUpdate"
  *      responses:
  *        200:
  *          description: "successful operation"

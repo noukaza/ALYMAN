@@ -40,13 +40,19 @@
  *         type: string
  *       updateAt:
  *         type: string
+ *   imageUpdate:
+ *      type: object
+ *      required:
+ *       - description
+ *      properties:
+ *       description:
+ *         type: string      
  *   userLogin:
  *     type: object
  *     required:
  *       - email
  *       - password
  *     properties:
-
  *       email:
  *         type: string
  *       password:
